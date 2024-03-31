@@ -22,15 +22,15 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 const OPTIONS = [
   {
-    label: 'Home',
+    label: 'Mi area',
     linkTo: '/',
   },
   {
-    label: 'Profile',
+    label: 'Perfil',
     linkTo: '/#1',
   },
   {
-    label: 'Settings',
+    label: 'Configuración',
     linkTo: '/#2',
   },
 ];
@@ -117,7 +117,7 @@ export default function AccountPopover() {
           onClick={handleLogout}
           sx={{ m: 1, fontWeight: 'fontWeightBold', color: 'error.main' }}
         >
-          Logout
+          Cerrar sesión
         </MenuItem>
       </CustomPopover>
     </>

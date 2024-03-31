@@ -20,6 +20,7 @@ export const _userAbout = {
   school: _mock.companyName(2),
   company: _mock.companyName(1),
   coverUrl: _mock.image.cover(3),
+  coverProfileUrl: _mock.image.coverProfile(),
   totalFollowers: _mock.number.nativeL(1),
   totalFollowing: _mock.number.nativeL(2),
   quote:

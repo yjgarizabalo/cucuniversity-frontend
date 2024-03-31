@@ -15,6 +15,11 @@ const icon = (name) => (
 );
 
 const ICONS = {
+  home: icon('ic_home'),
+  book: icon('ic_book'),
+  search: icon('ic_search'),
+  application: icon('ic_arrow_map'),
+  favorite: icon('ic_favorite'),
   job: icon('ic_job'),
   blog: icon('ic_blog'),
   chat: icon('ic_chat'),
@@ -46,34 +51,48 @@ const ICONS = {
 export function useNavData() {
   const data = useMemo(
     () => [
-      // OVERVIEW
+      // CUC UNIVERSIRY
       // ----------------------------------------------------------------------
       {
-        subheader: 'overview v5.3.0',
+        subheader: 'Portal CUC v1.0.0',
         items: [
-          { title: 'one', path: paths.dashboard.root, icon: ICONS.dashboard },
-          { title: 'two', path: paths.dashboard.two, icon: ICONS.ecommerce },
+          { title: 'Perfil empleo', path: paths.dashboard.root, icon: ICONS.user },
+          { title: 'Aplicaciones', path: paths.dashboard.application, icon: ICONS.application },
+          { title: 'Mis favoritos', path: paths.dashboard.favorite, icon: ICONS.favorite },
+          { title: 'Cursos', path: paths.dashboard.courses, icon: ICONS.book },
+          // { title: 'Inicio', path: paths.dashboard.root, icon: ICONS.home },
+        ],
+      },
+
+      // STUDENTS
+      // ----------------------------------------------------------------------
+      {
+        subheader: 'Ofertas de empleo',
+        items: [
           {
-            title: 'three',
-            path: paths.dashboard.three,
-            icon: ICONS.analytics,
+            title: 'Buscar empleo',
+            path: paths.dashboard.students_job.root,
+            icon: ICONS.search,
+            children: [
+              { title: 'ofertas', path: paths.dashboard.students_job.job },
+            ],
           },
         ],
+
       },
 
       // MANAGEMENT
       // ----------------------------------------------------------------------
       {
-        subheader: 'management',
+        subheader: 'Administrador de cuentas',
         items: [
           {
-            title: 'user',
-            path: paths.dashboard.group.root,
+            title: 'Administrador',
+            path: paths.dashboard.user.root,
             icon: ICONS.user,
             children: [
-              { title: 'four', path: paths.dashboard.group.root },
-              { title: 'five', path: paths.dashboard.group.five },
-              { title: 'six', path: paths.dashboard.group.six },
+              { title: 'usuarios', path: paths.dashboard.user.root },
+              { title: 'roles', path: paths.dashboard.user.roles },
             ],
           },
         ],

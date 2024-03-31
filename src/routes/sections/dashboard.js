@@ -9,12 +9,15 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-const IndexPage = lazy(() => import('src/pages/dashboard/one'));
-const PageTwo = lazy(() => import('src/pages/dashboard/two'));
-const PageThree = lazy(() => import('src/pages/dashboard/three'));
-const PageFour = lazy(() => import('src/pages/dashboard/four'));
-const PageFive = lazy(() => import('src/pages/dashboard/five'));
-const PageSix = lazy(() => import('src/pages/dashboard/six'));
+
+const IndexPage = lazy(() => import('src/pages/dashboard/profile/index'));
+const PageCourses = lazy(() => import('src/pages/dashboard/cursos'));
+const PageStudentsJob = lazy(() => import('src/pages/dashboard/job/list'));
+const PageFavorite = lazy(() => import('src/pages/dashboard/favorite/list'));
+const PageApplication = lazy(() => import('src/pages/dashboard/application/list'));
+const PageUsers = lazy(() => import('src/pages/dashboard/user/list'));
+const PageRoles = lazy(() => import('src/pages/dashboard/roles/list'));
+// const IndexPage = lazy(() => import('src/pages/dashboard/home'));
 
 // ----------------------------------------------------------------------
 
@@ -32,14 +35,23 @@ export const dashboardRoutes = [
     ),
     children: [
       { element: <IndexPage />, index: true },
-      { path: 'two', element: <PageTwo /> },
-      { path: 'three', element: <PageThree /> },
+      { path: 'application', element: <PageApplication /> },
+      { path: 'favorite', element: <PageFavorite /> },
+      { path: 'courses', element: <PageCourses /> },
+      
       {
-        path: 'group',
+        path: 'students_job',
         children: [
-          { element: <PageFour />, index: true },
-          { path: 'five', element: <PageFive /> },
-          { path: 'six', element: <PageSix /> },
+          { element: <PageStudentsJob />, index: true },
+          { path: 'job', element: <PageStudentsJob /> },
+        ],
+      },
+
+      {
+        path: 'user',
+        children: [
+          { element: <PageUsers />, index: true },
+          { path: 'roles', element: <PageRoles /> },
         ],
       },
     ],

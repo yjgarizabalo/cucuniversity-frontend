@@ -44,6 +44,7 @@ export const _appAuthors = [...Array(3)].map((_, index) => ({
   name: _mock.fullName(index),
   avatarUrl: _mock.image.avatar(index),
   totalFavorites: _mock.number.nativeL(index),
+  coverProfileUrl: _mock.image.coverProfile(),
 }));
 
 export const _appInvoices = [...Array(5)].map((_, index) => {
@@ -65,6 +66,7 @@ export const _appFeatured = [...Array(3)].map((_, index) => ({
   title: _mock.postTitle(index),
   description: _mock.sentence(index),
   coverUrl: _mock.image.cover(index),
+  coverProfileUrl: _mock.image.coverProfile(),
 }));
 
 // ANALYTIC
