@@ -37,47 +37,47 @@ export const JOB_WORKING_SCHEDULE_OPTIONS = [
 ];
 
 export const JOB_EMPLOYMENT_TYPE_OPTIONS = [
-  { value: 'Full-time', label: 'Full-time' },
-  { value: 'Part-time', label: 'Part-time' },
-  { value: 'On Demand', label: 'On Demand' },
-  { value: 'Negotiable', label: 'Negotiable' },
+  { value: 'Full-time', label: 'Tiempo completo' },
+  { value: 'Part-time', label: 'Medio tiempo' },
+  { value: 'On Demand', label: 'Bajo necesidad' },
+  { value: 'Negotiable', label: 'Negociable' },
 ];
 
 export const JOB_EXPERIENCE_OPTIONS = [
-  { value: 'No experience', label: 'No experience' },
-  { value: '1 year exp', label: '1 year exp' },
-  { value: '2 year exp', label: '2 year exp' },
-  { value: '> 3 year exp', label: '> 3 year exp' },
+  { value: 'No experience', label: 'Sin Experiencia' },
+  { value: '1 year exp', label: '1 años exp' },
+  { value: '2 year exp', label: '2 años exp' },
+  { value: '> 3 year exp', label: 'mayor 3 años exp' },
 ];
 
 export const JOB_BENEFIT_OPTIONS = [
-  { value: 'Free parking', label: 'Free parking' },
-  { value: 'Bonus commission', label: 'Bonus commission' },
-  { value: 'Travel', label: 'Travel' },
-  { value: 'Device support', label: 'Device support' },
-  { value: 'Health care', label: 'Health care' },
-  { value: 'Training', label: 'Training' },
-  { value: 'Health Insurance', label: 'Health Insurance' },
-  { value: 'Retirement Plans', label: 'Retirement Plans' },
-  { value: 'Paid Time Off', label: 'Paid Time Off' },
-  { value: 'Flexible Work Schedule', label: 'Flexible Work Schedule' },
+  { value: 'Parqueadero gratis', label: 'Free parking' },
+  { value: 'Comisiones', label: 'Bonus commission' },
+  { value: 'Viajes', label: 'Travel' },
+  // { value: 'Device support', label: 'Device support' },
+  // { value: 'Health care', label: 'Health care' },
+  // { value: 'Training', label: 'Training' },
+  // { value: 'Health Insurance', label: 'Health Insurance' },
+  // { value: 'Retirement Plans', label: 'Retirement Plans' },
+  // { value: 'Paid Time Off', label: 'Paid Time Off' },
+  // { value: 'Flexible Work Schedule', label: 'Flexible Work Schedule' },
 ];
 
 export const JOB_PUBLISH_OPTIONS = [
   {
     value: 'published',
-    label: 'Published',
+    label: 'Publicadas',
   },
   {
     value: 'draft',
-    label: 'Draft',
+    label: 'Borrador',
   },
 ];
 
 export const JOB_SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' },
+  { value: 'nuevas', label: 'Nuevas' },
+  { value: 'popular', label: 'Populares' },
+  { value: 'recientes', label: 'Recientes' },
 ];
 
 const CANDIDATES = [...Array(12)].map((_, index) => ({
