@@ -9,17 +9,16 @@ import { paths } from 'src/routes/paths';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // _mock
-import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from 'src/_mock';
+import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFavorites } from 'src/_mock';
 // components
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
+import AccountView from 'src/sections/account/view/user-account-view';
+import ProfileFavorite from '../profile-favorite';
 import ProfileHome from '../profile-home';
 import ProfileCover from '../profile-cover';
-// import ProfileFriends from '../profile-friends';
-// import ProfileGallery from '../profile-gallery';
-// import ProfileFollowers from '../profile-followers';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +29,7 @@ const TABS = [
     icon: <Iconify icon="solar:home-2-bold" width={24} />,
   },
   {
-    value: 'favite',
+    value: 'favorite',
     label: 'Favoritos',
     icon: <Iconify icon="solar:heart-bold" width={24} />,
   },
@@ -48,16 +47,11 @@ export default function UserProfileView() {
 
   const { user } = useMockedUser();
 
-  const [searchFriends, setSearchFriends] = useState('');
-
   const [currentTab, setCurrentTab] = useState('profile');
+
 
   const handleChangeTab = useCallback((event, newValue) => {
     setCurrentTab(newValue);
-  }, []);
-
-  const handleSearchFriends = useCallback((event) => {
-    setSearchFriends(event.target.value);
   }, []);
 
   return (
@@ -110,15 +104,9 @@ export default function UserProfileView() {
 
       {currentTab === 'profile' && <ProfileHome info={_userAbout} posts={_userFeeds} />}
 
-      {/* {currentTab === 'followers' && <ProfileFollowers followers={_userFollowers} />} */}
+      {currentTab === 'favorite' && <ProfileFavorite favorites={_userFavorites} />}
 
-      {/* {currentTab === 'friends' && (
-        <ProfileFriends
-          friends={_userFriends}
-          searchFriends={searchFriends}
-          onSearchFriends={handleSearchFriends}
-        />
-      )} */}
+      {currentTab === 'cv' && <AccountView />}
 
     </Container>
   );

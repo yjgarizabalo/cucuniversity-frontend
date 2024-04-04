@@ -33,6 +33,7 @@ export const paths = {
     user: {
       root: `${ROOTS.DASHBOARD}/user`,
       roles: `${ROOTS.DASHBOARD}/user/roles`,
+      account: `${ROOTS.DASHBOARD}/user/account`,
     },
   },
 };

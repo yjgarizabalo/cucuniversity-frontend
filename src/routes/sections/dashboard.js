@@ -17,6 +17,7 @@ const PageFavorite = lazy(() => import('src/pages/dashboard/favorite/list'));
 const PageApplication = lazy(() => import('src/pages/dashboard/application/list'));
 const PageUsers = lazy(() => import('src/pages/dashboard/user/list'));
 const PageRoles = lazy(() => import('src/pages/dashboard/roles/list'));
+const UserAccountPage = lazy(() => import('src/pages/dashboard/user/account'));
 // const IndexPage = lazy(() => import('src/pages/dashboard/home'));
 
 // ----------------------------------------------------------------------
@@ -52,6 +53,7 @@ export const dashboardRoutes = [
         children: [
           { element: <PageUsers />, index: true },
           { path: 'roles', element: <PageRoles /> },
+          { path: 'account', element: <UserAccountPage />}
         ],
       },
     ],

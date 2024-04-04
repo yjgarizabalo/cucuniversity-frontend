@@ -33,7 +33,7 @@ export const _userAbout = {
   },
 };
 
-export const _userFollowers = [...Array(18)].map((_, index) => ({
+export const _userFavorites = [...Array(18)].map((_, index) => ({
   id: _mock.id(index),
   name: _mock.fullName(index),
   country: countries[index + 1].label,
