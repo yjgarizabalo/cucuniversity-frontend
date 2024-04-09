@@ -9,7 +9,7 @@ import { paths } from 'src/routes/paths';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // _mock
-import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFavorites } from 'src/_mock';
+import { _userAbout, _userFeeds, _userFavorites } from 'src/_mock';
 // components
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';

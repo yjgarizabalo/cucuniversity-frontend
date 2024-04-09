@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import FavoriteView from 'src/sections/favorite/view';
+import { _userFavorites } from 'src/_mock';
+import ProfileFavorite from 'src/sections/profile/profile-favorite';
+
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +13,7 @@ export default function PageStudentsJob() {
         <title> Ofertas de empleo</title>
       </Helmet>
 
-      <FavoriteView />
+      <ProfileFavorite favorites={_userFavorites} />
     </>
   );
 }
