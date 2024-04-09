@@ -37,14 +37,14 @@ import {
   TableSelectedAction,
   TablePaginationCustom,
 } from 'src/components/table';
-//
+// context
+import { useUserContext } from 'src/context/user/hooks/userUserContext';
+// components
 import UserTableRow from '../user-table-row';
 import UserTableToolbar from '../user-table-toolbar';
 import UserTableFiltersResult from '../user-table-filters-result';
-
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = [{ value: 'all', label: 'Todas' }, ...USER_STATUS_OPTIONS];
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nombre' },
@@ -64,6 +64,8 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function UserListView() {
+  const { users } = useUserContext()
+
   const table = useTable();
 
   const settings = useSettingsContext();
@@ -72,12 +74,10 @@ export default function UserListView() {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState(_userList);
-
   const [filters, setFilters] = useState(defaultFilters);
 
   const dataFiltered = applyFilter({
-    inputData: tableData,
+    inputData: users,
     comparator: getComparator(table.order, table.orderBy),
     filters,
   });
@@ -106,24 +106,24 @@ export default function UserListView() {
 
   const handleDeleteRow = useCallback(
     (id) => {
-      const deleteRow = tableData.filter((row) => row.id !== id);
-      setTableData(deleteRow);
+      const deleteRow = users.filter((row) => row.id !== id);
+      // setTableData(deleteRow);
 
       table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [dataInPage.length, table, tableData]
+    [dataInPage.length, table, users]
   );
 
   const handleDeleteRows = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
-    setTableData(deleteRows);
+    const deleteRows = users.filter((row) => !table.selected.includes(row.id));
+    // setTableData(deleteRows); // funcion que usaremos
 
     table.onUpdatePageDeleteRows({
-      totalRows: tableData.length,
+      totalRows: users.length,
       totalRowsInPage: dataInPage.length,
       totalRowsFiltered: dataFiltered.length,
     });
-  }, [dataFiltered.length, dataInPage.length, table, tableData]);
+  }, [dataFiltered.length, dataInPage.length, table, users]);
 
   const handleEditRow = useCallback(
     (id) => {
@@ -234,11 +234,11 @@ export default function UserListView() {
             <TableSelectedAction
               dense={table.dense}
               numSelected={table.selected.length}
-              rowCount={tableData.length}
+              rowCount={users.length}
               onSelectAllRows={(checked) =>
                 table.onSelectAllRows(
                   checked,
-                  tableData.map((row) => row.id)
+                  users.map((row) => row.id)
                 )
               }
               action={
@@ -256,13 +256,13 @@ export default function UserListView() {
                   order={table.order}
                   orderBy={table.orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={tableData.length}
+                  rowCount={users.length}
                   numSelected={table.selected.length}
                   onSort={table.onSort}
                   onSelectAllRows={(checked) =>
                     table.onSelectAllRows(
                       checked,
-                      tableData.map((row) => row.id)
+                      users.map((row) => row.id)
                     )
                   }
                 />
@@ -286,7 +286,7 @@ export default function UserListView() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
+                    emptyRows={emptyRows(table.page, table.rowsPerPage, users.length)}
                   />
 
                   <TableNoData notFound={notFound} />
@@ -311,10 +311,10 @@ export default function UserListView() {
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
+        title="Eliminar usuario"
         content={
           <>
-            Are you sure want to delete <strong> {table.selected.length} </strong> items?
+            Estas seguro de eliminar a <strong> {table.selected.length} </strong> ?
           </>
         }
         action={
@@ -337,7 +337,7 @@ export default function UserListView() {
 // ----------------------------------------------------------------------
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { name, status, role } = filters;
+  const { firstName, lastName, secundoSurname, role, program } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -349,14 +349,18 @@ function applyFilter({ inputData, comparator, filters }) {
 
   inputData = stabilizedThis.map((el) => el[0]);
 
-  if (name) {
+  if (firstName) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+      (user) => user.firstName.toLowerCase().indexOf(firstName.toLowerCase()) !== -1
     );
   }
 
-  if (status !== 'all') {
-    inputData = inputData.filter((user) => user.status === status);
+  if (lastName) {
+    inputData = inputData.filter((user) => user.lastName === lastName);
+  }
+
+  if (secundoSurname) {
+    inputData = inputData.filter((user) => user.secundoSurname === secundoSurname);
   }
 
   if (role.length) {

@@ -6,6 +6,7 @@ import { AuthGuard } from 'src/auth/guard';
 import DashboardLayout from 'src/layouts/dashboard';
 // components
 import { LoadingScreen } from 'src/components/loading-screen';
+import { UserProvider } from 'src/context/user/context/userProvider';
 
 // ----------------------------------------------------------------------
 
@@ -27,11 +28,13 @@ export const dashboardRoutes = [
     path: 'dashboard',
     element: (
       <AuthGuard>
+        <UserProvider>
         <DashboardLayout>
           <Suspense fallback={<LoadingScreen />}>
             <Outlet />
           </Suspense>
         </DashboardLayout>
+        </UserProvider>
       </AuthGuard>
     ),
     children: [
