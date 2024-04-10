@@ -1,4 +1,4 @@
-import { id } from "date-fns/locale";
+import { id, ro } from "date-fns/locale";
 
 export const initialState = {
   users: [
@@ -13,7 +13,7 @@ export const initialState = {
       program: 'Ingenieria de sistemas',
       email: 'jhon@r.com',
       phoneNumber: '123456789',
-      role: 'admin',
+      role: 'Administrador',
     },
     {
       id: 2,
@@ -26,7 +26,7 @@ export const initialState = {
       program: 'Ingenieria de sistemas',
       email: 'jane@r.com',
       phoneNumber: '123456789',
-      role: 'Student',
+      role: 'Estudiante',
     },
     {
       id: 3,
@@ -39,7 +39,7 @@ export const initialState = {
       program: 'Ingenieria de sistemas',
       email: 'jhonny@r.com',
       phoneNumber: '123456789',
-      role: 'Student',
+      role: 'Estudiante',
     },
     {
       id: 4,
@@ -52,7 +52,7 @@ export const initialState = {
       program: 'Ingenieria de sistemas',
       email: 'jhonny@r.com',
       phoneNumber: '123456789',
-      role: 'Student',
+      role: 'Estudiante',
     },
     {
       id: 5,
@@ -65,7 +65,33 @@ export const initialState = {
       program: 'Ingenieria de sistemas',
       email: 'jhonny@r.com',
       phoneNumber: '123456789',
-      role: 'Student',
+      role: 'Estudiante',
+    },
+    {
+      id: 6,
+      firstName: 'Pedro',
+      secundoName: '',
+      lastName: 'Perez',
+      secundoSurname: 'Doe',
+      identification: '123456789',
+      gender: 'Male',
+      program: 'Derecho',
+      email: 'pepit@r.com',
+      phoneNumber: '123456789',
+      role: 'Estudiante',
+    },
+    {
+      id: 7,
+      firstName: 'Juan',
+      secundoName: '',
+      lastName: 'Perez',
+      secundoSurname: 'Doe',
+      identification: '123456789',
+      gender: 'Male',
+      program: 'Psicologia',
+      email: 'juan@r.com',
+      phoneNumber: '123456789',
+      role: 'Estudiante',
     }
   ],
   userSelected: {},

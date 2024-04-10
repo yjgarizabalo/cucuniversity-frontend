@@ -27,7 +27,7 @@ export default function UserTableToolbar({
 
   const handleFilterName = useCallback(
     (event) => {
-      onFilters('name', event.target.value);
+      onFilters('firstName', event.target.value);
     },
     [onFilters]
   );
@@ -62,7 +62,7 @@ export default function UserTableToolbar({
             width: { xs: 1, md: 200 },
           }}
         >
-          <InputLabel>Perfiles</InputLabel>
+          <InputLabel margin='dense'>Roles</InputLabel>
 
           <Select
             multiple
@@ -88,7 +88,7 @@ export default function UserTableToolbar({
         <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
           <TextField
             fullWidth
-            value={filters.name}
+            value={filters.firstName}
             onChange={handleFilterName}
             placeholder="Buscar..."
             InputProps={{

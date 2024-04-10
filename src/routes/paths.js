@@ -34,6 +34,7 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/user`,
       roles: `${ROOTS.DASHBOARD}/user/roles`,
       account: `${ROOTS.DASHBOARD}/user/account`,
+      edit: (id) => `${ROOTS.DASHBOARD}/user/${id}/edit`,
     },
   },
 };
