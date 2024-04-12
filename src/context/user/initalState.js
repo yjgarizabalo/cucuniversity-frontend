@@ -1,5 +1,3 @@
-import { id, ro } from "date-fns/locale";
-
 export const initialState = {
   users: [
     {

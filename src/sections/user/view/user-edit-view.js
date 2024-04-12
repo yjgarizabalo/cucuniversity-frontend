@@ -21,8 +21,10 @@ export default function UserEditView({ id }) {
   const { users } = useUserContext()
 
   const settings = useSettingsContext();
+  console.log(id);
 
   const currentUser = users.find((user) => user.id === id);
+  console.log(currentUser)
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

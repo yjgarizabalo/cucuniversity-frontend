@@ -12,17 +12,17 @@ import ListItemText from '@mui/material/ListItemText';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
-import Label from 'src/components/label';
+// import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 //
-// import UserQuickEditForm from './user-quick-edit-form';
+import RoleEditForm from './role-edit-form';
 
 // ----------------------------------------------------------------------
 
 export default function RoleTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const { name, avatarUrl, decription, role } = row;
+  const { name, avatarUrl, description } = row;
 
   const confirm = useBoolean();
 
@@ -50,7 +50,7 @@ export default function RoleTableRow({ row, selected, onEditRow, onSelectRow, on
           />
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{decription}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{description}</TableCell>
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
         <Tooltip title="Editar" placement="top" arrow>
@@ -65,7 +65,7 @@ export default function RoleTableRow({ row, selected, onEditRow, onSelectRow, on
         </TableCell>
       </TableRow>
 
-      {/* <UserQuickEditForm currentUser={row} open={quickEdit.value} onClose={quickEdit.onFalse} /> */}
+      <RoleEditForm cuerrentRoles={row} open={quickEdit.value} onClose={quickEdit.onFalse} /> 
 
       <CustomPopover
         open={popover.open}

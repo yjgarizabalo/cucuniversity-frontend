@@ -7,6 +7,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 // components
 import { LoadingScreen } from 'src/components/loading-screen';
 import { UserProvider } from 'src/context/user/context/userProvider';
+import { RoleProvider } from 'src/context/role/context/roleProvider';
 
 // ----------------------------------------------------------------------
 
@@ -30,11 +31,13 @@ export const dashboardRoutes = [
     element: (
       <AuthGuard>
         <UserProvider>
+        <RoleProvider>  
         <DashboardLayout>
           <Suspense fallback={<LoadingScreen />}>
             <Outlet />
           </Suspense>
         </DashboardLayout>
+        </RoleProvider>
         </UserProvider>
       </AuthGuard>
     ),

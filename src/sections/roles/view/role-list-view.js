@@ -14,7 +14,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 // _mock
-import { _userList, _roles, USER_STATUS_OPTIONS } from 'src/_mock';
+import { _userList, _roles } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
@@ -33,6 +33,8 @@ import {
   TableSelectedAction,
   TablePaginationCustom,
 } from 'src/components/table';
+// contexts
+import { useRoleContext } from 'src/context/role/hook/useRoleContext';
 //
 import RoleTableRow from '../role-table-row';
 import RoleTableToolbar from '../role-table-toolbar';
@@ -55,6 +57,8 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function RoleListView() {
+  const { roles } = useRoleContext();
+
   const table = useTable();
 
   const settings = useSettingsContext();
@@ -63,12 +67,11 @@ export default function RoleListView() {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState(_userList);
 
   const [filters, setFilters] = useState(defaultFilters);
 
   const dataFiltered = applyFilter({
-    inputData: tableData,
+    inputData: roles,
     comparator: getComparator(table.order, table.orderBy),
     filters,
   });
@@ -97,24 +100,24 @@ export default function RoleListView() {
 
   const handleDeleteRow = useCallback(
     (id) => {
-      const deleteRow = tableData.filter((row) => row.id !== id);
-      setTableData(deleteRow);
+      const deleteRow = roles.filter((row) => row.id !== id);
+      // setTableData(deleteRow);
 
       table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [dataInPage.length, table, tableData]
+    [dataInPage.length, table, roles]
   );
 
   const handleDeleteRows = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
-    setTableData(deleteRows);
+    const deleteRows = roles.filter((row) => !table.selected.includes(row.id));
+    // setTableData(deleteRows);
 
     table.onUpdatePageDeleteRows({
-      totalRows: tableData.length,
+      totalRows: roles.length,
       totalRowsInPage: dataInPage.length,
       totalRowsFiltered: dataFiltered.length,
     });
-  }, [dataFiltered.length, dataInPage.length, table, tableData]);
+  }, [dataFiltered.length, dataInPage.length, table, roles]);
 
   const handleEditRow = useCallback(
     (id) => {
@@ -183,11 +186,11 @@ export default function RoleListView() {
             <TableSelectedAction
               dense={table.dense}
               numSelected={table.selected.length}
-              rowCount={tableData.length}
+              rowCount={roles.length}
               onSelectAllRows={(checked) =>
                 table.onSelectAllRows(
                   checked,
-                  tableData.map((row) => row.id)
+                  roles.map((row) => row.id)
                 )
               }
               action={
@@ -205,13 +208,13 @@ export default function RoleListView() {
                   order={table.order}
                   orderBy={table.orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={tableData.length}
+                  rowCount={roles.length}
                   numSelected={table.selected.length}
                   onSort={table.onSort}
                   onSelectAllRows={(checked) =>
                     table.onSelectAllRows(
                       checked,
-                      tableData.map((row) => row.id)
+                      roles.map((row) => row.id)
                     )
                   }
                 />
@@ -235,7 +238,7 @@ export default function RoleListView() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
+                    emptyRows={emptyRows(table.page, table.rowsPerPage, roles.length)}
                   />
 
                   <TableNoData notFound={notFound} />
@@ -275,7 +278,7 @@ export default function RoleListView() {
               confirm.onFalse();
             }}
           >
-            Delete
+            Eliminar
           </Button>
         }
       />

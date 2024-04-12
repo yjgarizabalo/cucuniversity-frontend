@@ -9,7 +9,9 @@ import { UserEditView } from 'src/sections/user/view';
 export default function UserEditPage() {
   const params = useParams();
 
-  const { id } = params;
+  const { id } = params
+
+  const numberId = Number(id);
 
   return (
     <>
@@ -17,7 +19,7 @@ export default function UserEditPage() {
         <title> Dashboard: User Edit</title>
       </Helmet>
 
-      <UserEditView id={`${id}`} />
+      <UserEditView id={numberId} />
     </>
   );
 }
