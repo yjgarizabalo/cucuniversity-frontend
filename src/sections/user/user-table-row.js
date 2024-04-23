@@ -22,7 +22,7 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 // ----------------------------------------------------------------------
 
 export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const { firstName, lastName, secundoSurname, avatarUrl, program, role, email, phoneNumber } = row;
+  const { firstName, lastName, secondSurname, avatarUrl, program, role, email, phoneNumber } = row;
 
   const confirm = useBoolean();
 
@@ -41,7 +41,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
           <Avatar alt={firstName} src={avatarUrl} sx={{ mr: 2 }} />
 
           <ListItemText
-            primary={`${firstName} ${lastName} ${secundoSurname}`}
+            primary={`${firstName} ${lastName} ${secondSurname}`}
             secondary={email}
             primaryTypographyProps={{ typography: 'body2' }}
             secondaryTypographyProps={{

@@ -1,21 +1,24 @@
 import axios from 'axios';
 // config
-import { HOST_API } from 'src/config-global';
+import { CUC_HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
-const axiosInstance = axios.create({ baseURL: HOST_API });
+const axiosInstance = axios.create({ baseURL: CUC_HOST_API });
 
 axiosInstance.interceptors.response.use(
   (res) => res,
-  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong')
+  (error) => Promise.reject((error.response && error.response.data) || 'Error en el servidor, intente mas tarde')
 );
 
 export default axiosInstance;
 
 // ----------------------------------------------------------------------
 
-export const fetcher = async (args) => {
+// METHODS HTTP
+
+/* get */
+export const getFetch = async (args) => {
   const [url, config] = Array.isArray(args) ? args : [args];
 
   const res = await axiosInstance.get(url, { ...config });
@@ -23,31 +26,35 @@ export const fetcher = async (args) => {
   return res.data;
 };
 
+/* put */
+export const updateFetch = async (url, data, config) => {
+  if (config === null) {
+    config = {};
+  }
+  const res = await axiosInstance.put(url, data, { ...config });
+  return res.data;
+};
+
+/* post */
+export const postFetch = async (url, data, config) => {
+  if (config === null) {
+    config = {};
+  }
+  const res = await axiosInstance.post(url, data, { ...config });
+  return res.data;
+};
+
+/* delete */
+export const deleteFetch = async (url, config) => {
+  if (config === null) {
+    config = {};
+  }
+  const res = await axiosInstance.delete(url, { ...config });
+  return res.data;
+};
+
 // ----------------------------------------------------------------------
 
 export const endpoints = {
-  chat: '/api/chat',
-  kanban: '/api/kanban',
-  calendar: '/api/calendar',
-  auth: {
-    me: '/api/auth/me',
-    login: '/api/auth/login',
-    register: '/api/auth/register',
-  },
-  mail: {
-    list: '/api/mail/list',
-    details: '/api/mail/details',
-    labels: '/api/mail/labels',
-  },
-  post: {
-    list: '/api/post/list',
-    details: '/api/post/details',
-    latest: '/api/post/latest',
-    search: '/api/post/search',
-  },
-  product: {
-    list: '/api/product/list',
-    details: '/api/product/details',
-    search: '/api/product/search',
-  },
+  users: '/api/v1/users',
 };

@@ -21,7 +21,6 @@ const PageUsers = lazy(() => import('src/pages/dashboard/user/list'));
 const UserEditPage = lazy(() => import('src/pages/dashboard/user/edit'));
 const PageRoles = lazy(() => import('src/pages/dashboard/roles/list'));
 const UserAccountPage = lazy(() => import('src/pages/dashboard/user/account'));
-// const IndexPage = lazy(() => import('src/pages/dashboard/home'));
 
 // ----------------------------------------------------------------------
 
@@ -29,9 +28,9 @@ export const dashboardRoutes = [
   {
     path: 'dashboard',
     element: (
-      <AuthGuard>
+      // <AuthGuard>
         <UserProvider>
-        <RoleProvider>  
+        <RoleProvider>
         <DashboardLayout>
           <Suspense fallback={<LoadingScreen />}>
             <Outlet />
@@ -39,14 +38,14 @@ export const dashboardRoutes = [
         </DashboardLayout>
         </RoleProvider>
         </UserProvider>
-      </AuthGuard>
+       // </AuthGuard>
     ),
     children: [
       { element: <IndexPage />, index: true },
       { path: 'application', element: <PageApplication /> },
       { path: 'favorite', element: <PageFavorite /> },
       { path: 'courses', element: <PageCourses /> },
-      
+
       {
         path: 'students_job',
         children: [

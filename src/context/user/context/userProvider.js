@@ -25,6 +25,7 @@ export const UserProvider = ({ children }) => {
       // multiDeleteUser,
     }),
     [
+      // getUser,
       state.users,
       state.userSelected,
       state.loading,

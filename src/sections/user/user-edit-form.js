@@ -52,9 +52,9 @@
 
 //   const NewUserSchema = Yup.object().shape({
 //     firstName: Yup.string().required('Nombre es requerido'),
-//     secundoName: Yup.string().required('Segundo nombre es requerido'),
+//     secondName: Yup.string().required('Segundo nombre es requerido'),
 //     lastName: Yup.string().required('Apellido es requerido'),
-//     secundoSurname: Yup.string().required('Segundo apellido es requerido'),
+//     secondSurname: Yup.string().required('Segundo apellido es requerido'),
 //     identification: Yup.number().required('Identificación es requerida').moreThan(0, 'Debe ser mayor a 0').typeError('Valor compra es requerido'),
 //     program: Yup.string().required('Programa es requerido'),
 //     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
@@ -67,9 +67,9 @@
 //   const defaultValues = useMemo(
 //     () => ({
 //       firstName: currentUser?.firstName || '',
-//       secundoName: currentUser?.secundoName || '',
+//       secondName: currentUser?.secondName || '',
 //       lastName: currentUser?.lastName || '',
-//       secundoSurname: currentUser?.secundoSurname || '',
+//       secondSurname: currentUser?.secondSurname || '',
 //       identification: currentUser?.identification || '',
 //       program: currentUser?.program || '',
 //       email: currentUser?.email || '',
@@ -144,7 +144,7 @@
 //             <RHFTextField name="firstName" label="Primer nombre" />
 //             <RHFTextField name="secoundName" label="Segundo nombre" />
 //             <RHFTextField name="lastName" label="Apellido" />
-//             <RHFTextField name="secundoSurname" label="Segundo apellido" />
+//             <RHFTextField name="secondSurname" label="Segundo apellido" />
 //             <RHFTextField name="identification" label="Identificación" />
 
 //             <RHFAutocomplete

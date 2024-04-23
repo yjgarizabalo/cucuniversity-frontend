@@ -63,30 +63,28 @@ export default function UserEdit({ currentUser }) {
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('Nombre es requerido'),
-    secundoName: Yup.string().required('Segundo nombre es requerido'),
+    secondName: Yup.string(),
     lastName: Yup.string().required('Apellido es requerido'),
-    secundoSurname: Yup.string().required('Segundo apellido es requerido'),
+    secondSurname: Yup.string().required('Segundo apellido es requerido'),
     identification: Yup.number().required('Identificación es requerida').moreThan(0, 'Debe ser mayor a 0').typeError('Valor compra es requerido'),
     program: Yup.string().required('Programa es requerido'),
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     phoneNumber: Yup.string().required('El numero de telefono es requerido').min(10, 'Debe tener al menos 10 caracteres').max(10, 'Debe tener máximo 10 caracteres'),
     gender: Yup.string().required('Sexo es requerido'),
-    state: Yup.string().required('State is required'),
     role: Yup.string().required('Role is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
       firstName: currentUser?.firstName || '',
-      secundoName: currentUser?.secundoName || '',
+      secondName: currentUser?.secondName || '',
       lastName: currentUser?.lastName || '',
-      secundoSurname: currentUser?.secundoSurname || '',
+      secondSurname: currentUser?.secondSurname || '',
       identification: currentUser?.identification || '',
       program: currentUser?.program || '',
       email: currentUser?.email || '',
       phoneNumber: currentUser?.phoneNumber || '',
       gender: currentUser?.gender || '',
-      state: currentUser?.state || '',
       role: currentUser?.role || '',
     }),
     [currentUser]
@@ -100,7 +98,6 @@ export default function UserEdit({ currentUser }) {
   const {
     reset,
     watch,
-    control,
     setValue,
     handleSubmit,
     formState: { isSubmitting },
@@ -202,7 +199,7 @@ export default function UserEdit({ currentUser }) {
               <RHFTextField name="firstName" label="Primer nombre" />
               <RHFTextField name="secoundName" label="Segundo nombre" />
               <RHFTextField name="lastName" label="Primer apellido" />
-              <RHFTextField name="secundoSurname" label="Segundo apellido" />
+              <RHFTextField name="secondSurname" label="Segundo apellido" />
               <RHFTextField name="identification" label="Identificación" />
 
               <RHFAutocomplete
@@ -232,7 +229,18 @@ export default function UserEdit({ currentUser }) {
                 }
               />
               <RHFTextField name="phoneNumber" label="Teléfono" />
-              <RHFTextField name="role" label="Role" />
+              <RHFAutocomplete
+                name="role"
+                label="Rol"
+                options={_roles}
+                getOptionLabel={(option) => option}
+                isOptionEqualToValue={(option, value) => option === value}
+                renderOption={(props, option) =>
+                  <li {...props} key={option}>
+                    {option}
+                  </li>
+                }
+              />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>

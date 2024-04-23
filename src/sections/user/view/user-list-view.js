@@ -341,7 +341,7 @@ export default function UserListView() {
 // ----------------------------------------------------------------------
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { firstName, lastName, secundoSurname, role, program } = filters;
+  const { firstName, lastName, secondSurname, role, program } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -363,8 +363,8 @@ function applyFilter({ inputData, comparator, filters }) {
     inputData = inputData.filter((user) => user.lastName === lastName);
   }
 
-  if (secundoSurname) {
-    inputData = inputData.filter((user) => user.secundoSurname === secundoSurname);
+  if (secondSurname) {
+    inputData = inputData.filter((user) => user.secondSurname === secondSurname);
   }
 
   if (role.length) {
