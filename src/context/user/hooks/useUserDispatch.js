@@ -2,8 +2,8 @@ import { useCallback } from "react";
 import { Payload } from '../context/userRedurcer';
 
 export const useUserDispatch = () => {
-  const loginAction = useCallback((dispatch) => {
-    dispatch({ 
+  const loadingAction = useCallback((dispatch) => {
+    dispatch({
       type: Payload.LOADING_ACTION,
       payload: {
         loading: true,
@@ -84,7 +84,7 @@ export const useUserDispatch = () => {
   }, []);
 
   return {
-    loginAction,
+    loadingAction,
     errorAction,
     getUsers,
     getUser,

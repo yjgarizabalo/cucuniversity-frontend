@@ -2,8 +2,8 @@ import { useCallback } from "react";
 import { Payload } from '../context/roleReducer';
 
 export const useRoleDispatch = () => {
-  const loginAction = useCallback((dispatch) => {
-    dispatch({ 
+  const loadingAction = useCallback((dispatch) => {
+    dispatch({
       type: Payload.LOGIN_ACTION,
       payload: {
         loading: true,
@@ -84,7 +84,7 @@ export const useRoleDispatch = () => {
   }, []);
 
   return {
-    loginAction,
+    loadingAction,
     errorAction,
     getRoles,
     getRole,

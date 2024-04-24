@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const isUserListViewActive = useActiveLink(paths.dashboard.user.list);
   const { handleErrorMessageNotickBar } = useHandleResponseMessage();
-  const { fetchUsers, fetchUserById, addUser, updateUser, deleteUser, multiDeleteUser } = useUsersApi();
+  const { fetchUsers, fetchUserById, addUser, updateUser, deleteUser } = useUsersApi();
   const {
     loadingAction,
     errorAction,
@@ -23,7 +23,6 @@ export const UserProvider = ({ children }) => {
     addUserSuccess,
     editUserSuccess,
     deleteUserSuccess,
-    multiDeleteUsersSuccess,
   } = useUserDispatch();
 
   useEffect(() => {
@@ -101,20 +100,6 @@ export const UserProvider = ({ children }) => {
     [deleteUserSuccess, handleErrorMessageNotickBar, deleteUser]
   );
 
-/*   const multiDeleteUsersAction = useCallback(
-    async (ids) => {
-      try {
-        await multiDeleteUser(ids);
-        multiDeleteUsersSuccess(dispatch, ids);
-      } catch (error) {
-        console.error('error connection', error);
-        handleErrorMessageNotickBar(error);
-      }
-    },
-    [multiDeleteUsersSuccess, handleErrorMessageNotickBar, multiDeleteUser]
-  );
- */
-
 
   const memorizedState = useMemo(
     () => ({
@@ -127,7 +112,6 @@ export const UserProvider = ({ children }) => {
       addUserAccion,
       editUser,
       deleteUserAccion,
-      // multiDeleteUser,
     }),
     [
       getUser,

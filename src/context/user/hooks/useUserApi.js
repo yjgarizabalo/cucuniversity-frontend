@@ -9,10 +9,8 @@ export const useUsersApi = () => {
 
   const fetchUsers = useCallback(async () => {
     const response = await getFetch(endpoints.users);
-    return response.data.map(user => ({
-      ...user,
-      permissions: user.permissions.split(','),
-    }));
+    console.log('response', response);
+    return response.data;
   }, [getFetch]);
 
   const fetchUserById = useCallback(async id => {

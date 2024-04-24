@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 // @mui
 // import { alpha } from '@mui/material/styles';
 // import Tab from '@mui/material/Tab';
@@ -68,7 +68,7 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function UserListView() {
-  const { users } = useUserContext()
+  const { users, getUser } = useUserContext()
 
   const table = useTable();
 
@@ -79,6 +79,12 @@ export default function UserListView() {
   const confirm = useBoolean();
 
   const [filters, setFilters] = useState(defaultFilters);
+
+  useEffect(() => {
+    getUser()
+  },
+    [getUser]
+  );
 
   const dataFiltered = applyFilter({
     inputData: users,
