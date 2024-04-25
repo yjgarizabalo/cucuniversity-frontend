@@ -8,38 +8,29 @@ export const useUsersApi = () => {
   const { handleResponseMessage } = useHandleResponseMessage();
 
   const fetchUsers = useCallback(async () => {
-    const response = await getFetch(endpoints.users);
-    console.log('response', response);
-    return response.data;
+    const users = await getFetch(endpoints.users);
+    return users;
   }, [getFetch]);
 
   const fetchUserById = useCallback(async id => {
-    const response = await getFetch(`${endpoints.userManager.users}/${id}`);
+    const response = await getFetch(`${endpoints.users}/${id}`);
     const user = response.data;
-    return {
-      ...user,
-      permissions: user.permissions.split(','),
-    };
+    return user;
   }, [getFetch]);
 
   const addUser = useCallback(async user => {
-    const response = await postFetch(endpoints.userManager.users, user);
+    const response = await postFetch(endpoints.users, user);
     const newUser = response.data;
     handleResponseMessage(response);
-    return {
-      ...newUser,
-      permissions: newUser.permissions.split(','),
-    };
+    return newUser
+
   }, [postFetch, handleResponseMessage]);
 
   const updateUser = useCallback(async user => {
     const response = await putFetch(`${endpoints.userManager.users}/${user.id}`, user);
     const userEdited = response.data;
     handleResponseMessage(response);
-    return {
-      ...userEdited,
-      permissions: userEdited.permissions.split(','),
-    };
+    return userEdited;
   }, [putFetch, handleResponseMessage]);
 
   const deleteUser = useCallback(async id => {

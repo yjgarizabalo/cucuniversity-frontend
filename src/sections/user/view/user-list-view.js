@@ -55,7 +55,6 @@ const TABLE_HEAD = [
   { id: 'phoneNumber', label: 'Teléfono', width: 180 },
   { id: 'company', label: 'Programa', width: 220 },
   { id: 'role', label: 'Rol', width: 180 },
-  // { id: 'status', label: 'Estado', width: 100 },
   { id: '', width: 88 },
 ];
 
@@ -85,6 +84,8 @@ export default function UserListView() {
   },
     [getUser]
   );
+
+  console.log('users----', users);
 
   const dataFiltered = applyFilter({
     inputData: users,
@@ -179,47 +180,6 @@ export default function UserListView() {
         />
 
         <Card>
-          {/* <Tabs
-            value={filters.status}
-            onChange={handleFilterStatus}
-            sx={{
-              px: 2.5,
-              boxShadow: (theme) => `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
-            }}
-          >
-            {STATUS_OPTIONS.map((tab) => (
-              <Tab
-                key={tab.value}
-                iconPosition="end"
-                value={tab.value}
-                label={tab.label}
-                icon={
-                  <Label
-                    variant={
-                      ((tab.value === 'all' || tab.value === filters.status) && 'filled') || 'soft'
-                    }
-                    color={
-                      (tab.value === 'active' && 'success') ||
-                      (tab.value === 'pending' && 'warning') ||
-                      (tab.value === 'banned' && 'error') ||
-                      'default'
-                    }
-                  >
-                    {tab.value === 'all' && _userList.length}
-                    {tab.value === 'active' &&
-                      _userList.filter((user) => user.status === 'active').length}
-
-                    {tab.value === 'pending' &&
-                      _userList.filter((user) => user.status === 'pending').length}
-                    {tab.value === 'banned' &&
-                      _userList.filter((user) => user.status === 'banned').length}
-                    {tab.value === 'rejected' &&
-                      _userList.filter((user) => user.status === 'rejected').length}
-                  </Label>
-                }
-              />
-            ))}
-          </Tabs> */}
 
           <UserTableToolbar
             filters={filters}
@@ -249,6 +209,7 @@ export default function UserListView() {
                 table.onSelectAllRows(
                   checked,
                   users.map((row) => row.id)
+
                 )
               }
               action={
