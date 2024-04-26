@@ -9,6 +9,7 @@ export const useUsersApi = () => {
 
   const fetchUsers = useCallback(async () => {
     const users = await getFetch(endpoints.users);
+    console.log(users);
     return users;
   }, [getFetch]);
 

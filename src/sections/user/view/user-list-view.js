@@ -85,7 +85,7 @@ export default function UserListView() {
     [getUser]
   );
 
-  console.log('users----', users);
+  console.log(users);
 
   const dataFiltered = applyFilter({
     inputData: users,
@@ -308,7 +308,7 @@ export default function UserListView() {
 // ----------------------------------------------------------------------
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { firstName, lastName, secondSurname, role, program } = filters;
+  const { firstName, lastName, secondSurname, role } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 

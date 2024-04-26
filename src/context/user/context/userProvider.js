@@ -18,7 +18,7 @@ export const UserProvider = ({ children }) => {
   const {
     loadingAction,
     errorAction,
-    getUsersSuccess,
+    getUsers,
     getUserByIdSuccess,
     addUserSuccess,
     editUserSuccess,
@@ -35,13 +35,13 @@ export const UserProvider = ({ children }) => {
     loadingAction(dispatch);
     try {
       const users = await fetchUsers();
-      getUsersSuccess(dispatch, users);
+      getUsers(dispatch, users);
     } catch (error) {
       console.error('se a presentado un error', error);
       errorAction(dispatch);
       handleErrorMessageNotickBar(error);
     }
-  }, [loadingAction, errorAction, handleErrorMessageNotickBar, fetchUsers, getUsersSuccess]);
+  }, [loadingAction, errorAction, handleErrorMessageNotickBar, fetchUsers, getUsers]);
 
   const getUserById = useCallback(
     async (id) => {

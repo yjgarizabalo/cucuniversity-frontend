@@ -32,9 +32,7 @@ export const useUserDispatch = () => {
   const getUsers = useCallback((dispatch, users) => {
     dispatch({
       type: Payload.GET_USERS,
-      payload: {
-        users,
-      },
+      payload: users,
     });
   }, []);
 
