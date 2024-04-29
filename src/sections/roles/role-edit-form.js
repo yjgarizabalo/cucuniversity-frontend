@@ -9,25 +9,19 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-// import MenuItem from '@mui/material/MenuItem';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// _mock
-// import { USER_STATUS_OPTIONS } from 'src/_mock';
-// assets
-// import { countries } from 'src/assets/data';
 // contexts
-import { useRoleContext } from 'src/context/role/hook/useRoleContext';
-// components
-// import Iconify from 'src/components/iconify';
+import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
+
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
 export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
-  const { editRole } = useRoleContext();
+  const { editRoleAccion } = useRoleContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -67,7 +61,7 @@ export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
       // await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       onClose();
-      editRole(editData);
+      editRoleAccion(editData);
       enqueueSnackbar('Rol editado', 'con exito');
       console.log("Editado correctamente");
     } catch (error) {

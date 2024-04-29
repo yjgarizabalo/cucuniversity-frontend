@@ -1,5 +1,3 @@
-import { de } from "date-fns/locale";
-
 export const Payload = {
   'LOGIN_ACTION': 'LOGIN_ACTION',
   'ERROR_ACTION': 'ERROR_ACTION',

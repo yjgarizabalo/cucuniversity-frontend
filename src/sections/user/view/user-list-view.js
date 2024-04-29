@@ -1,9 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import { useState, useCallback, useEffect } from 'react';
 // @mui
-// import { alpha } from '@mui/material/styles';
-// import Tab from '@mui/material/Tab';
-// import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
@@ -16,8 +13,6 @@ import TableContainer from '@mui/material/TableContainer';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
-// _mock
-// import { USER_STATUS_OPTIONS } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
@@ -54,7 +49,7 @@ const TABLE_HEAD = [
   { id: 'name', label: 'Nombre' },
   { id: 'phoneNumber', label: 'Teléfono', width: 180 },
   { id: 'company', label: 'Programa', width: 220 },
-  { id: 'role', label: 'Rol', width: 180 },
+  // { id: 'role', label: 'Rol', width: 180 },
   { id: '', width: 88 },
 ];
 
@@ -209,7 +204,6 @@ export default function UserListView() {
                 table.onSelectAllRows(
                   checked,
                   users.map((row) => row.id)
-
                 )
               }
               action={

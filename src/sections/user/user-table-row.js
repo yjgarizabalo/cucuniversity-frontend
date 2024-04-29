@@ -22,7 +22,7 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 // ----------------------------------------------------------------------
 
 export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const { firstName, secondName, lastName, secondSurname, program, role, email, phoneNumber } = row;
+  const { firstName, secondName, lastName, secondSurname, program, email, phoneNumber } = row;
 
   const confirm = useBoolean();
 
@@ -55,7 +55,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{program}</TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell>
+        {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell> */}
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
         <Tooltip title="Cambiar contraseña" placement="top" arrow>

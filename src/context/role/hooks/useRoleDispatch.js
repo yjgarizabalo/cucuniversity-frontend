@@ -32,54 +32,42 @@ export const useRoleDispatch = () => {
   const getRoles = useCallback((dispatch, roles) => {
     dispatch({
       type: Payload.GET_ROLES,
-      payload: {
-        roles,
-      },
+      payload: roles
     });
   }, []);
 
-  const getRole = useCallback((dispatch, role) => {
+  const getRoleByIdSuccess = useCallback((dispatch, role) => {
     dispatch({
       type: Payload.GET_ROLE,
-      payload: {
-        role,
-      },
+      payload: role
     });
   }, []);
 
-  const addRole = useCallback((dispatch, role) => {
+  const addRoleSuccess = useCallback((dispatch, role) => {
     dispatch({
       type: Payload.ADD_ROLE,
-      payload: {
-        role,
-      },
+      payload:  role
     });
   }, []);
 
-  const editRole = useCallback((dispatch, role) => {
+  const editRoleSuccess = useCallback((dispatch, role) => {
     dispatch({
       type: Payload.EDIT_ROLE,
-      payload: {
-        role,
-      },
+      payload:  role
     });
   }, []);
 
-  const deleteRole = useCallback((dispatch, id) => {
+  const deleteRoleSuccess = useCallback((dispatch, id) => {
     dispatch({
       type: Payload.DELETE_ROLE,
-      payload: {
-        id,
-      },
+      payload: id
     });
   }, []);
 
-  const deletesRole = useCallback((dispatch, ids) => {
+  const deletesRoleSucces = useCallback((dispatch, ids) => {
     dispatch({
       type: Payload.DELETES_ROLE,
-      payload: {
-        ids,
-      },
+      payload: ids
     });
   }, []);
 
@@ -87,10 +75,10 @@ export const useRoleDispatch = () => {
     loadingAction,
     errorAction,
     getRoles,
-    getRole,
-    addRole,
-    editRole,
-    deleteRole,
-    deletesRole,
+    getRoleByIdSuccess,
+    addRoleSuccess,
+    editRoleSuccess,
+    deleteRoleSuccess,
+    deletesRoleSucces
   };
 };

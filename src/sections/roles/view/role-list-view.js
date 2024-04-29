@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 // @mui
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -14,7 +14,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 // _mock
-import { _userList, _roles } from 'src/_mock';
+import {_roles } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
@@ -34,7 +34,7 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 // contexts
-import { useRoleContext } from 'src/context/role/hook/useRoleContext';
+import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
 //
 import RoleTableRow from '../role-table-row';
 import RoleTableToolbar from '../role-table-toolbar';
@@ -57,7 +57,7 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function RoleListView() {
-  const { roles } = useRoleContext();
+  const { roles, getRoleAccion } = useRoleContext();
 
   const table = useTable();
 
@@ -66,6 +66,13 @@ export default function RoleListView() {
   const router = useRouter();
 
   const confirm = useBoolean();
+
+  useEffect(() => {
+    getRoleAccion();
+  }, [getRoleAccion]);
+
+
+  console.log(roles);
 
 
   const [filters, setFilters] = useState(defaultFilters);

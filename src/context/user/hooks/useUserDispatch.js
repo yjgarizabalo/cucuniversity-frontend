@@ -39,45 +39,35 @@ export const useUserDispatch = () => {
   const getUser = useCallback((dispatch, user) => {
     dispatch({
       type: Payload.GET_USER,
-      payload: {
-        user,
-      },
+      payload: user
     });
   }, []);
 
   const addUser = useCallback((dispatch, user) => {
     dispatch({
       type: Payload.ADD_USER,
-      payload: {
-        user,
-      },
+      payload: user
     });
   }, []);
 
   const editUser = useCallback((dispatch, user) => {
     dispatch({
       type: Payload.EDIT_USER,
-      payload: {
-        user,
-      },
+      payload: user
     });
   }, []);
 
   const deleteUser = useCallback((dispatch, id) => {
     dispatch({
       type: Payload.DELETE_USER,
-      payload: {
-        id,
-      },
+      payload: id
     });
   }, []);
 
   const multiDeleteUser = useCallback((dispatch, ids) => {
     dispatch({
       type: Payload.DELETES_USER,
-      payload: {
-        ids,
-      },
+      payload: ids
     });
   }, []);
 
