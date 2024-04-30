@@ -47,7 +47,7 @@ const reducer = (state, action) => {
     case Payload.EDIT_ROLE:
       return {
         ...state,
-        roles: state.roles.map((role) => (role.id === action.payload.id ? action.payload : role)),
+        roles: action.payload && action.payload.id ? state.roles.map((role) => (role.id === action.payload.id ? action.payload : role)) : state.roles,
         loading: false,
         error: false,
       };

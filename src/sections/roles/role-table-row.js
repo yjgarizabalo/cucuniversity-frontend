@@ -65,7 +65,7 @@ export default function RoleTableRow({ row, selected, onEditRow, onSelectRow, on
         </TableCell>
       </TableRow>
 
-      <RoleEditForm cuerrentRoles={row} open={quickEdit.value} onClose={quickEdit.onFalse} /> 
+      <RoleEditForm currentRoles={row} open={quickEdit.value} onClose={quickEdit.onFalse} />
 
       <CustomPopover
         open={popover.open}

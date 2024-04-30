@@ -17,9 +17,9 @@ export const useHttpClient = (axiosInstance) => {
     [axiosInstance]
   );
 
-  const putFetch = useCallback(
+  const updateFetch = useCallback(
     async (url, data, config) => {
-      const response = await axiosInstance.put(url, data, config);
+      const response = await axiosInstance.patch(url, data, config);
       return response.data;
     },
     [axiosInstance]
@@ -36,7 +36,7 @@ export const useHttpClient = (axiosInstance) => {
   return {
     getFetch,
     postFetch,
-    putFetch,
+    updateFetch,
     deleteFetch,
   };
 };

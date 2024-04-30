@@ -11,7 +11,6 @@ import IconButton from '@mui/material/IconButton';
 import TableContainer from '@mui/material/TableContainer';
 // routes
 import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 // _mock
 import {_roles } from 'src/_mock';
@@ -39,6 +38,7 @@ import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
 import RoleTableRow from '../role-table-row';
 import RoleTableToolbar from '../role-table-toolbar';
 import RoleTableFiltersResult from '../role-table-filters-result';
+import RoleCreateForm from '../role-create-form';
 
 // ----------------------------------------------------------------------
 
@@ -56,14 +56,12 @@ const defaultFilters = {
 
 // ----------------------------------------------------------------------
 
-export default function RoleListView() {
-  const { roles, getRoleAccion } = useRoleContext();
+export default function RoleListView(rowAdd) {
+  const { roles, getRoleAccion, deleteRoleAccion } = useRoleContext();
 
   const table = useTable();
 
   const settings = useSettingsContext();
-
-  const router = useRouter();
 
   const confirm = useBoolean();
 
@@ -71,9 +69,7 @@ export default function RoleListView() {
     getRoleAccion();
   }, [getRoleAccion]);
 
-
-  console.log(roles);
-
+  console.log("roles", roles);
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -107,12 +103,11 @@ export default function RoleListView() {
 
   const handleDeleteRow = useCallback(
     (id) => {
-      const deleteRow = roles.filter((row) => row.id !== id);
-      // setTableData(deleteRow);
+      deleteRoleAccion(id);
 
       table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [dataInPage.length, table, roles]
+    [dataInPage.length, table, deleteRoleAccion]
   );
 
   const handleDeleteRows = useCallback(() => {
@@ -126,23 +121,11 @@ export default function RoleListView() {
     });
   }, [dataFiltered.length, dataInPage.length, table, roles]);
 
-  const handleEditRow = useCallback(
-    (id) => {
-      router.push(paths.dashboard.user.edit(id));
-    },
-    [router]
-  );
-
-  const handleFilterStatus = useCallback(
-    (event, newValue) => {
-      handleFilters('status', newValue);
-    },
-    [handleFilters]
-  );
-
   const handleResetFilters = useCallback(() => {
     setFilters(defaultFilters);
   }, []);
+
+  const EditRole = useBoolean();
 
   return (
     <>
@@ -157,7 +140,7 @@ export default function RoleListView() {
           action={
             <Button
               component={RouterLink}
-              href={paths.dashboard.user.new}
+              onClick={EditRole.onTrue}
               variant="contained"
               startIcon={<Iconify icon="mingcute:add-line" />}
             >
@@ -167,6 +150,13 @@ export default function RoleListView() {
           sx={{
             mb: { xs: 3, md: 5 },
           }}
+        />
+
+        <RoleCreateForm
+        currentRoles={rowAdd}
+        open={EditRole.value}
+        onClose={EditRole.onFalse}
+
         />
 
         <Card>
@@ -238,8 +228,7 @@ export default function RoleListView() {
                         row={row}
                         selected={table.selected.includes(row.id)}
                         onSelectRow={() => table.onSelectRow(row.id)}
-                        // onDeleteRow={() => handleDeleteRow(row.id)}
-                        // onEditRow={() => handleEditRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
                       />
                     ))}
 

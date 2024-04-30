@@ -20,7 +20,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
+export default function RoleEditForm({ currentRoles, open, onClose }) {
   const { editRoleAccion } = useRoleContext();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -32,10 +32,10 @@ export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
 
   const defaultValues = useMemo(
     () => ({
-      name: cuerrentRoles?.name || '',
-      description: cuerrentRoles?.description || '',
+      name: currentRoles?.name || '',
+      description: currentRoles?.description || '',
     }),
-    [cuerrentRoles]
+    [currentRoles]
   );
 
   const methods = useForm({
@@ -50,18 +50,17 @@ export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-
-    const editData = {
-      id: cuerrentRoles.id,
-      name: data.name,
-      description: data.description,
-    };
-
     try {
       reset();
       onClose();
+      enqueueSnackbar('Rol editado correctamente', { variant: 'success' });
+      const editData = {
+        id: currentRoles.id,
+        name: data.name,
+        description: data.description,
+      };
+
       editRoleAccion(editData);
-      enqueueSnackbar('Rol editado', 'con exito');
       console.log("Editado correctamente");
     } catch (error) {
       console.error(error);
@@ -116,7 +115,7 @@ export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
 }
 
 RoleEditForm.propTypes = {
-  cuerrentRoles: PropTypes.object,
+  currentRoles: PropTypes.object,
   onClose: PropTypes.func,
   open: PropTypes.bool,
 };

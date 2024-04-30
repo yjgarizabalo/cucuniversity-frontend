@@ -4,39 +4,35 @@ import { useHttpClient } from 'src/hooks/use-http-client';
 import { useHandleResponseMessage } from 'src/hooks/use-handler-rosponse-msg';
 
 export const useUsersApi = () => {
-  const { getFetch, postFetch, putFetch, deleteFetch } = useHttpClient(axiosInstance);
+  const { getFetch, postFetch, updateFetch, deleteFetch } = useHttpClient(axiosInstance);
   const { handleResponseMessage } = useHandleResponseMessage();
 
   const fetchUsers = useCallback(async () => {
     const users = await getFetch(endpoints.users);
-    console.log(users);
     return users;
   }, [getFetch]);
 
   const fetchUserById = useCallback(async id => {
-    const response = await getFetch(`${endpoints.users}/${id}`);
-    const user = response.data;
+    const user = await getFetch(`${endpoints.users}/${id}`);
     return user;
   }, [getFetch]);
 
   const addUser = useCallback(async user => {
-    const response = await postFetch(endpoints.users, user);
-    const newUser = response.data;
-    handleResponseMessage(response);
+    const newUser = await postFetch(endpoints.users, user);
+    handleResponseMessage(newUser);
     return newUser
 
   }, [postFetch, handleResponseMessage]);
 
   const updateUser = useCallback(async user => {
-    const response = await putFetch(`${endpoints.userManager.users}/${user.id}`, user);
-    const userEdited = response.data;
-    handleResponseMessage(response);
+    const userEdited = await updateFetch(`${endpoints.userManager.users}/${user.id}`, user);
+    handleResponseMessage(userEdited);
     return userEdited;
-  }, [putFetch, handleResponseMessage]);
+  }, [updateFetch, handleResponseMessage]);
 
   const deleteUser = useCallback(async id => {
-    const response = await deleteFetch(`${endpoints.userManager.users}/${id}`);
-    handleResponseMessage(response);
+    const userDelete = await deleteFetch(`${endpoints.userManager.users}/${id}`);
+    handleResponseMessage(userDelete);
   }, [deleteFetch, handleResponseMessage]);
 
   const multiDeleteUser = useCallback(async ids => {

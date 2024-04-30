@@ -75,6 +75,7 @@ export const RoleProvider = ({ children }) => {
 
   const editRoleAccion = useCallback(
     async (role) => {
+      console.log(role);
       try {
         const roleUpdated = await updateRole(role);
         editRoleSuccess(dispatch, roleUpdated);
@@ -85,6 +86,20 @@ export const RoleProvider = ({ children }) => {
       }
     },
     [editRoleSuccess, handleErrorMessageNotickBar, updateRole]
+  );
+
+  const deleteRoleAccion = useCallback(
+    async (id) => {
+      try {
+        await deleteRole(id);
+        deleteRoleSuccess(dispatch, id);
+      } catch (error) {
+        console.error('error connection', error);
+        handleErrorMessageNotickBar(error);
+        throw error;
+      }
+    },
+    [deleteRoleSuccess, handleErrorMessageNotickBar, deleteRole]
   );
 
 
@@ -98,7 +113,7 @@ export const RoleProvider = ({ children }) => {
       getRoleByIdAccion,
       addRoleAccion,
       editRoleAccion,
-      deleteRole,
+      deleteRoleAccion,
       multiDeleteRole,
     }),
 
@@ -112,7 +127,7 @@ export const RoleProvider = ({ children }) => {
       getRoleByIdAccion,
       addRoleAccion,
       editRoleAccion,
-      deleteRole,
+      deleteRoleAccion,
       multiDeleteRole,
     ]
   );

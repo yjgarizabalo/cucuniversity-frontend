@@ -16,6 +16,7 @@ import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 import ProgressBar from 'src/components/progress-bar';
 import MotionLazy from 'src/components/animate/motion-lazy';
 import { SettingsProvider, SettingsDrawer } from 'src/components/settings';
+import { SnackbarProvider } from 'src/components/snackbar';
 // auth
 import { AuthProvider, AuthConsumer } from 'src/auth/context/jwt';
 
@@ -27,8 +28,8 @@ export default function App() {
 
   ██████ ╗██╗   ██╗ ██████╗
   ██╔════╝██║   ██║██╔════╝
-  ██║     ██║   ██║██║     
-  ██║     ██║   ██║██║     
+  ██║     ██║   ██║██║
+  ██║     ██║   ██║██║
   ╚██████╗╚██████╔╝╚██████╗
    ╚═════╝ ╚═════╝  ╚═════╝
   `
@@ -50,13 +51,15 @@ export default function App() {
         }}
       >
         <ThemeProvider>
-          <MotionLazy>
-            <SettingsDrawer />
-            <ProgressBar />
-            <AuthConsumer>
-              <Router />
-            </AuthConsumer>
-          </MotionLazy>
+          <SnackbarProvider>
+            <MotionLazy>
+              <SettingsDrawer />
+              <ProgressBar />
+              <AuthConsumer>
+                <Router />
+              </AuthConsumer>
+            </MotionLazy>
+          </SnackbarProvider>
         </ThemeProvider>
       </SettingsProvider>
     </AuthProvider>

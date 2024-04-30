@@ -12,8 +12,6 @@ export const useHandleResponseMessage = () => {
         enqueueSnackbar(response.msg);
       } else if (response && response.message) {
         enqueueSnackbar(response.message);
-      } else {
-        enqueueSnackbar('Operations success');
       }
     },
     [enqueueSnackbar]
