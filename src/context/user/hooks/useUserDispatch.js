@@ -29,42 +29,42 @@ export const useUserDispatch = () => {
     }, 4000);
   }, []);
 
-  const getUsers = useCallback((dispatch, users) => {
+  const getUserSuccess = useCallback((dispatch, users) => {
     dispatch({
       type: Payload.GET_USERS,
       payload: users,
     });
   }, []);
 
-  const getUser = useCallback((dispatch, user) => {
+  const getUserByIdSuccess = useCallback((dispatch, user) => {
     dispatch({
       type: Payload.GET_USER,
       payload: user
     });
   }, []);
 
-  const addUser = useCallback((dispatch, user) => {
+  const addUserSuccess = useCallback((dispatch, user) => {
     dispatch({
       type: Payload.ADD_USER,
       payload: user
     });
   }, []);
 
-  const editUser = useCallback((dispatch, user) => {
+  const editUserSuccess = useCallback((dispatch, user) => {
     dispatch({
       type: Payload.EDIT_USER,
       payload: user
     });
   }, []);
 
-  const deleteUser = useCallback((dispatch, id) => {
+  const deleteUserSuccess = useCallback((dispatch, id) => {
     dispatch({
       type: Payload.DELETE_USER,
       payload: id
     });
   }, []);
 
-  const multiDeleteUser = useCallback((dispatch, ids) => {
+  const multiDeleteUserSucces = useCallback((dispatch, ids) => {
     dispatch({
       type: Payload.DELETES_USER,
       payload: ids
@@ -74,12 +74,12 @@ export const useUserDispatch = () => {
   return {
     loadingAction,
     errorAction,
-    getUsers,
-    getUser,
-    addUser,
-    editUser,
-    deleteUser,
-    multiDeleteUser,
+    getUserSuccess,
+    getUserByIdSuccess,
+    addUserSuccess,
+    editUserSuccess,
+    deleteUserSuccess,
+    multiDeleteUserSucces,
   };
 
 };

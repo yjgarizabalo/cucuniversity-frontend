@@ -58,7 +58,6 @@ export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
     };
 
     try {
-      // await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       onClose();
       editRoleAccion(editData);
@@ -84,7 +83,7 @@ export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
 
         <DialogContent>
           <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
-            Editar Rol.
+            Editar Rol - CUC University.
           </Alert>
 
           <Box
@@ -96,13 +95,6 @@ export default function RoleEditForm({ cuerrentRoles, open, onClose }) {
               sm: 'repeat(2, 1fr)',
             }}
           >
-            {/* <RHFSelect name="status" label="Status">
-              {USER_STATUS_OPTIONS.map((status) => (
-                <MenuItem key={status.value} value={status.value}>
-                  {status.label}
-                </MenuItem>
-              ))}
-            </RHFSelect> */}
 
             <RHFTextField name="name" label="Ingres Nombre del Rol" />
             <RHFTextField name="description" label="Descripción" />

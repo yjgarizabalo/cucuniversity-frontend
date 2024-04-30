@@ -18,7 +18,7 @@ export const UserProvider = ({ children }) => {
   const {
     loadingAction,
     errorAction,
-    getUsers,
+    getUserSuccess,
     getUserByIdSuccess,
     addUserSuccess,
     editUserSuccess,
@@ -31,19 +31,19 @@ export const UserProvider = ({ children }) => {
     }
   }, [isUserListViewActive, loadingAction]);
 
-  const getUser = useCallback(async () => {
+  const getUserAccion = useCallback(async () => {
     loadingAction(dispatch);
     try {
       const users = await fetchUsers();
-      getUsers(dispatch, users);
+      getUserSuccess(dispatch, users);
     } catch (error) {
       console.error('se a presentado un error', error);
       errorAction(dispatch);
       handleErrorMessageNotickBar(error);
     }
-  }, [loadingAction, errorAction, handleErrorMessageNotickBar, fetchUsers, getUsers]);
+  }, [loadingAction, errorAction, handleErrorMessageNotickBar, fetchUsers, getUserSuccess]);
 
-  const getUserById = useCallback(
+  const getUserByIdAccion = useCallback(
     async (id) => {
       loadingAction(dispatch);
       try {
@@ -107,15 +107,15 @@ export const UserProvider = ({ children }) => {
       userSelected: state.userSelected,
       loading: state.loading,
       error: state.error,
-      getUser,
-      getUserById,
+      getUserAccion,
+      getUserByIdAccion,
       addUserAccion,
       editUser,
       deleteUserAccion,
     }),
     [
-      getUser,
-      getUserById,
+      getUserAccion,
+      getUserByIdAccion,
       addUserAccion,
       editUser,
       deleteUserAccion,

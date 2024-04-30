@@ -62,7 +62,7 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function UserListView() {
-  const { users, getUser } = useUserContext()
+  const { users, getUserAccion } = useUserContext()
 
   const table = useTable();
 
@@ -75,9 +75,9 @@ export default function UserListView() {
   const [filters, setFilters] = useState(defaultFilters);
 
   useEffect(() => {
-    getUser()
+    getUserAccion()
   },
-    [getUser]
+    [getUserAccion]
   );
 
   console.log(users);

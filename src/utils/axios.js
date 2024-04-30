@@ -26,12 +26,12 @@ export const getFetch = async (args) => {
   return res.data;
 };
 
-/* put */
+/* patch */
 export const updateFetch = async (url, data, config) => {
   if (config === null) {
     config = {};
   }
-  const res = await axiosInstance.put(url, data, { ...config });
+  const res = await axiosInstance.patch(url, data, { ...config });
   return res.data;
 };
 
