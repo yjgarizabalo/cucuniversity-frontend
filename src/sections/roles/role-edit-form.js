@@ -21,7 +21,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function RoleEditForm({ currentRoles, open, onClose }) {
-  const { editRoleAccion } = useRoleContext();
+  const { editRoleAction } = useRoleContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -60,7 +60,7 @@ export default function RoleEditForm({ currentRoles, open, onClose }) {
         description: data.description,
       };
 
-      editRoleAccion(editData);
+      editRoleAction(editData);
       console.log("Editado correctamente");
     } catch (error) {
       console.error(error);

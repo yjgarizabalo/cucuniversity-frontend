@@ -16,13 +16,13 @@ import UserEditForm from '../user-edit';
 // ----------------------------------------------------------------------
 
 export default function UserEditView({ id }) {
-  const { users, addUserAccion } = useUserContext()
+  const { users, addUserAction } = useUserContext()
 
   const settings = useSettingsContext();
 
   useEffect(() => {
-    addUserAccion()
-  }, [addUserAccion])
+    addUserAction()
+  }, [addUserAction])
 
   const currentUser = users.find((user) => user.id === id);
   console.log(currentUser)

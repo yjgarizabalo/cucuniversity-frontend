@@ -34,9 +34,11 @@ import {
 } from 'src/components/table';
 // context
 import { useUserContext } from 'src/context/user/hooks/userUserContext';
+import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
 // components
 import UserTableRow from '../user-table-row';
 import UserTableToolbar from '../user-table-toolbar';
+import UserCreateForm from '../user-create-form';
 import UserTableFiltersResult from '../user-table-filters-result';
 // ----------------------------------------------------------------------
 const _roles = [
@@ -61,8 +63,9 @@ const defaultFilters = {
 
 // ----------------------------------------------------------------------
 
-export default function UserListView() {
-  const { users, getUserAccion } = useUserContext()
+export default function UserListView(rowAdd) {
+  const { users, getUserAction } = useUserContext()
+  const { roles, getRoleAction } = useRoleContext();
 
   const table = useTable();
 
@@ -75,9 +78,10 @@ export default function UserListView() {
   const [filters, setFilters] = useState(defaultFilters);
 
   useEffect(() => {
-    getUserAccion()
+    getUserAction()
+    getRoleAction();
   },
-    [getUserAccion]
+    [getUserAction, getRoleAction]
   );
 
   console.log(users);
@@ -149,6 +153,8 @@ export default function UserListView() {
     setFilters(defaultFilters);
   }, []);
 
+  const createUser = useBoolean();
+
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -162,7 +168,7 @@ export default function UserListView() {
           action={
             <Button
               component={RouterLink}
-              href={paths.dashboard.user.new}
+              onClick={createUser.onTrue}
               variant="contained"
               startIcon={<Iconify icon="mingcute:add-line" />}
             >
@@ -172,6 +178,13 @@ export default function UserListView() {
           sx={{
             mb: { xs: 3, md: 5 },
           }}
+        />
+
+        <UserCreateForm
+          currentRoles={roles}
+          currentUser={rowAdd}
+          open={createUser.value}
+          onClose={createUser.onFalse}
         />
 
         <Card>

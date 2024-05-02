@@ -49,7 +49,7 @@ const _programs = [
 
 
 export default function UserCreateForm({ currentUser, open, onClose }) {
-  const { addUserAccion } = useUserContext();
+  const { addUserAction } = useUserContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -109,7 +109,7 @@ export default function UserCreateForm({ currentUser, open, onClose }) {
       reset();
       onClose();
       enqueueSnackbar('Usuario creado con exito', 'success');
-      addUserAccion(dataUser);
+      addUserAction(dataUser);
     } catch (error) {
       console.error(error);
     }
@@ -137,18 +137,26 @@ export default function UserCreateForm({ currentUser, open, onClose }) {
       open={open}
       onClose={onClose}
       PaperProps={{
-        sx: { maxWidth: 720 },
+        sx: { maxWidth: 1180 },
       }}>
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Crear Rol</DialogTitle>
+        <DialogTitle>Crear Usuario</DialogTitle>
 
         <DialogContent>
-          <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
-            Crear un nuevo rol
-          </Alert>
+          {/* <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
+            Crear un nuevo usuario
+          </Alert> */}
 
 
-          <Grid container spacing={3}>
+          <Box
+            rowGap={3}
+            columnGap={2}
+            display="grid"
+            gridTemplateColumns={{
+              xs: 'repeat(1, 1fr)',
+              sm: 'repeat(2, 1fr)',
+            }}
+          >
             <Grid xs={12} md={4}>
               <Card sx={{ pt: 10, pb: 5, px: 3 }}>
                 {currentUser && (
@@ -256,15 +264,9 @@ export default function UserCreateForm({ currentUser, open, onClose }) {
                     }
                   />
                 </Box>
-
-                <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-                  <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                    {!currentUser ? 'Crear Usuario' : 'Guardar Cambios'}
-                  </LoadingButton>
-                </Stack>
               </Card>
             </Grid>
-          </Grid>
+          </Box>
         </DialogContent>
 
 
@@ -274,7 +276,7 @@ export default function UserCreateForm({ currentUser, open, onClose }) {
           </Button>
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-            Guardar
+            {!currentUser ? 'Crear Usuario' : 'Crear Usuario'}
           </LoadingButton>
         </DialogActions>
       </FormProvider>
@@ -282,7 +284,7 @@ export default function UserCreateForm({ currentUser, open, onClose }) {
   );
 };
 
-UserCreateForm.prototype = {
+UserCreateForm.propTypes = {
   currentUser: PropTypes.object,
   open: PropTypes.bool,
   onClose: PropTypes.func

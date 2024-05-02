@@ -22,7 +22,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function RoleCreateForm({ currentRoles, open, onClose }) {
-  const { addRoleAccion } = useRoleContext();
+  const { addRoleAction } = useRoleContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -60,7 +60,7 @@ export default function RoleCreateForm({ currentRoles, open, onClose }) {
       reset();
       onClose();
       enqueueSnackbar('Rol editado', 'con exito');
-      addRoleAccion(dataRole);
+      addRoleAction(dataRole);
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
@@ -81,9 +81,9 @@ export default function RoleCreateForm({ currentRoles, open, onClose }) {
         <DialogTitle>Crear Rol</DialogTitle>
 
         <DialogContent>
-          <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
+          {/* <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
             Crear un nuevo rol
-          </Alert>
+          </Alert> */}
 
           <Box
             rowGap={3}

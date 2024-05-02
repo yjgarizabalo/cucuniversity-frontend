@@ -31,7 +31,7 @@ export const UserProvider = ({ children }) => {
     }
   }, [isUserListViewActive, loadingAction]);
 
-  const getUserAccion = useCallback(async () => {
+  const getUserAction = useCallback(async () => {
     loadingAction(dispatch);
     try {
       const users = await fetchUsers();
@@ -43,7 +43,7 @@ export const UserProvider = ({ children }) => {
     }
   }, [loadingAction, errorAction, handleErrorMessageNotickBar, fetchUsers, getUserSuccess]);
 
-  const getUserByIdAccion = useCallback(
+  const getUserByIdAction = useCallback(
     async (id) => {
       loadingAction(dispatch);
       try {
@@ -58,7 +58,7 @@ export const UserProvider = ({ children }) => {
     [loadingAction, getUserByIdSuccess, errorAction, handleErrorMessageNotickBar, fetchUserById]
   );
 
-  const addUserAccion = useCallback(
+  const addUserAction = useCallback(
     async (user) => {
       try {
         const newUser = await addUser(user);
@@ -72,7 +72,7 @@ export const UserProvider = ({ children }) => {
     [addUserSuccess, handleErrorMessageNotickBar, addUser]
   );
 
-  const editUser = useCallback(
+  const editUserAction = useCallback(
     async (user) => {
       try {
         const userUpdate = await updateUser(user);
@@ -86,7 +86,7 @@ export const UserProvider = ({ children }) => {
     [editUserSuccess, handleErrorMessageNotickBar, updateUser]
   );
 
-  const deleteUserAccion = useCallback(
+  const deleteUserAction = useCallback(
     async (id) => {
       try {
         await deleteUser(id);
@@ -107,18 +107,18 @@ export const UserProvider = ({ children }) => {
       userSelected: state.userSelected,
       loading: state.loading,
       error: state.error,
-      getUserAccion,
-      getUserByIdAccion,
-      addUserAccion,
-      editUser,
-      deleteUserAccion,
+      getUserAction,
+      getUserByIdAction,
+      addUserAction,
+      editUserAction,
+      deleteUserAction,
     }),
     [
-      getUserAccion,
-      getUserByIdAccion,
-      addUserAccion,
-      editUser,
-      deleteUserAccion,
+      getUserAction,
+      getUserByIdAction,
+      addUserAction,
+      editUserAction,
+      deleteUserAction,
       state.users,
       state.userSelected,
       state.loading,

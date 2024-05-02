@@ -13,7 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 // _mock
-import {_roles } from 'src/_mock';
+import { _roles } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
@@ -57,7 +57,7 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function RoleListView(rowAdd) {
-  const { roles, getRoleAccion, deleteRoleAccion } = useRoleContext();
+  const { roles, getRoleAction, deleteRoleAction } = useRoleContext();
 
   const table = useTable();
 
@@ -66,8 +66,8 @@ export default function RoleListView(rowAdd) {
   const confirm = useBoolean();
 
   useEffect(() => {
-    getRoleAccion();
-  }, [getRoleAccion]);
+    getRoleAction();
+  }, [getRoleAction]);
 
   console.log("roles", roles);
 
@@ -103,11 +103,11 @@ export default function RoleListView(rowAdd) {
 
   const handleDeleteRow = useCallback(
     (id) => {
-      deleteRoleAccion(id);
+      deleteRoleAction(id);
 
       table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [dataInPage.length, table, deleteRoleAccion]
+    [dataInPage.length, table, deleteRoleAction]
   );
 
   const handleDeleteRows = useCallback(() => {
@@ -153,10 +153,9 @@ export default function RoleListView(rowAdd) {
         />
 
         <RoleCreateForm
-        currentRoles={rowAdd}
-        open={EditRole.value}
-        onClose={EditRole.onFalse}
-
+          currentRoles={rowAdd}
+          open={EditRole.value}
+          onClose={EditRole.onFalse}
         />
 
         <Card>
@@ -262,7 +261,7 @@ export default function RoleListView(rowAdd) {
         title="Delete"
         content={
           <>
-           Estas seguro de eliminar <strong> {table.selected.length} </strong>?
+            Estas seguro de eliminar <strong> {table.selected.length} </strong>?
           </>
         }
         action={

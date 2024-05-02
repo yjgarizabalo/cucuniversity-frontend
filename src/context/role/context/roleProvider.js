@@ -32,7 +32,7 @@ export const RoleProvider = ({ children }) => {
     }
   }, [isRoleListViewActive, loadingAction]);
 
-  const getRoleAccion = useCallback(async () => {
+  const getRoleAction = useCallback(async () => {
     loadingAction(dispatch);
     try {
       const roles = await fetchRoles();
@@ -44,7 +44,7 @@ export const RoleProvider = ({ children }) => {
     }
   }, [loadingAction, errorAction, handleErrorMessageNotickBar, fetchRoles, getRoles]);
 
-  const getRoleByIdAccion = useCallback(
+  const getRoleByIdAction = useCallback(
     async (id) => {
       loadingAction(dispatch);
       try {
@@ -59,7 +59,7 @@ export const RoleProvider = ({ children }) => {
     [loadingAction, getRoleByIdSuccess, errorAction, handleErrorMessageNotickBar, fetchRoleById]
   );
 
-  const addRoleAccion = useCallback(
+  const addRoleAction = useCallback(
     async (role) => {
       try {
         const roleAdded = await addRole(role);
@@ -73,7 +73,7 @@ export const RoleProvider = ({ children }) => {
     [addRoleSuccess, handleErrorMessageNotickBar, addRole]
   );
 
-  const editRoleAccion = useCallback(
+  const editRoleAction = useCallback(
     async (role) => {
       console.log(role);
       try {
@@ -88,7 +88,7 @@ export const RoleProvider = ({ children }) => {
     [editRoleSuccess, handleErrorMessageNotickBar, updateRole]
   );
 
-  const deleteRoleAccion = useCallback(
+  const deleteRoleAction = useCallback(
     async (id) => {
       try {
         await deleteRole(id);
@@ -109,11 +109,11 @@ export const RoleProvider = ({ children }) => {
       roleSelected: state.roleSelected,
       loading: state.loading,
       error: state.error,
-      getRoleAccion,
-      getRoleByIdAccion,
-      addRoleAccion,
-      editRoleAccion,
-      deleteRoleAccion,
+      getRoleAction,
+      getRoleByIdAction,
+      addRoleAction,
+      editRoleAction,
+      deleteRoleAction,
       multiDeleteRole,
     }),
 
@@ -123,11 +123,11 @@ export const RoleProvider = ({ children }) => {
       state.loading,
       state.error,
       //
-      getRoleAccion,
-      getRoleByIdAccion,
-      addRoleAccion,
-      editRoleAccion,
-      deleteRoleAccion,
+      getRoleAction,
+      getRoleByIdAction,
+      addRoleAction,
+      editRoleAction,
+      deleteRoleAction,
       multiDeleteRole,
     ]
   );
