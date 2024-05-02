@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
@@ -46,12 +46,15 @@ const _programs = [
 ]
 
 
-
-
-export default function UserCreateForm({ currentUser, open, onClose }) {
+export default function UserCreateForm({ currentUser, currentRoles, open, onClose }) {
+  const [selectedRoleId, setSelectedRoleId] = useState(currentUser?.roleId || 'Selecciona Rol');
   const { addUserAction } = useUserContext();
 
   const { enqueueSnackbar } = useSnackbar();
+
+  const handleChange = (event, value) => {
+    setSelectedRoleId(value);
+  };
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('Nombre es requerido'),
@@ -60,7 +63,7 @@ export default function UserCreateForm({ currentUser, open, onClose }) {
     email: Yup.string().email('Email no válido').required('Email es requerido'),
     password: Yup.string().required('Contraseña es requerida'),
     program: Yup.string().required('Programa es requerido'),
-    roleId: Yup.string().required('Rol es requerido'),
+    roleId: Yup.string(),
     gender: Yup.string().required('Género es requerido'),
   });
 
@@ -252,16 +255,18 @@ export default function UserCreateForm({ currentUser, open, onClose }) {
                   />
                   <RHFTextField name="phoneNumber" label="Teléfono" />
                   <RHFAutocomplete
-                    name="role"
+                    name="roleId"
                     label="Rol"
-                    // options={}
-                    getOptionLabel={(option) => option}
-                    isOptionEqualToValue={(option, value) => option === value}
-                    renderOption={(props, option) =>
-                      <li {...props} key={option}>
-                        {option}
+                    options={currentRoles}
+                    getOptionLabel={(option) => option.name}
+                    getOptionValue={(option) => option.id} // Obtener solo el ID del rol como valor
+                    value={selectedRoleId} // Valor seleccionado del ID del rol
+                    onChange={handleChange} // Manejador de cambio para actualizar el ID del rol seleccionado
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option.name}
                       </li>
-                    }
+                    )}
                   />
                 </Box>
               </Card>
@@ -286,6 +291,7 @@ export default function UserCreateForm({ currentUser, open, onClose }) {
 
 UserCreateForm.propTypes = {
   currentUser: PropTypes.object,
+  currentRoles: PropTypes.array,
   open: PropTypes.bool,
   onClose: PropTypes.func
 };

@@ -83,6 +83,7 @@ export default function UserListView(rowAdd) {
   },
     [getUserAction, getRoleAction]
   );
+  console.log(roles);
 
   console.log(users);
 
@@ -186,6 +187,7 @@ export default function UserListView(rowAdd) {
           open={createUser.value}
           onClose={createUser.onFalse}
         />
+
 
         <Card>
 
