@@ -47,14 +47,10 @@ const _programs = [
 
 
 export default function UserCreateForm({ currentUser, currentRoles, open, onClose }) {
-  const [selectedRoleId, setSelectedRoleId] = useState(currentUser?.roleId || 'Selecciona Rol');
   const { addUserAction } = useUserContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleChange = (event, value) => {
-    setSelectedRoleId(value);
-  };
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('Nombre es requerido'),
@@ -95,6 +91,10 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
   } = methods;
 
   const values = watch();
+
+  const selectRole = currentRoles.map(role => role.name);
+
+  const filteredselectRol = currentRoles?.filter(item => !selectRole.includes(item.name));
 
   const onSubmit = handleSubmit(async (data) => {
     const dataUser = {
@@ -257,16 +257,20 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
                   <RHFAutocomplete
                     name="roleId"
                     label="Rol"
-                    options={currentRoles}
-                    getOptionLabel={(option) => option.name}
-                    getOptionValue={(option) => option.id} // Obtener solo el ID del rol como valor
-                    value={selectedRoleId} // Valor seleccionado del ID del rol
-                    onChange={handleChange} // Manejador de cambio para actualizar el ID del rol seleccionado
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {option.name}
-                      </li>
-                    )}
+                    placeholder="Selecciona Rol"
+                    options={filteredselectRol.map((role) =>  role.name )}
+                    getOptionLabel={(option) => option}
+                    isOptionEqualToValue={(option, value) => option === value}
+                    renderOption={(props, option) => {
+                      const { id, name } = currentRoles.filter(role => role.id === option)[0]
+                      if (!name) return null;
+                      return (
+                        <li {...props} key={id}>
+                          {name}
+                        </li>
+                      )
+                    }}
+
                   />
                 </Box>
               </Card>
