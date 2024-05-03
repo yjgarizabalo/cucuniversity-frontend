@@ -59,7 +59,6 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
     email: Yup.string().email('Email no válido').required('Email es requerido'),
     password: Yup.string().required('Contraseña es requerida'),
     program: Yup.string().required('Programa es requerido'),
-    roleId: Yup.string(),
     gender: Yup.string().required('Género es requerido'),
   });
 
@@ -71,7 +70,6 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
       email: currentUser?.email || '',
       password: currentUser?.password || '',
       program: currentUser?.program || '',
-      roleId: currentUser?.roleId,
       gender: currentUser?.gender || '',
     }),
     [currentUser]
@@ -92,9 +90,12 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
 
   const values = watch();
 
-  const selectRole = currentRoles.map(role => role.name);
+  const filteredselectRol = currentRoles.map(role => role.name);
 
-  const filteredselectRol = currentRoles?.filter(item => !selectRole.includes(item.name));
+  console.log('currentRoles', currentRoles);
+
+  console.log('filteredselectRol', filteredselectRol);
+
 
   const onSubmit = handleSubmit(async (data) => {
     const dataUser = {
@@ -254,23 +255,20 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
                     }
                   />
                   <RHFTextField name="phoneNumber" label="Teléfono" />
+
                   <RHFAutocomplete
                     name="roleId"
                     label="Rol"
                     placeholder="Selecciona Rol"
-                    options={filteredselectRol.map((role) =>  role.name )}
-                    getOptionLabel={(option) => option}
-                    isOptionEqualToValue={(option, value) => option === value}
-                    renderOption={(props, option) => {
-                      const { id, name } = currentRoles.filter(role => role.id === option)[0]
-                      if (!name) return null;
-                      return (
-                        <li {...props} key={id}>
-                          {name}
-                        </li>
-                      )
-                    }}
-
+                    options={currentRoles.map(role => ({ id: role.id, name: role.name }))}
+                    getOptionLabel={(option) => option.name}
+                    getOptionValue={(option) => option.id}
+                    isOptionEqualToValue={(option, value) => option.id === value}
+                    renderOption={(props, option) =>
+                      <li {...props} key={option.id}>
+                        {option.name}
+                      </li>
+                    }
                   />
                 </Box>
               </Card>
