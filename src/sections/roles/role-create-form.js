@@ -81,13 +81,13 @@ export default function RoleCreateForm({ currentRoles, open, onClose }) {
         <DialogTitle>Crear Rol</DialogTitle>
 
         <DialogContent>
-          {/* <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
+          <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
             Crear un nuevo rol
-          </Alert> */}
+          </Alert>
 
           <Box
-            rowGap={3}
-            columnGap={2}
+            rowGap={7}
+            columnGap={3}
             display="grid"
             gridTemplateColumns={{
               xs: 'repeat(1, 1fr)',

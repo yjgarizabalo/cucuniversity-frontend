@@ -54,23 +54,29 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('Nombre es requerido'),
+    secoundName: Yup.string().optional(),
     lastName: Yup.string().required('Apellido es requerido'),
+    secondSurname: Yup.string().optional(),
     identification: Yup.string().required('Identificación es requerida'),
     email: Yup.string().email('Email no válido').required('Email es requerido'),
-    password: Yup.string().required('Contraseña es requerida'),
     program: Yup.string().required('Programa es requerido'),
     gender: Yup.string().required('Género es requerido'),
+    phoneNumber: Yup.string().required('Teléfono es requerido'),
+    roleId: Yup.object().shape({ id: Yup.string().required('Rol es requerido') }),
   });
 
   const defaultValues = useMemo(
     () => ({
       firstName: currentUser?.firstName || '',
+      secondName: currentUser?.secondName || '',
       lastName: currentUser?.lastName || '',
+      secondSurname: currentUser?.secondSurname || '',
       identification: currentUser?.identification || '',
       email: currentUser?.email || '',
-      password: currentUser?.password || '',
       program: currentUser?.program || '',
       gender: currentUser?.gender || '',
+      phoneNumber: currentUser?.phoneNumber || '',
+      roleId: currentUser?.roleId || { id: '', name: '', description: '' },
     }),
     [currentUser]
   );
@@ -90,24 +96,22 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
 
   const values = watch();
 
-  const filteredselectRol = currentRoles.map(role => role.name);
-
-  console.log('currentRoles', currentRoles);
-
-  console.log('filteredselectRol', filteredselectRol);
-
 
   const onSubmit = handleSubmit(async (data) => {
     const dataUser = {
       firstName: data.firstName,
+      secoundName: data.secoundName,
       lastName: data.lastName,
+      secondSurname: data.secondSurname,
       identification: data.identification,
       email: data.email,
-      password: data.password,
       program: data.program,
-      roleId: data.roleId,
+      phoneNumber: data.phoneNumber,
+      roleId: data.roleId.id,
       gender: data.gender
     };
+
+    console.log(data.roleId);
 
     try {
       reset();
@@ -147,9 +151,9 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
         <DialogTitle>Crear Usuario</DialogTitle>
 
         <DialogContent>
-          {/* <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
+          <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
             Crear un nuevo usuario
-          </Alert> */}
+          </Alert>
 
 
           <Box
@@ -260,15 +264,18 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
                     name="roleId"
                     label="Rol"
                     placeholder="Selecciona Rol"
-                    options={currentRoles.map(role => ({ id: role.id, name: role.name }))}
+                    options={currentRoles}
                     getOptionLabel={(option) => option.name}
-                    getOptionValue={(option) => option.id}
-                    isOptionEqualToValue={(option, value) => option.id === value}
-                    renderOption={(props, option) =>
-                      <li {...props} key={option.id}>
-                        {option.name}
-                      </li>
-                    }
+                    isOptionEqualToValue={(option, value) => option.name === value.name}
+                    renderOption={(props, option) => {
+                      if (option === '') {
+                        return null
+                      };
+                      return (
+                        <li {...props} key={option.id}>
+                          {option.name}
+                        </li>)
+                    }}
                   />
                 </Box>
               </Card>
@@ -283,7 +290,7 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
           </Button>
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-            {!currentUser ? 'Crear Usuario' : 'Crear Usuario'}
+            Crear Usuario
           </LoadingButton>
         </DialogActions>
       </FormProvider>

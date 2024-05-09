@@ -17,6 +17,7 @@ import { _roles } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
+import { useSnackbar } from 'src/components/snackbar';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
@@ -65,6 +66,8 @@ export default function RoleListView(rowAdd) {
 
   const confirm = useBoolean();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     getRoleAction();
   }, [getRoleAction]);
@@ -103,11 +106,11 @@ export default function RoleListView(rowAdd) {
 
   const handleDeleteRow = useCallback(
     (id) => {
+      enqueueSnackbar('Delete role', 'success');
       deleteRoleAction(id);
-
       table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [dataInPage.length, table, deleteRoleAction]
+    [dataInPage.length, table, deleteRoleAction, enqueueSnackbar]
   );
 
   const handleDeleteRows = useCallback(() => {

@@ -83,9 +83,6 @@ export default function UserListView(rowAdd) {
   },
     [getUserAction, getRoleAction]
   );
-  console.log(roles);
-
-  console.log(users);
 
   const dataFiltered = applyFilter({
     inputData: users,
