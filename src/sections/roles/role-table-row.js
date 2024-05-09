@@ -21,7 +21,7 @@ import RoleEditForm from './role-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function RoleTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
+export default function RoleTableRow({ row, selected, onSelectRow, onDeleteRow }) {
   const { name, avatarUrl, description } = row;
 
   const confirm = useBoolean();
@@ -53,7 +53,7 @@ export default function RoleTableRow({ row, selected, onEditRow, onSelectRow, on
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{description}</TableCell>
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-        <Tooltip title="Editar" placement="top" arrow>
+          <Tooltip title="Editar" placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
               <Iconify icon="solar:pen-bold" />
             </IconButton>
@@ -98,8 +98,8 @@ export default function RoleTableRow({ row, selected, onEditRow, onSelectRow, on
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Eliminar usuario"
-        content="¿Estás seguro de que quieres eliminar este usuario?"
+        title="Eliminar Rol"
+        content="¿Estás seguro de que quieres eliminar este rol?"
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
             Eliminar
@@ -112,7 +112,6 @@ export default function RoleTableRow({ row, selected, onEditRow, onSelectRow, on
 
 RoleTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
-  onEditRow: PropTypes.func,
   onSelectRow: PropTypes.func,
   row: PropTypes.object,
   selected: PropTypes.bool,

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
@@ -40,8 +40,8 @@ const _programs = [
 ]
 
 
-export default function UserCreateForm({ currentUser, currentRoles, open, onClose }) {
-  const { addUserAction } = useUserContext();
+export default function UserEditForm({ currentUser, currentRoles, open, onClose }) {
+  const { editUserAction } = useUserContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -89,26 +89,27 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
 
   const values = watch();
 
-
   const onSubmit = handleSubmit(async (data) => {
-    const dataUser = {
-      firstName: data.firstName,
-      secondName: data.secondName,
-      lastName: data.lastName,
-      secondSurname: data.secondSurname,
-      identification: data.identification,
-      email: data.email,
-      program: data.program,
-      phoneNumber: data.phoneNumber,
-      roleId: data.roleId.id,
-      gender: data.gender
-    };
 
     try {
       reset();
       onClose();
-      enqueueSnackbar('Usuario creado con exito', 'success');
-      addUserAction(dataUser);
+      const dataUser = {
+        id: currentUser.id,
+        firstName: data.firstName,
+        secondName: data.secondName,
+        lastName: data.lastName,
+        secondSurname: data.secondSurname,
+        identification: data.identification,
+        email: data.email,
+        program: data.program,
+        phoneNumber: data.phoneNumber,
+        roleId: data.roleId.id,
+        gender: data.gender
+      };
+
+      enqueueSnackbar('Usuaria actualizado con exito', 'success');
+      editUserAction(dataUser);
     } catch (error) {
       console.error(error);
     }
@@ -139,11 +140,11 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
         sx: { maxWidth: 1180 },
       }}>
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Crear Usuario</DialogTitle>
+        <DialogTitle>Actualizar Usuario</DialogTitle>
 
         <DialogContent>
           <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
-            Crear un nuevo usuario
+            Actualizar usuario
           </Alert>
 
 
@@ -277,11 +278,11 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
 
         <DialogActions>
           <Button variant="outlined" onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-            Crear Usuario
+            Actualizar
           </LoadingButton>
         </DialogActions>
       </FormProvider>
@@ -289,7 +290,7 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
   );
 };
 
-UserCreateForm.propTypes = {
+UserEditForm.propTypes = {
   currentUser: PropTypes.object,
   currentRoles: PropTypes.array,
   open: PropTypes.bool,

@@ -17,11 +17,11 @@ import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 //
-// import UserEditForm from './user-edit-form';
+import UserEditForm from './user-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
+export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }) {
   const { firstName, secondName, lastName, secondSurname, program, email, phoneNumber } = row;
 
   const confirm = useBoolean();
@@ -58,9 +58,15 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
         {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell> */}
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-        <Tooltip title="Cambiar contraseña" placement="top" arrow>
+          {/* <Tooltip title="Cambiar contraseña" placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
               <Iconify icon="mdi:password-reset" />
+            </IconButton>
+          </Tooltip> */}
+
+          <Tooltip title="Editar usuario" placement="top" arrow>
+            <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
+              <Iconify icon="solar:pen-bold" />
             </IconButton>
           </Tooltip>
 
@@ -70,7 +76,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
         </TableCell>
       </TableRow>
 
-      {/* <UserEditForm currentUser={row} open={quickEdit.value} onClose={quickEdit.onFalse} /> */}
+      <UserEditForm currentUser={row}  open={quickEdit.value} onClose={quickEdit.onFalse} />
 
       <CustomPopover
         open={popover.open}
@@ -89,15 +95,10 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
           Eliminar
         </MenuItem>
 
-        <MenuItem
-          onClick={() => {
-            onEditRow();
-            popover.onClose();
-          }}
-        >
+        {/* <MenuItem  onClick={quickEdit.onTrue}>
           <Iconify icon="solar:pen-bold" />
           Editar
-        </MenuItem>
+        </MenuItem> */}
       </CustomPopover>
 
       <ConfirmDialog
@@ -117,7 +118,6 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
 
 UserTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
-  onEditRow: PropTypes.func,
   onSelectRow: PropTypes.func,
   row: PropTypes.object,
   selected: PropTypes.bool,

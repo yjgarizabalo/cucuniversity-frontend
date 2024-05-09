@@ -50,18 +50,17 @@ export default function RoleEditForm({ currentRoles, open, onClose }) {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+
     try {
       reset();
       onClose();
-      enqueueSnackbar('Rol editado correctamente', { variant: 'success' });
       const editData = {
         id: currentRoles.id,
         name: data.name,
         description: data.description,
       };
-
       editRoleAction(editData);
-      console.log("Editado correctamente");
+      enqueueSnackbar('Rol editado correctamente', { variant: 'success' });
     } catch (error) {
       console.error(error);
     }
@@ -102,7 +101,7 @@ export default function RoleEditForm({ currentRoles, open, onClose }) {
 
         <DialogActions>
           <Button variant="outlined" onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
