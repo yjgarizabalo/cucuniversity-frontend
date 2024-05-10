@@ -10,7 +10,6 @@ export const useRoleApi = () => {
 
   const fetchRoles = useCallback(async () => {
     const roles = await getFetch(endpoints.roles);
-    console.log(roles);
     return roles;
   }, [getFetch]);
 

@@ -218,7 +218,7 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
                 >
 
                   <RHFTextField name="firstName" label="Primer nombre" />
-                  <RHFTextField name="secoundName" label="Segundo nombre" />
+                  <RHFTextField name="secondName" label="Segundo nombre" />
                   <RHFTextField name="lastName" label="Primer apellido" />
                   <RHFTextField name="secondSurname" label="Segundo apellido" />
                   <RHFTextField name="identification" label="Identificación" />

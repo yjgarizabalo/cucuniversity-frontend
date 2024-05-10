@@ -75,7 +75,6 @@ export const RoleProvider = ({ children }) => {
 
   const editRoleAction = useCallback(
     async (role) => {
-      console.log(role);
       try {
         const roleUpdated = await updateRole(role);
         editRoleSuccess(dispatch, roleUpdated);

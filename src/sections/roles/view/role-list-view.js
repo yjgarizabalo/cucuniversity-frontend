@@ -72,8 +72,6 @@ export default function RoleListView(rowAdd) {
     getRoleAction();
   }, [getRoleAction]);
 
-  console.log("roles", roles);
-
   const [filters, setFilters] = useState(defaultFilters);
 
   const dataFiltered = applyFilter({

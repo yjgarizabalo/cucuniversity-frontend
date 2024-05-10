@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
+
 // @mui
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
@@ -17,18 +19,23 @@ import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 //
+import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
 import UserEditForm from './user-edit-form';
+
 
 // ----------------------------------------------------------------------
 
 export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }) {
   const { firstName, secondName, lastName, secondSurname, program, email, phoneNumber } = row;
+  const { roles, getRoleAction } = useRoleContext();
 
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
 
   const popover = usePopover();
+
+  useEffect(() => {getRoleAction()}, [getRoleAction]);
 
   return (
     <>
@@ -76,7 +83,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }
         </TableCell>
       </TableRow>
 
-      <UserEditForm currentUser={row}  open={quickEdit.value} onClose={quickEdit.onFalse} />
+      <UserEditForm currentUser={row} currentRoles={roles}  open={quickEdit.value} onClose={quickEdit.onFalse} />
 
       <CustomPopover
         open={popover.open}

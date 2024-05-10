@@ -47,7 +47,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('Nombre es requerido'),
-    secoundName: Yup.string().optional(),
+    secondName: Yup.string().optional(),
     lastName: Yup.string().required('Apellido es requerido'),
     secondSurname: Yup.string().optional(),
     identification: Yup.string().required('Identificación es requerida'),
@@ -195,14 +195,6 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                   />
                 </Box>
 
-
-                {currentUser && (
-                  <Stack justifyContent="center" alignItems="center" sx={{ mt: 3 }}>
-                    <Button variant="soft" color="error">
-                      Eliminar Usuario
-                    </Button>
-                  </Stack>
-                )}
               </Card>
             </Grid>
 
@@ -219,7 +211,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                 >
 
                   <RHFTextField name="firstName" label="Primer nombre" />
-                  <RHFTextField name="secoundName" label="Segundo nombre" />
+                  <RHFTextField name="secondName" label="Segundo nombre" />
                   <RHFTextField name="lastName" label="Primer apellido" />
                   <RHFTextField name="secondSurname" label="Segundo apellido" />
                   <RHFTextField name="identification" label="Identificación" />
@@ -228,7 +220,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                     name="program"
                     label="Programa"
                     options={_programs}
-                    getOptionLabel={(option) => option}
+                    getOptionLabel={(option) => option || ''}
                     isOptionEqualToValue={(option, value) => option === value}
                     renderOption={(props, option) =>
                       <li {...props} key={option}>
@@ -242,7 +234,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                     name="gender"
                     label="Genero"
                     options={_gender}
-                    getOptionLabel={(option) => option}
+                    getOptionLabel={(option) => option || ''}
                     isOptionEqualToValue={(option, value) => option === value}
                     renderOption={(props, option) =>
                       <li {...props} key={option}>

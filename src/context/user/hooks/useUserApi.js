@@ -25,19 +25,19 @@ export const useUsersApi = () => {
   }, [postFetch, handleResponseMessage]);
 
   const updateUser = useCallback(async user => {
-    const userEdited = await updateFetch(`${endpoints.userManager.users}/${user.id}`, user);
+    const userEdited = await updateFetch(`${endpoints.users}/${user.id}`, user);
     handleResponseMessage(userEdited);
     return userEdited;
   }, [updateFetch, handleResponseMessage]);
 
   const deleteUser = useCallback(async id => {
-    const userDelete = await deleteFetch(`${endpoints.userManager.users}/${id}`);
+    const userDelete = await deleteFetch(`${endpoints.users}/${id}`);
     handleResponseMessage(userDelete);
   }, [deleteFetch, handleResponseMessage]);
 
   const multiDeleteUser = useCallback(async ids => {
     const response = await Promise.all(
-      ids.map(id => deleteFetch(`${endpoints.userManager.users}/${id}`))
+      ids.map(id => deleteFetch(`${endpoints.users}/${id}`))
     );
     handleResponseMessage(response[0], 'Delete users success');
   }, [deleteFetch, handleResponseMessage]);
