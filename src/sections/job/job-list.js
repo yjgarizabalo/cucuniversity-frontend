@@ -12,6 +12,7 @@ import JobItem from './job-item';
 // ----------------------------------------------------------------------
 
 export default function JobList({ jobs }) {
+
   const router = useRouter();
 
   const handleView = useCallback(

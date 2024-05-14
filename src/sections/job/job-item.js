@@ -62,7 +62,7 @@ export default function JobItem({ job, onView, onEdit, onDelete }) {
             }}
           />
 
-          <Stack
+          {/* <Stack
             spacing={0.5}
             direction="row"
             alignItems="center"
@@ -70,7 +70,7 @@ export default function JobItem({ job, onView, onEdit, onDelete }) {
           >
             <Iconify width={16} icon="solar:users-group-rounded-bold" />
             {candidates.length} Candidates
-          </Stack>
+          </Stack> */}
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
@@ -80,10 +80,6 @@ export default function JobItem({ job, onView, onEdit, onDelete }) {
             {
               label: experience,
               icon: <Iconify width={16} icon="carbon:skill-level-basic" sx={{ flexShrink: 0 }} />,
-            },
-            {
-              label: employmentTypes.join(', '),
-              icon: <Iconify width={16} icon="solar:clock-circle-bold" sx={{ flexShrink: 0 }} />,
             },
             {
               label: salary.negotiable ? 'Negotiable' : fCurrency(salary.price),

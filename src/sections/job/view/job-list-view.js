@@ -1,6 +1,6 @@
 import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 // @mui
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -10,6 +10,16 @@ import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
+
+// assets
+import { countries } from 'src/assets/data';
+// components
+import Iconify from 'src/components/iconify';
+import EmptyContent from 'src/components/empty-content';
+import { useSettingsContext } from 'src/components/settings';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+// contexts
+import { useJobContext } from 'src/context/job/hooks/usejobContext';
 // _mock
 import {
   _jobs,
@@ -19,13 +29,6 @@ import {
   JOB_EXPERIENCE_OPTIONS,
   JOB_EMPLOYMENT_TYPE_OPTIONS,
 } from 'src/_mock';
-// assets
-import { countries } from 'src/assets/data';
-// components
-import Iconify from 'src/components/iconify';
-import EmptyContent from 'src/components/empty-content';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
 import JobList from '../job-list';
 import JobSort from '../job-sort';
@@ -46,6 +49,9 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function JobListView() {
+  const { jobs, getJobAction  } = useJobContext();
+
+
   const settings = useSettingsContext();
 
   const openFilters = useBoolean();
@@ -57,10 +63,12 @@ export default function JobListView() {
     results: [],
   });
 
+  useEffect(() => {getJobAction()}, [getJobAction]);
+
   const [filters, setFilters] = useState(defaultFilters);
 
   const dataFiltered = applyFilter({
-    inputData: _jobs,
+    inputData: jobs,
     filters,
     sortBy,
   });
@@ -88,7 +96,7 @@ export default function JobListView() {
       }));
 
       if (inputValue) {
-        const results = _jobs.filter(
+        const results = jobs.filter(
           (job) => job.title.toLowerCase().indexOf(search.query.toLowerCase()) !== -1
         );
 
@@ -98,7 +106,7 @@ export default function JobListView() {
         }));
       }
     },
-    [search.query]
+    [search.query, jobs]
   );
 
   const handleResetFilters = useCallback(() => {
@@ -195,7 +203,7 @@ export default function JobListView() {
 
       {notFound && <EmptyContent filled title="No hay información" sx={{ py: 10 }} />}
 
-      <JobList jobs={dataFiltered} />
+      <JobList jobs={jobs} />
     </Container>
   );
 }

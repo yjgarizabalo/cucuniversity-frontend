@@ -48,7 +48,7 @@ const reducer = (state, action) => {
     case Payload.EDIT_USER:
       return {
         ...state,
-        users: action.users.map((user) => (user.id === action.payload.id ? action.payload : user)),
+        users: action.payload && action.payload.id ? state.users.map((user) => (user.id === action.payload.id ? action.payload : user)) : state.users,
         loading: false,
         error: false,
       };

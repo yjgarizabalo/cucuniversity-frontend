@@ -58,4 +58,5 @@ export const deleteFetch = async (url, config) => {
 export const endpoints = {
   users: '/api/v1/users',
   roles: '/api/v1/roles',
+  jobs: '/api/v1/jobs',
 };

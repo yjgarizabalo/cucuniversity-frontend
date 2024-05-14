@@ -36,6 +36,7 @@ import {
 import { useUserContext } from 'src/context/user/hooks/userUserContext';
 import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
 // components
+import { useSnackbar } from 'src/components/snackbar';
 import UserTableRow from '../user-table-row';
 import UserTableToolbar from '../user-table-toolbar';
 import UserCreateForm from '../user-create-form';
@@ -64,10 +65,12 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function UserListView(rowAdd) {
-  const { users, getUserAction } = useUserContext()
+  const { users, getUserAction, deleteUserAction } = useUserContext()
   const { roles, getRoleAction } = useRoleContext();
 
   const table = useTable();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const settings = useSettingsContext();
 
@@ -114,12 +117,11 @@ export default function UserListView(rowAdd) {
 
   const handleDeleteRow = useCallback(
     (id) => {
-      const deleteRow = users.filter((row) => row.id !== id);
-      // setTableData(deleteRow);
-
+      enqueueSnackbar('Usuario Eliminado', 'success');
+      deleteUserAction(id);
       table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [dataInPage.length, table, users]
+    [dataInPage.length, table,enqueueSnackbar, deleteUserAction]
   );
 
   const handleDeleteRows = useCallback(() => {
@@ -256,7 +258,7 @@ export default function UserListView(rowAdd) {
                         row={row}
                         selected={table.selected.includes(row.id)}
                         onSelectRow={() => table.onSelectRow(row.id)}
-                        // onDeleteRow={() => handleDeleteRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
                         onEditRow={() => handleEditRow(row.id)}
                       />
                     ))}

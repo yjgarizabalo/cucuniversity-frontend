@@ -27,15 +27,13 @@ import UserEditForm from './user-edit-form';
 
 export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }) {
   const { firstName, secondName, lastName, secondSurname, program, email, phoneNumber } = row;
-  const { roles, getRoleAction } = useRoleContext();
+  const { roles } = useRoleContext();
 
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
 
   const popover = usePopover();
-
-  useEffect(() => {getRoleAction()}, [getRoleAction]);
 
   return (
     <>

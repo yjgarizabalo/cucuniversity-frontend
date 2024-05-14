@@ -104,7 +104,7 @@ export default function RoleListView(rowAdd) {
 
   const handleDeleteRow = useCallback(
     (id) => {
-      enqueueSnackbar('Delete role', 'success');
+      enqueueSnackbar('Rol Eliminado', 'success');
       deleteRoleAction(id);
       table.onUpdatePageDeleteRow(dataInPage.length);
     },

@@ -13,12 +13,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 // utils
 import { fData } from 'src/utils/format-number';
-
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Unstable_Grid2';
 import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
 
 // components
 import Label from 'src/components/label';
@@ -249,7 +247,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                     label="Rol"
                     placeholder="Selecciona Rol"
                     options={currentRoles}
-                    getOptionLabel={(option) => option.name}
+                    getOptionLabel={(option) => option.name || currentUser.role.name}
                     isOptionEqualToValue={(option, value) => option.name === value.name}
                     renderOption={(props, option) => {
                       if (option === '') {
