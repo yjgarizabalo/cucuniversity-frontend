@@ -59,7 +59,7 @@ export default function RoleCreateForm({ currentRoles, open, onClose }) {
     try {
       reset();
       onClose();
-      enqueueSnackbar('Rol editado', 'con exito');
+      enqueueSnackbar('Rol creado con exito', 'success');
       addRoleAction(dataRole);
       console.info('DATA', data);
     } catch (error) {
@@ -102,7 +102,7 @@ export default function RoleCreateForm({ currentRoles, open, onClose }) {
 
         <DialogActions>
           <Button variant="outlined" onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>

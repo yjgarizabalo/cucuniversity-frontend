@@ -25,7 +25,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 export default function JobItem({ job, onView, onEdit, onDelete }) {
   const popover = usePopover();
 
-  const { id, title, company, createdAt, candidates, experience, employmentTypes, salary, role } =
+  const { id, title, company, createAt, experience, salary, roleJob } =
     job;
 
   return (
@@ -50,7 +50,7 @@ export default function JobItem({ job, onView, onEdit, onDelete }) {
                 {title}
               </Link>
             }
-            secondary={`Posted date: ${fDate(createdAt)}`}
+            secondary={`Publicado: ${fDate(createAt)}`}
             primaryTypographyProps={{
               typography: 'subtitle1',
             }}
@@ -61,16 +61,6 @@ export default function JobItem({ job, onView, onEdit, onDelete }) {
               color: 'text.disabled',
             }}
           />
-
-          {/* <Stack
-            spacing={0.5}
-            direction="row"
-            alignItems="center"
-            sx={{ color: 'primary.main', typography: 'caption' }}
-          >
-            <Iconify width={16} icon="solar:users-group-rounded-bold" />
-            {candidates.length} Candidates
-          </Stack> */}
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
@@ -82,11 +72,11 @@ export default function JobItem({ job, onView, onEdit, onDelete }) {
               icon: <Iconify width={16} icon="carbon:skill-level-basic" sx={{ flexShrink: 0 }} />,
             },
             {
-              label: salary.negotiable ? 'Negotiable' : fCurrency(salary.price),
+              label: salary,
               icon: <Iconify width={16} icon="solar:wad-of-money-bold" sx={{ flexShrink: 0 }} />,
             },
             {
-              label: role,
+              label: roleJob,
               icon: <Iconify width={16} icon="solar:user-rounded-bold" sx={{ flexShrink: 0 }} />,
             },
           ].map((item) => (

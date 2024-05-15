@@ -30,11 +30,13 @@ import {
   JOB_EMPLOYMENT_TYPE_OPTIONS,
 } from 'src/_mock';
 //
+import { create } from 'lodash';
 import JobList from '../job-list';
 import JobSort from '../job-sort';
 import JobSearch from '../job-search';
 import JobFilters from '../job-filters';
 import JobFiltersResult from '../job-filters-result';
+import JobCreateForm from '../job-create-form';
 
 // ----------------------------------------------------------------------
 
@@ -48,13 +50,13 @@ const defaultFilters = {
 
 // ----------------------------------------------------------------------
 
-export default function JobListView() {
-  const { jobs, getJobAction  } = useJobContext();
-
+export default function JobListView(rowAdd) {
+  const { jobs, getJobAction } = useJobContext();
 
   const settings = useSettingsContext();
 
   const openFilters = useBoolean();
+
 
   const [sortBy, setSortBy] = useState('nuevas');
 
@@ -63,7 +65,7 @@ export default function JobListView() {
     results: [],
   });
 
-  useEffect(() => {getJobAction()}, [getJobAction]);
+  useEffect(() => { getJobAction() }, [getJobAction]);
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -72,6 +74,7 @@ export default function JobListView() {
     filters,
     sortBy,
   });
+
 
   const canReset = !isEqual(defaultFilters, filters);
 
@@ -163,6 +166,9 @@ export default function JobListView() {
     />
   );
 
+
+  const CreateJob = useBoolean();
+
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
@@ -178,7 +184,7 @@ export default function JobListView() {
         action={
           <Button
             component={RouterLink}
-            // href={paths.dashboard.job.new}
+            onClick={CreateJob.onTrue}
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
           >
@@ -188,6 +194,12 @@ export default function JobListView() {
         sx={{
           mb: { xs: 3, md: 5 },
         }}
+      />
+
+      <JobCreateForm
+        currentJob={rowAdd}
+        open={CreateJob.value}
+        onClose={CreateJob.onFalse}
       />
 
       <Stack
