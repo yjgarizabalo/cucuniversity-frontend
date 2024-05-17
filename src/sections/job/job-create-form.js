@@ -21,7 +21,7 @@ import Stack from '@mui/material/Stack';
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
 import { useSnackbar } from 'src/components/snackbar';
 // import { FormProvider } from 'react-hook-form';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFEditor } from 'src/components/hook-form';
 
 
 
@@ -124,7 +124,10 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
                     <Typography variant="subtitle2">Titulo</Typography>
                     <RHFTextField name="title" placeholder="Ex: Software Engineer..." />
                   </Stack>
-                  {/* Add other fields here */}
+                  <Stack spacing={1.5}>
+                    <Typography variant="subtitle2">Content</Typography>
+                    <RHFEditor simple name="content" />
+                  </Stack>
                 </Stack>
               </Card>
             </Grid>

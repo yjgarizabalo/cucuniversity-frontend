@@ -188,7 +188,7 @@ export default function JobListView(rowAdd) {
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
           >
-            Nueva Oferta Laboral
+            Nueva Oferta
           </Button>
         }
         sx={{
