@@ -33,11 +33,10 @@ import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFEditor, RHFTextField, RHFAutocomplete, RHFRadioGroup } from 'src/components/hook-form';
 
 
-
 // ----------------------------------------------------------------------
 
-export default function JobCreateForm({ currentJob, open, onClose }) {
-  const { addJobAction } = useJobContext();
+export default function JobEditForm({ currentJob, open, onClose }) {
+  const { editJobAction } = useJobContext();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewJobSchema = Yup.object().shape({
@@ -76,6 +75,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
 
   const onSubmit = handleSubmit(async (data) => {
     const dataJob = {
+      id: currentJob.id,
       title: data.title,
       description: data.description,
       roleJob: data.roleJob,
@@ -90,8 +90,8 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
     try {
       reset();
       onClose();
-      enqueueSnackbar('Oferta creada con éxito', 'success');
-      addJobAction(dataJob);
+      enqueueSnackbar('Oferta actulizada con exito', 'success');
+      editJobAction(dataJob);
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
@@ -208,7 +208,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
         Cancelar
       </Button>
       <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-        Guardar
+        Actulizar
       </LoadingButton>
     </DialogActions>
   );
@@ -224,11 +224,11 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
       }}
     >
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Crear Oferta</DialogTitle>
+        <DialogTitle>Editar Oferta</DialogTitle>
 
         <DialogContent>
           <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
-            Crear una nueva oferta laboral | CUC univeristy.
+            Editar oferta laboral | CUC univeristy.
           </Alert>
           <Box
             rowGap={7}
@@ -254,7 +254,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
   );
 }
 
-JobCreateForm.propTypes = {
+JobEditForm.propTypes = {
   currentJob: PropTypes.object,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

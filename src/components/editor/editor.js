@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import 'src/utils/highlight';
 import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 // @mui
 import { alpha } from '@mui/material/styles';
 //
@@ -50,7 +51,7 @@ export default function Editor({
         <ReactQuill
           modules={modules}
           formats={formats}
-          placeholder="Write something awesome..."
+          placeholder="Escribe la descripción aqui..."
           {...other}
         />
       </StyledEditor>

@@ -5,26 +5,20 @@ export const useJobDispatch = () => {
   const loadingAction = useCallback((dispatch) => {
     dispatch({
       type: Payload.LOGIN_ACTION,
-      payload: {
-        loading: true,
-      },
+      payload: true
     });
   }, []);
 
   const errorAction = useCallback((dispatch, error) => {
     dispatch({
       type: Payload.ERROR_ACTION,
-      payload: {
-        error,
-      },
+      payload: error
     });
 
     setTimeout(() => {
       dispatch({
         type: Payload.ERROR_ACTION,
-        payload: {
-          error: false,
-        },
+        payload: false
       });
     }, 4000);
   }, []);

@@ -22,15 +22,12 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
 // _mock
 import {
-  _jobs,
   _roles,
-  JOB_SORT_OPTIONS,
   JOB_BENEFIT_OPTIONS,
   JOB_EXPERIENCE_OPTIONS,
-  JOB_EMPLOYMENT_TYPE_OPTIONS,
 } from 'src/_mock';
 //
-import { create } from 'lodash';
+
 import JobList from '../job-list';
 import JobSort from '../job-sort';
 import JobSearch from '../job-search';
@@ -146,10 +143,8 @@ export default function JobListView(rowAdd) {
           roleOptions={_roles}
           benefitOptions={JOB_BENEFIT_OPTIONS.map((option) => option.label)}
           experienceOptions={['Todas', ...JOB_EXPERIENCE_OPTIONS.map((option) => option.label)]}
-          employmentTypeOptions={JOB_EMPLOYMENT_TYPE_OPTIONS.map((option) => option.label)}
         />
 
-        <JobSort sort={sortBy} onSort={handleSortBy} sortOptions={JOB_SORT_OPTIONS} />
       </Stack>
     </Stack>
   );

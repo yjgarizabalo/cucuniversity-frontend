@@ -94,7 +94,7 @@ export default function RoleEditForm({ currentRoles, open, onClose }) {
             }}
           >
 
-            <RHFTextField name="name" label="Ingres Nombre del Rol" />
+            <RHFTextField name="name" label="Ingresar Nombre del Rol" />
             <RHFTextField name="description" label="Descripción" />
           </Box>
         </DialogContent>

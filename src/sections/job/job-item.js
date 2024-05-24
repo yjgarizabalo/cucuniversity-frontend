@@ -10,23 +10,26 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
+// hooks
+import { useBoolean } from 'src/hooks/use-boolean';
 // utils
 import { fDate } from 'src/utils/format-time';
-import { fCurrency } from 'src/utils/format-number';
-// routes
-import { paths } from 'src/routes/paths';
 // components
 import Iconify from 'src/components/iconify';
 import { RouterLink } from 'src/routes/components';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
+import JobEditForm from './job-edit-form';
 // ----------------------------------------------------------------------
 
-export default function JobItem({ job, onView, onEdit, onDelete }) {
+export default function JobItem({ job, onView, onDelete }) {
   const popover = usePopover();
 
-  const { id, title, company, createAt, experience, salary, roleJob } =
+  const { title, company, createAt, experience, salary, roleJob } =
     job;
+
+  const EditJob = useBoolean();
+
 
   return (
     <>
@@ -103,25 +106,17 @@ export default function JobItem({ job, onView, onEdit, onDelete }) {
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        <MenuItem
-          onClick={() => {
-            popover.onClose();
-            onView();
-          }}
-        >
+        <MenuItem onClick={() => { popover.onClose(); onView(); }}>
           <Iconify icon="solar:eye-bold" />
           Ver
         </MenuItem>
 
-        <MenuItem
-          onClick={() => {
-            popover.onClose();
-            onEdit();
-          }}
-        >
-          <Iconify icon="solar:pen-bold" />
-          Editar oferta
+        <MenuItem  onClick={EditJob.onTrue}>
+          <Iconify icon="solar:pen-bold"/>
+          Editar
         </MenuItem>
+
+        <JobEditForm currentJob={job} open={EditJob.value} onClose={EditJob.onFalse} />
 
         <MenuItem
           onClick={() => {
@@ -141,6 +136,5 @@ export default function JobItem({ job, onView, onEdit, onDelete }) {
 JobItem.propTypes = {
   job: PropTypes.object,
   onDelete: PropTypes.func,
-  onEdit: PropTypes.func,
   onView: PropTypes.func,
 };

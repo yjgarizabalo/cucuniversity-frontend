@@ -104,26 +104,6 @@ export default function JobFilters({
     </Stack>
   );
 
-  const renderEmploymentTypes = (
-    <Stack>
-      <Typography variant="subtitle2" sx={{ mb: 1 }}>
-        Tipos de empleos
-      </Typography>
-      {employmentTypeOptions.map((option) => (
-        <FormControlLabel
-          key={option}
-          control={
-            <Checkbox
-              checked={filters.employmentTypes.includes(option)}
-              onClick={() => handleFilterEmploymentTypes(option)}
-            />
-          }
-          label={option}
-        />
-      ))}
-    </Stack>
-  );
-
   const renderExperience = (
     <Stack>
       <Typography variant="subtitle2" sx={{ mb: 1 }}>
@@ -283,7 +263,6 @@ export default function JobFilters({
 
         <Scrollbar sx={{ px: 2.5, py: 3 }}>
           <Stack spacing={3}>
-            {renderEmploymentTypes}
 
             {renderExperience}
 

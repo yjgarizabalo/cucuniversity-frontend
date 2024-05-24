@@ -23,7 +23,6 @@ export const paths = {
     application: `${ROOTS.DASHBOARD}/application`,
     favorite: `${ROOTS.DASHBOARD}/favorite`,
     courses: `${ROOTS.DASHBOARD}/courses`,
-    // home: `${ROOTS.DASHBOARD}/home`,
 
     students_job: {
       root: `${ROOTS.DASHBOARD}/students_job`,
