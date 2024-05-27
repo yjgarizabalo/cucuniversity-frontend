@@ -83,16 +83,6 @@ export default function RoleTableRow({ row, selected, onSelectRow, onDeleteRow }
           <Iconify icon="solar:trash-bin-trash-bold" />
           Eliminar
         </MenuItem>
-
-        {/* <MenuItem
-          onClick={() => {
-            onEditRow();
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="solar:pen-bold" />
-          Editar
-        </MenuItem> */}
       </CustomPopover>
 
       <ConfirmDialog

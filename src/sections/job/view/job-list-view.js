@@ -29,7 +29,6 @@ import {
 //
 
 import JobList from '../job-list';
-import JobSort from '../job-sort';
 import JobSearch from '../job-search';
 import JobFilters from '../job-filters';
 import JobFiltersResult from '../job-filters-result';
@@ -82,10 +81,6 @@ export default function JobListView(rowAdd) {
       ...prevState,
       [name]: value,
     }));
-  }, []);
-
-  const handleSortBy = useCallback((newValue) => {
-    setSortBy(newValue);
   }, []);
 
   const handleSearch = useCallback(

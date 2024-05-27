@@ -259,7 +259,7 @@ export default function RoleListView(rowAdd) {
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
+        title="Eliminar"
         content={
           <>
             Estas seguro de eliminar <strong> {table.selected.length} </strong>?

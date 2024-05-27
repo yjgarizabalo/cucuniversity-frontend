@@ -23,12 +23,17 @@ import JobEditForm from './job-edit-form';
 // ----------------------------------------------------------------------
 
 export default function JobItem({ job, onView, onDelete }) {
+
   const popover = usePopover();
 
-  const { title, company, createAt, experience, salary, roleJob } =
-    job;
+  const { title, company, createAt, experience, salary, roleJob } = job;
 
   const EditJob = useBoolean();
+
+
+  const handleEditClick = () => {
+    EditJob.onTrue();
+  };
 
 
   return (
@@ -118,6 +123,7 @@ export default function JobItem({ job, onView, onDelete }) {
 
         <JobEditForm currentJob={job} open={EditJob.value} onClose={EditJob.onFalse} />
 
+
         <MenuItem
           onClick={() => {
             popover.onClose();
@@ -137,4 +143,7 @@ JobItem.propTypes = {
   job: PropTypes.object,
   onDelete: PropTypes.func,
   onView: PropTypes.func,
+  EditJob: PropTypes.shape({
+    onTrue: PropTypes.func.isRequired,
+  }).isRequired,
 };
