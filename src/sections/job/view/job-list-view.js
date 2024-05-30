@@ -54,8 +54,6 @@ export default function JobListView(rowAdd) {
   const openFilters = useBoolean();
 
 
-  const [sortBy, setSortBy] = useState('nuevas');
-
   const [search, setSearch] = useState({
     query: '',
     results: [],
@@ -68,7 +66,6 @@ export default function JobListView(rowAdd) {
   const dataFiltered = applyFilter({
     inputData: jobs,
     filters,
-    sortBy,
   });
 
 
@@ -162,7 +159,7 @@ export default function JobListView(rowAdd) {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Ofertars laborales"
+        heading="Ofertas laborales"
         links={[
           { name: 'Inicio', href: paths.dashboard.root },
           {

@@ -22,6 +22,7 @@ const PageUsers = lazy(() => import('src/pages/dashboard/user/list'));
 const PageRoles = lazy(() => import('src/pages/dashboard/roles/list'));
 const UserAccountPage = lazy(() => import('src/pages/dashboard/user/account'));
 const PageStudentsJob = lazy(() => import('src/pages/dashboard/job/list'));
+const JobDetailsPage = lazy(() => import('src/pages/dashboard/job/details'));
 
 
 // ----------------------------------------------------------------------
@@ -55,6 +56,7 @@ export const dashboardRoutes = [
         children: [
           { element: <PageStudentsJob />, index: true },
           { path: 'job', element: <PageStudentsJob /> },
+          { path: ':id', element: <JobDetailsPage /> }
         ],
       },
 

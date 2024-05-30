@@ -20,6 +20,7 @@ import { RouterLink } from 'src/routes/components';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import JobEditForm from './job-edit-form';
+
 // ----------------------------------------------------------------------
 
 export default function JobItem({ job, onView, onDelete }) {
@@ -29,12 +30,6 @@ export default function JobItem({ job, onView, onDelete }) {
   const { title, company, createAt, experience, salary, roleJob } = job;
 
   const EditJob = useBoolean();
-
-
-  const handleEditClick = () => {
-    EditJob.onTrue();
-  };
-
 
   return (
     <>
@@ -116,12 +111,11 @@ export default function JobItem({ job, onView, onDelete }) {
           Ver
         </MenuItem>
 
-        <MenuItem  onClick={EditJob.onTrue}>
-          <Iconify icon="solar:pen-bold"/>
+        <MenuItem onClick={() => {  EditJob.onTrue(); popover.onClose(); }}>
+          <Iconify icon="solar:pen-bold" />
           Editar
         </MenuItem>
 
-        <JobEditForm currentJob={job} open={EditJob.value} onClose={EditJob.onFalse} />
 
 
         <MenuItem
@@ -135,6 +129,8 @@ export default function JobItem({ job, onView, onDelete }) {
           Eliminar
         </MenuItem>
       </CustomPopover>
+
+      <JobEditForm currentJob={job} open={EditJob.value} onClose={EditJob.onFalse} />
     </>
   );
 }
@@ -143,7 +139,4 @@ JobItem.propTypes = {
   job: PropTypes.object,
   onDelete: PropTypes.func,
   onView: PropTypes.func,
-  EditJob: PropTypes.shape({
-    onTrue: PropTypes.func.isRequired,
-  }).isRequired,
 };

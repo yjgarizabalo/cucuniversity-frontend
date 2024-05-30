@@ -14,8 +14,8 @@ import JobItem from './job-item';
 
 // ----------------------------------------------------------------------
 
-export default function JobList({ jobs }) {
-  const { getJobAction, deleteJobAction } = useJobContext();
+export default function JobList() {
+  const { jobs, getJobAction, deleteJobAction } = useJobContext();
 
   const router = useRouter();
 
@@ -27,7 +27,9 @@ export default function JobList({ jobs }) {
 
   const handleView = useCallback(
     (id) => {
-      router.push(paths.dashboard.job.details(id));
+      const url = paths.dashboard.students_job.details(id);
+      console.log(url);
+      router.push(url);
     },
     [router]
   );
@@ -84,6 +86,6 @@ return (
 );
 }
 
-JobList.propTypes = {
-  jobs: PropTypes.array,
-};
+// JobList.propTypes = {
+//   jobs: PropTypes.array,
+// };

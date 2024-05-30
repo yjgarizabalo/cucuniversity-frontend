@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
@@ -39,6 +39,8 @@ export default function JobEditForm({ currentJob, open, onClose }) {
   const { editJobAction } = useJobContext();
   const { enqueueSnackbar } = useSnackbar();
 
+
+
   const NewJobSchema = Yup.object().shape({
     title: Yup.string().required('Título es requerido'),
     description: Yup.string().required('Descripción es requerida'),
@@ -58,7 +60,7 @@ export default function JobEditForm({ currentJob, open, onClose }) {
       roleJob: currentJob?.roleJob || '',
       company: currentJob?.company || '',
       location: currentJob?.location || '',
-      experience: currentJob?.experience || '',
+      experience: currentJob?.experience,
       salary: currentJob?.salary || '',
       workingHours: currentJob?.workingHours || '',
       benefits: currentJob?.benefits || '',
@@ -72,6 +74,13 @@ export default function JobEditForm({ currentJob, open, onClose }) {
   });
 
   const { reset, handleSubmit, formState: { isSubmitting } } = methods;
+
+  useEffect(() => {
+    if (currentJob) {
+      reset(defaultValues);
+    }
+  }, [currentJob, reset, defaultValues]);
+
 
   const onSubmit = handleSubmit(async (data) => {
     const dataJob = {
@@ -122,7 +131,13 @@ export default function JobEditForm({ currentJob, open, onClose }) {
 
           <Stack spacing={1}>
             <Typography variant="subtitle2">Experiencia</Typography>
-            <RHFRadioGroup row spacing={4} name="experience" options={JOB_EXPERIENCE_OPTIONS} />
+            <RHFRadioGroup
+              row
+              spacing={4}
+              name="experience"
+              options={JOB_EXPERIENCE_OPTIONS}
+
+            />
           </Stack>
 
           <Stack spacing={1.5}>
@@ -195,7 +210,7 @@ export default function JobEditForm({ currentJob, open, onClose }) {
 
           <Stack spacing={1}>
             <Typography variant="subtitle2">Benficios</Typography>
-            <RHFRadioGroup row spacing={4} name="experience" options={JOB_BENEFIT_OPTIONS} />
+            <RHFRadioGroup row spacing={4} name="benefits" options={JOB_BENEFIT_OPTIONS} />
           </Stack>
         </Stack>
       </Card>

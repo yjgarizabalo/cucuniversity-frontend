@@ -5,6 +5,11 @@ import { _mock } from './_mock';
 
 // ----------------------------------------------------------------------
 
+export const JOB_DETAILS_TABS = [
+  { value: 'content', label: 'Job Content' },
+  { value: 'candidates', label: 'Candidates' },
+];
+
 export const ROLES = [
   'Frontend Developer',
   'Backend Developer',
@@ -12,7 +17,6 @@ export const ROLES = [
   'DevOps',
   'System Engineer',
 ];
-
 
 export const JOB_WORKING_HOURS = [
   'De lunes a viernes',
@@ -27,10 +31,10 @@ export const JOB_BENEFIT_OPTIONS = [
 ];
 
 export const JOB_EXPERIENCE_OPTIONS = [
-  { value: 'No experience', label: 'Sin Experiencia' },
-  { value: '1 year exp', label: '1 años exp' },
-  { value: '2 year exp', label: '2 años exp' },
-  { value: '> 3 year exp', label: 'mayor 3 años exp' },
+  { value: 'Sin Experiencia', label: 'Sin Experiencia' },
+  { value: '1 años exp', label: '1 años exp' },
+  { value: '2 años exp', label: '2 años exp' },
+  { value: 'mayor 3 años exp', label: 'mayor 3 años exp' },
 ];
 
 export const JOB_LOCATION = [
