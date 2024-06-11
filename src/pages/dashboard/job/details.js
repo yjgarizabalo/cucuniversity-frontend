@@ -17,7 +17,7 @@ export default function JobDetailsPage() {
         <title> Dashboard: Ofertas</title>
       </Helmet>
 
-      <JobDetailsView id={`${id}`} />
+      <JobDetailsView id={Number(id)} />
     </>
   );
 }

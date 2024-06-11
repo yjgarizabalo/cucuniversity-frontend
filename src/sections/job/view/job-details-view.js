@@ -25,13 +25,16 @@ export default function JobDetailsView({ id }) {
 
   const settings = useSettingsContext();
 
-  const currentJob = jobs.filter((job) => job.id === id)[0];
+  console.log(jobs, "jobs");
+  useEffect(() => { getJobAction() }, [getJobAction]);
+
+  const currentJob = jobs.find((job) => job.id === id);
+  console.log(currentJob, "currentJob");
 
   const [publish, setPublish] = useState(currentJob?.publish);
 
   const [currentTab, setCurrentTab] = useState('content');
 
-  useEffect(() => { getJobAction() }, [getJobAction]);
 
   const handleChangeTab = useCallback((event, newValue) => {
     setCurrentTab(newValue);
@@ -49,7 +52,7 @@ export default function JobDetailsView({ id }) {
         mb: { xs: 3, md: 5 },
       }}
     >
-      {JOB_DETAILS_TABS.map((tab) => (
+      {/* {JOB_DETAILS_TABS.map((tab) => (
         <Tab
           key={tab.value}
           iconPosition="end"
@@ -63,15 +66,15 @@ export default function JobDetailsView({ id }) {
             )
           }
         />
-      ))}
+      ))} */}
     </Tabs>
   );
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <JobDetailsToolbar
-        backLink={paths.dashboard.job.root}
-        editLink={paths.dashboard.job.edit(`${currentJob?.id}`)}
+        backLink={paths.dashboard.students_job.job}
+        // editLink={paths.dashboard.job.edit(`${currentJob?.id}`)}
         liveLink="#"
         publish={publish || ''}
         onChangePublish={handleChangePublish}
@@ -87,5 +90,5 @@ export default function JobDetailsView({ id }) {
 }
 
 JobDetailsView.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
 };

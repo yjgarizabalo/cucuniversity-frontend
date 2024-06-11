@@ -36,23 +36,23 @@ export default function JobDetailsContent({ job }) {
 
       <Markdown children={content} />
 
-      <Stack spacing={2}>
+      {/* <Stack spacing={2}>
         <Typography variant="h6">Skills</Typography>
         <Stack direction="row" alignItems="center" spacing={1}>
           {skills.map((skill) => (
             <Chip key={skill} label={skill} variant="soft" />
           ))}
         </Stack>
-      </Stack>
+      </Stack> */}
 
-      <Stack spacing={2}>
+      {/* <Stack spacing={2}>
         <Typography variant="h6">Benefits</Typography>
         <Stack direction="row" alignItems="center" spacing={1}>
           {benefits.map((benefit) => (
             <Chip key={benefit} label={benefit} variant="soft" />
           ))}
         </Stack>
-      </Stack>
+      </Stack> */}
     </Stack>
   );
 

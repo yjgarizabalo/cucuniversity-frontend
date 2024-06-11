@@ -18,7 +18,6 @@ const PageCourses = lazy(() => import('src/pages/dashboard/cursos'));
 const PageFavorite = lazy(() => import('src/pages/dashboard/favorite/list'));
 const PageApplication = lazy(() => import('src/pages/dashboard/application/list'));
 const PageUsers = lazy(() => import('src/pages/dashboard/user/list'));
-// const UserEditPage = lazy(() => import('src/pages/dashboard/user/edit'));
 const PageRoles = lazy(() => import('src/pages/dashboard/roles/list'));
 const UserAccountPage = lazy(() => import('src/pages/dashboard/user/account'));
 const PageStudentsJob = lazy(() => import('src/pages/dashboard/job/list'));
@@ -65,7 +64,6 @@ export const dashboardRoutes = [
         children: [
           { element: <PageUsers />, index: true },
           { path: 'roles', element: <PageRoles /> },
-          // { path: ':id/edit', element: <UserEditPage /> },
           { path: 'account', element: <UserAccountPage /> }
         ],
       },
