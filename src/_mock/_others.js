@@ -6,7 +6,7 @@ export const _carouselsMembers = [...Array(6)].map((_, index) => ({
   id: _mock.id(index),
   name: _mock.fullName(index),
   role: _mock.role(index),
-  avatarUrl: _mock.image.portrait(index),
+  // avatarUrl: _mock.image.portrait(index),
 }));
 
 // ----------------------------------------------------------------------
@@ -117,20 +117,20 @@ export const _mapContact = [
 // ----------------------------------------------------------------------
 
 export const _socials = [
-  {
-    value: 'facebook',
-    name: 'FaceBook',
-    icon: 'eva:facebook-fill',
-    color: '#1877F2',
-    path: 'https://www.facebook.com/caitlyn.kerluke',
-  },
-  {
-    value: 'instagram',
-    name: 'Instagram',
-    icon: 'ant-design:instagram-filled',
-    color: '#E02D69',
-    path: 'https://www.instagram.com/caitlyn.kerluke',
-  },
+  // {
+  //   value: 'facebook',
+  //   name: 'FaceBook',
+  //   icon: 'eva:facebook-fill',
+  //   color: '#1877F2',
+  //   path: 'https://www.facebook.com/caitlyn.kerluke',
+  // },
+  // {
+  //   value: 'instagram',
+  //   name: 'Instagram',
+  //   icon: 'ant-design:instagram-filled',
+  //   color: '#E02D69',
+  //   path: 'https://www.instagram.com/caitlyn.kerluke',
+  // },
   {
     value: 'linkedin',
     name: 'Linkedin',
@@ -138,13 +138,13 @@ export const _socials = [
     color: '#007EBB',
     path: 'https://www.linkedin.com/caitlyn.kerluke',
   },
-  {
-    value: 'twitter',
-    name: 'Twitter',
-    icon: 'eva:twitter-fill',
-    color: '#00AAEC',
-    path: 'https://www.twitter.com/caitlyn.kerluke',
-  },
+  // {
+  //   value: 'twitter',
+  //   name: 'Twitter',
+  //   icon: 'eva:twitter-fill',
+  //   color: '#00AAEC',
+  //   path: 'https://www.twitter.com/caitlyn.kerluke',
+  // },
 ];
 
 // ----------------------------------------------------------------------

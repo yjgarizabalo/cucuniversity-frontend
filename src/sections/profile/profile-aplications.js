@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
+import  PropTypes from 'prop-types';
 import { useState, useCallback } from 'react';
+
 // @mui
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -10,10 +11,10 @@ import ListItemText from '@mui/material/ListItemText';
 // components
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
 
-export default function ProfileFavorite({ favorites }) {
-  const _mockFollowed = favorites.slice(4, 8).map((i) => i.id);
+
+export default function ProfileAplications({ aplications }) {
+  const _mockFollowed = aplications.slice(4, 8).map((i) => i.id);
 
   const [followed, setFollowed] = useState(_mockFollowed);
 
@@ -31,7 +32,7 @@ export default function ProfileFavorite({ favorites }) {
   return (
     <>
       <Typography variant="h4" sx={{ my: 5 }}>
-        Ofertas favoritas ❤️
+        Aplicaciones 💼
       </Typography>
 
       <Box
@@ -43,7 +44,7 @@ export default function ProfileFavorite({ favorites }) {
           md: 'repeat(1, 1fr)',
         }}
       >
-        {favorites.map((follower) => (
+        {aplications.map((follower) => (
           <FollowerItem
             key={follower.id}
             follower={follower}
@@ -56,9 +57,10 @@ export default function ProfileFavorite({ favorites }) {
   );
 }
 
-ProfileFavorite.propTypes = {
-  favorites: PropTypes.array,
+ProfileAplications.propTypes = {
+  aplications: PropTypes.array
 };
+
 
 // ----------------------------------------------------------------------
 
@@ -116,6 +118,6 @@ function FollowerItem({ follower, selected, onSelected }) {
 
 FollowerItem.propTypes = {
   follower: PropTypes.object,
-  onSelected: PropTypes.func,
   selected: PropTypes.bool,
+  onSelected: PropTypes.func
 };

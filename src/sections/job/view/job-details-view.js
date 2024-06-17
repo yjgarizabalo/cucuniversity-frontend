@@ -25,11 +25,9 @@ export default function JobDetailsView({ id }) {
 
   const settings = useSettingsContext();
 
-  console.log(jobs, "jobs");
   useEffect(() => { getJobAction() }, [getJobAction]);
 
   const currentJob = jobs.find((job) => job.id === id);
-  console.log(currentJob, "currentJob");
 
   const [publish, setPublish] = useState(currentJob?.publish);
 

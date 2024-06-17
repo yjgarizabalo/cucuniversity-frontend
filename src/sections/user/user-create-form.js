@@ -40,7 +40,7 @@ const _programs = [
 ]
 
 
-export default function UserCreateForm({ currentUser, currentRoles, open, onClose }) {
+export default function UserCreateForm({ currentUser, currentRoles, open, onClose }, sx) {
   const { addUserAction } = useUserContext();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -114,19 +114,27 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
     }
   });
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
+  // const handleDrop = useCallback(
+  //   (acceptedFiles) => {
+  //     const file = acceptedFiles[0];
 
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
+  //     const newFile = Object.assign(file, {
+  //       preview: URL.createObjectURL(file),
+  //     });
 
-      if (file) {
-        setValue('avatarUrl', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
+  //     if (file) {
+  //       setValue('avatarUrl', newFile, { shouldValidate: true });
+  //     }
+  //   },
+  //   [setValue]
+  // );
+
+  const logo = (
+    <Box
+      component="img"
+      src="/logo/logo_cucuniversity.svg"
+      sx={{ width: 150, height: 40, cursor: 'pointer', ...sx }}
+    />
   );
 
   return (
@@ -158,50 +166,7 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
           >
             <Grid xs={12} md={4}>
               <Card sx={{ pt: 10, pb: 5, px: 3 }}>
-                {currentUser && (
-                  <Label
-                    color={
-                      (values.status === 'active' && 'success') ||
-                      (values.status === 'banned' && 'error') ||
-                      'warning'
-                    }
-                    sx={{ position: 'absolute', top: 24, right: 24 }}
-                  >
-                    {values.status}
-                  </Label>
-                )}
-
-                <Box sx={{ mb: 5 }}>
-                  <RHFUploadAvatar
-                    name="avatarUrl"
-                    maxSize={3145728}
-                    onDrop={handleDrop}
-                    helperText={
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          mt: 3,
-                          mx: 'auto',
-                          display: 'block',
-                          textAlign: 'center',
-                          color: 'text.disabled',
-                        }}
-                      >
-                        Solo permitimos *.jpeg, *.jpg, *.png, *.gif
-                        <br /> capacidad maxima del archivo {fData(3145728)}
-                      </Typography>
-                    }
-                  />
-                </Box>
-
-
-                {currentUser && (
-                  <Stack justifyContent="center" alignItems="center" sx={{ mt: 3 }}>
-                    <Button variant="soft" color="error">
-                      Eliminar Usuario
-                    </Button>
-                  </Stack>
-                )}
+                {logo}
               </Card>
             </Grid>
 

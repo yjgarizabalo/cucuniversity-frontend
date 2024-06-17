@@ -38,7 +38,7 @@ const _programs = [
 ]
 
 
-export default function UserEditForm({ currentUser, currentRoles, open, onClose }) {
+export default function UserEditForm({ currentUser, currentRoles, open, onClose }, sx) {
   const { editUserAction } = useUserContext();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -128,6 +128,14 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
     [setValue]
   );
 
+  const logo = (
+    <Box
+      component="img"
+      src="/logo/logo_cucuniversity.svg"
+      sx={{ width: 150, height: 40, cursor: 'pointer', ...sx }}
+    />
+  );
+
   return (
     <Dialog
       fullWidth
@@ -157,42 +165,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
           >
             <Grid xs={12} md={4}>
               <Card sx={{ pt: 10, pb: 5, px: 3 }}>
-                {currentUser && (
-                  <Label
-                    color={
-                      (values.status === 'active' && 'success') ||
-                      (values.status === 'banned' && 'error') ||
-                      'warning'
-                    }
-                    sx={{ position: 'absolute', top: 24, right: 24 }}
-                  >
-                    {values.status}
-                  </Label>
-                )}
-
-                <Box sx={{ mb: 5 }}>
-                  <RHFUploadAvatar
-                    name="avatarUrl"
-                    maxSize={3145728}
-                    onDrop={handleDrop}
-                    helperText={
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          mt: 3,
-                          mx: 'auto',
-                          display: 'block',
-                          textAlign: 'center',
-                          color: 'text.disabled',
-                        }}
-                      >
-                        Solo permitimos *.jpeg, *.jpg, *.png, *.gif
-                        <br /> capacidad maxima del archivo {fData(3145728)}
-                      </Typography>
-                    }
-                  />
-                </Box>
-
+              {logo}
               </Card>
             </Grid>
 

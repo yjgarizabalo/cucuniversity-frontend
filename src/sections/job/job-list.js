@@ -28,7 +28,6 @@ export default function JobList() {
   const handleView = useCallback(
     (id) => {
       const url = paths.dashboard.students_job.details(id);
-      console.log(url);
       router.push(url);
     },
     [router]

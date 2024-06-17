@@ -11,101 +11,56 @@ import Stack from '@mui/material/Stack';
 import { RouterLink } from 'src/routes/components';
 // components
 import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
 export default function JobDetailsToolbar({
-  publish,
   backLink,
-  editLink,
-  liveLink,
-  // publishOptions,
-  onChangePublish,
   sx,
   ...other
 }) {
-  const popover = usePopover();
+
+  const handleApllyJob = () => {
+    console.log('Apply Job');
+  }
 
   return (
-    <>
-      <Stack
-        spacing={1.5}
-        direction="row"
-        sx={{
-          mb: { xs: 3, md: 5 },
-          ...sx,
-        }}
-        {...other}
+    <Stack
+      spacing={1.5}
+      direction="row"
+      sx={{
+        mb: { xs: 3, md: 5 },
+        ...sx,
+      }}
+      {...other}
+    >
+      <Button
+        component={RouterLink}
+        href={backLink}
+        startIcon={<Iconify icon="eva:checkmark-fill" width={16} />}
       >
-        <Button
-          component={RouterLink}
-          href={backLink}
-          startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
-        >
-          Atras
-        </Button>
+        Atras
+      </Button>
 
-        <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ flexGrow: 1 }} />
 
-        {publish === 'published' && (
-          <Tooltip title="Go Live">
-            <IconButton component={RouterLink} href={liveLink}>
-              <Iconify icon="eva:external-link-fill" />
-            </IconButton>
-          </Tooltip>
-        )}
-
-        <Tooltip title="Edit">
-          <IconButton component={RouterLink} href={editLink}>
-            <Iconify icon="solar:pen-bold" />
-          </IconButton>
-        </Tooltip>
-
-        <LoadingButton
+      <LoadingButton
           color="inherit"
           variant="contained"
-          loading={!publish}
+          loading={false}
           loadingIndicator="Loading…"
-          endIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
-          onClick={popover.onOpen}
+          endIcon={<Iconify icon="eva:checkmark-fill" />}
+          onClick={handleApllyJob}
           sx={{ textTransform: 'capitalize' }}
         >
-          {publish}
+          Aplicar Oferta
         </LoadingButton>
-      </Stack>
 
-      <CustomPopover
-        open={popover.open}
-        onClose={popover.onClose}
-        arrow="top-right"
-        sx={{ width: 140 }}
-      >
-        {/* {publishOptions.map((option) => (
-          <MenuItem
-            key={option.value}
-            selected={option.value === publish}
-            onClick={() => {
-              popover.onClose();
-              onChangePublish(option.value);
-            }}
-          >
-            {option.value === 'published' && <Iconify icon="eva:cloud-upload-fill" />}
-            {option.value === 'draft' && <Iconify icon="solar:file-text-bold" />}
-            {option.label}
-          </MenuItem>
-        ))} */}
-      </CustomPopover>
-    </>
+    </Stack>
   );
 }
 
 JobDetailsToolbar.propTypes = {
   backLink: PropTypes.string,
-  editLink: PropTypes.string,
-  liveLink: PropTypes.string,
-  onChangePublish: PropTypes.func,
-  publish: PropTypes.string,
-  publishOptions: PropTypes.array,
-  sx: PropTypes.object,
+  sx: PropTypes.object
 };

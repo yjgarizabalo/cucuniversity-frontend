@@ -32,9 +32,9 @@ export const JOB_BENEFIT_OPTIONS = [
 
 export const JOB_EXPERIENCE_OPTIONS = [
   { value: 'Sin Experiencia', label: 'Sin Experiencia' },
-  { value: '1 años exp', label: '1 años exp' },
+  { value: '1 años exp', label: '1 año exp' },
   { value: '2 años exp', label: '2 años exp' },
-  { value: 'mayor 3 años exp', label: 'mayor 3 años exp' },
+  { value: 'mayor a 3 años exp', label: 'mayor a 3 años exp' },
 ];
 
 export const JOB_LOCATION = [
@@ -87,7 +87,6 @@ export const _jobs = [...Array(12)].map((_, index) => {
 
   const company = {
     name: _mock.companyName(index),
-    logo: _mock.image.company(index),
     phoneNumber: _mock.phoneNumber(index),
     fullAddress: _mock.fullAddress(index),
   };

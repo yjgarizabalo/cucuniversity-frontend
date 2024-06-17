@@ -121,7 +121,7 @@ export default function UserListView(rowAdd) {
       deleteUserAction(id);
       table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [dataInPage.length, table,enqueueSnackbar, deleteUserAction]
+    [dataInPage.length, table, enqueueSnackbar, deleteUserAction]
   );
 
   const handleDeleteRows = useCallback(() => {
@@ -154,6 +154,8 @@ export default function UserListView(rowAdd) {
   }, []);
 
   const createUser = useBoolean();
+
+  const filteredUsers = users.filter(user => user.status !== false);
 
   return (
     <>
@@ -213,11 +215,11 @@ export default function UserListView(rowAdd) {
             <TableSelectedAction
               dense={table.dense}
               numSelected={table.selected.length}
-              rowCount={users.length}
+              rowCount={users.filter((user) => user.status !== false).length}
               onSelectAllRows={(checked) =>
                 table.onSelectAllRows(
                   checked,
-                  users.map((row) => row.id)
+                  users.filter((user) => user.status !== false).map((row) => row.id)
                 )
               }
               action={
@@ -235,19 +237,20 @@ export default function UserListView(rowAdd) {
                   order={table.order}
                   orderBy={table.orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={users.length}
+                  rowCount={users.filter((user) => user.status !== false).length}
                   numSelected={table.selected.length}
                   onSort={table.onSort}
                   onSelectAllRows={(checked) =>
                     table.onSelectAllRows(
                       checked,
-                      users.map((row) => row.id)
+                      users.filter((user) => user.status !== false).map((row) => row.id)
                     )
                   }
                 />
 
                 <TableBody>
                   {dataFiltered
+                    .filter((row) => row.status !== false)  // Filtrar usuarios con status false
                     .slice(
                       table.page * table.rowsPerPage,
                       table.page * table.rowsPerPage + table.rowsPerPage

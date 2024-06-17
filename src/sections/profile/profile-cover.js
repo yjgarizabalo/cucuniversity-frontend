@@ -10,15 +10,14 @@ import { bgGradient } from 'src/theme/css';
 
 // ----------------------------------------------------------------------
 
-export default function ProfileCover({ name, avatarUrl, role, coverUrl, coverProfileUrl }) {
+export default function ProfileCover({ name, avatarUrl, role, coverProfileUrl }) {
   const theme = useTheme();
 
   return (
     <Box
-      src="/assets/backgrounds/hero_login.jpg"
       sx={{
         ...bgGradient({
-          color: alpha(theme.palette.primary.darker, 0.8),
+          color: alpha(theme.palette.primary.darker, 0.2),
           imgUrl: coverProfileUrl,
         }),
         height: 1,
@@ -72,7 +71,6 @@ export default function ProfileCover({ name, avatarUrl, role, coverUrl, coverPro
 
 ProfileCover.propTypes = {
   avatarUrl: PropTypes.string,
-  coverUrl: PropTypes.string,
   coverProfileUrl: PropTypes.string,
   name: PropTypes.string,
   role: PropTypes.string,

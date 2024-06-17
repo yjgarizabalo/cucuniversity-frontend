@@ -9,7 +9,7 @@ import { paths } from 'src/routes/paths';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // _mock
-import { _userAbout, _userFeeds, _userFavorites } from 'src/_mock';
+import { _userAbout, _userFeeds, _userAplications } from 'src/_mock';
 // components
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
@@ -17,8 +17,10 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
 import AccountView from 'src/sections/account/view/user-account-view';
 import ProfileFavorite from '../profile-favorite';
+import ProfileAplications from '../profile-aplications';
 import ProfileHome from '../profile-home';
 import ProfileCover from '../profile-cover';
+
 
 // ----------------------------------------------------------------------
 
@@ -29,9 +31,9 @@ const TABS = [
     icon: <Iconify icon="solar:home-2-bold" width={24} />,
   },
   {
-    value: 'favorite',
-    label: 'Favoritos',
-    icon: <Iconify icon="solar:heart-bold" width={24} />,
+    value: 'aplications',
+    label: 'Aplicaciones',
+    icon: <Iconify icon="solar:map-arrow-square-bold" width={24} />,
   },
   {
     value: 'cv',
@@ -73,8 +75,8 @@ export default function UserProfileView() {
         <ProfileCover
           role={_userAbout.role}
           name={user?.displayName}
-          avatarUrl={user?.photoURL}
-          // coverUrl={_userAbout.coverUrl}
+          avatarUrl={user?.coverProfileUrl}
+          coverUrl={_userAbout.coverUrl}
           coverProfileUrl={_userAbout.coverProfileUrl}
         />
 
@@ -104,7 +106,7 @@ export default function UserProfileView() {
 
       {currentTab === 'profile' && <ProfileHome info={_userAbout} posts={_userFeeds} />}
 
-      {currentTab === 'favorite' && <ProfileFavorite favorites={_userFavorites} />}
+      {currentTab === 'aplications' && <ProfileAplications aplications={_userAplications} />}
 
       {currentTab === 'cv' && <AccountView />}
 

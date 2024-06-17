@@ -20,67 +20,69 @@ import Markdown from 'src/components/markdown';
 export default function JobDetailsContent({ job }) {
   const {
     title,
-    skills,
-    salary,
-    content,
+    description,
     benefits,
-    createdAt,
+    createAt,
+    workingHours,
+    salary,
     experience,
-    expiredDate,
-    employmentTypes,
+    company,
+    location,
+    roleJob
   } = job;
 
   const renderContent = (
     <Stack component={Card} spacing={3} sx={{ p: 3 }}>
       <Typography variant="h4">{title}</Typography>
 
-      <Markdown children={content} />
+      <Markdown children={description} />
 
-      {/* <Stack spacing={2}>
-        <Typography variant="h6">Skills</Typography>
+      <Stack spacing={2}>
+        <Typography variant="h6">Beneficios</Typography>
         <Stack direction="row" alignItems="center" spacing={1}>
-          {skills.map((skill) => (
-            <Chip key={skill} label={skill} variant="soft" />
-          ))}
+          {!benefits ?
+            <Typography variant="body2" color="text.secondary">
+              No hay beneficios
+            </Typography> :
+            <Chip label={benefits} />
+          }
         </Stack>
-      </Stack> */}
+      </Stack>
 
-      {/* <Stack spacing={2}>
-        <Typography variant="h6">Benefits</Typography>
+      <Stack spacing={2}>
+        <Typography variant="h6">Rol o Cargo</Typography>
         <Stack direction="row" alignItems="center" spacing={1}>
-          {benefits.map((benefit) => (
-            <Chip key={benefit} label={benefit} variant="soft" />
-          ))}
+          {!roleJob ?
+            <Typography variant="body2" color="text.secondary">
+              No hay Rol
+            </Typography> :
+            <Chip label={roleJob} />
+          }
         </Stack>
-      </Stack> */}
+      </Stack>
     </Stack>
   );
 
-  const renderOverview = (
+  const renderGeneral = (
     <Stack component={Card} spacing={2} sx={{ p: 3 }}>
       {[
         {
-          label: 'Date Posted',
-          value: fDate(createdAt),
+          label: 'Fecha de publicación',
+          value: fDate(createAt),
           icon: <Iconify icon="solar:calendar-date-bold" />,
         },
         {
-          label: 'Expiration date',
-          value: fDate(expiredDate),
-          icon: <Iconify icon="solar:calendar-date-bold" />,
-        },
-        {
-          label: 'Employment type',
-          value: employmentTypes,
+          label: 'Horario Laboral',
+          value: workingHours,
           icon: <Iconify icon="solar:clock-circle-bold" />,
         },
         {
-          label: 'Offered salary',
-          value: salary.negotiable ? 'Negotiable' : fCurrency(salary.price),
+          label: 'Salario',
+          value: fCurrency(salary),
           icon: <Iconify icon="solar:wad-of-money-bold" />,
         },
         {
-          label: 'Experience',
+          label: 'Experiencia',
           value: experience,
           icon: <Iconify icon="carbon:skill-level-basic" />,
         },
@@ -122,9 +124,8 @@ export default function JobDetailsContent({ job }) {
       />
 
       <Stack spacing={1}>
-        <Typography variant="subtitle1">{job.company.name}</Typography>
-        <Typography variant="body2">{job.company.fullAddress}</Typography>
-        <Typography variant="body2">{job.company.phoneNumber}</Typography>
+        <Typography variant="subtitle1">{company}</Typography>
+        <Typography variant="body2">{location}</Typography>
       </Stack>
     </Stack>
   );
@@ -136,7 +137,7 @@ export default function JobDetailsContent({ job }) {
       </Grid>
 
       <Grid xs={12} md={4}>
-        {renderOverview}
+        {renderGeneral}
 
         {renderCompany}
       </Grid>
