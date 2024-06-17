@@ -86,5 +86,5 @@ return (
 }
 
 // JobList.propTypes = {
-//   jobs: PropTypes.array,
+//   job: PropTypes.array,
 // };

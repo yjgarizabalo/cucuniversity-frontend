@@ -1,37 +1,29 @@
 import PropTypes from 'prop-types';
 import { useRef } from 'react';
 // @mui
-import { alpha } from '@mui/material/styles';
-import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import InputBase from '@mui/material/InputBase';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 // _mock
 import { _socials } from 'src/_mock';
-// utils
-import { fNumber } from 'src/utils/format-number';
 // components
 import Iconify from 'src/components/iconify';
 //
-import ProfilePostItem from './profile-post-item';
 import ProfileJob from './profile-job';
 
 // ----------------------------------------------------------------------
 
-export default function ProfileHome({ info, posts }) {
-  const fileRef = useRef(null);
+export default function ProfileHome({ info }) {
+  // const fileRef = useRef(null);
 
-  const handleAttach = () => {
-    if (fileRef.current) {
-      fileRef.current.click();
-    }
-  };
+  // const handleAttach = () => {
+  //   if (fileRef.current) {
+  //     fileRef.current.click();
+  //   }
+  // };
 
   const renderAbout = (
     <Card>
@@ -126,5 +118,5 @@ export default function ProfileHome({ info, posts }) {
 
 ProfileHome.propTypes = {
   info: PropTypes.object,
-  posts: PropTypes.array,
+  // posts: PropTypes.array,
 };

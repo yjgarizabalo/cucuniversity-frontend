@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 // contexts
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import Iconify from 'src/components/iconify';
 
+// utils
+import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
 
 
 export default function ProfileJob() {
@@ -54,6 +57,16 @@ ProfileJob.propTypes = {
 function JobItem({ job }) {
   const { title, location, salary, experience, avatarUrl } = job;
 
+  const router = useRouter();
+
+  const handleView = useCallback(
+    (id) => {
+      const url = paths.dashboard.students_job.details(id);
+      router.push(url);
+    },
+    [router]
+  );
+
   return (
     <Card
       sx={{
@@ -82,7 +95,7 @@ function JobItem({ job }) {
         startIcon={
           <Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} />
         }
-        // onClick={onSelected}
+        onClick={handleView}
         sx={{ flexShrink: 0, ml: 1.5 }}
       >
         ver
