@@ -17,14 +17,6 @@ import ProfileJob from './profile-job';
 // ----------------------------------------------------------------------
 
 export default function ProfileHome({ info }) {
-  // const fileRef = useRef(null);
-
-  // const handleAttach = () => {
-  //   if (fileRef.current) {
-  //     fileRef.current.click();
-  //   }
-  // };
-
   const renderAbout = (
     <Card>
       <CardHeader title="Sobre mi" />

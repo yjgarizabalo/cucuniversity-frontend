@@ -15,15 +15,15 @@ import { useMockedUser } from 'src/hooks/use-mocked-user';
 // utils
 import { fData } from 'src/utils/format-number';
 // assets
-// import { countries } from 'src/assets/data';
+import { countries } from 'src/assets/data';
 // components
-// import Iconify from 'src/components/iconify';
+import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
-  // RHFAutocomplete,
+  RHFAutocomplete,
 } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
@@ -118,22 +118,12 @@ export default function AccountGeneral() {
                     color: 'text.disabled',
                   }}
                 >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(3145728)}
+                  Permitido *.jpeg, *.jpg, *.png, *.gif
+                  <br /> tamaño máximo de  {fData(3145728)}
                 </Typography>
               }
             />
 
-            <RHFSwitch
-              name="isPublic"
-              labelPlacement="start"
-              label="Public Profile"
-              sx={{ mt: 5 }}
-            />
-
-            <Button variant="soft" color="error" sx={{ mt: 3 }}>
-              Delete User
-            </Button>
           </Card>
         </Grid>
 
@@ -148,12 +138,12 @@ export default function AccountGeneral() {
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="displayName" label="Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
-              <RHFTextField name="address" label="Address" />
+              <RHFTextField name="displayName" label="Nombre completo" />
+              <RHFTextField name="email" label="Correo instucional" />
+              <RHFTextField name="phoneNumber" label="Teléfono" />
+              <RHFTextField name="address" label="Dirección" />
 
-              {/* <RHFAutocomplete
+              <RHFAutocomplete
                 name="country"
                 label="Country"
                 options={countries.map((country) => country.label)}
@@ -179,18 +169,20 @@ export default function AccountGeneral() {
                     </li>
                   );
                 }}
-              /> */}
+              />
 
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
+
+              <RHFTextField name="state" label="Departamento / Estado" />
+              <RHFTextField name="city" label="municipio / Ciudad" />
+              <RHFTextField name="email" label="Correo personal" />
+              <RHFTextField name="zipCode" label="Codigo Postal" />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <RHFTextField name="about" multiline rows={4} label="About" />
+              <RHFTextField name="about" multiline rows={4} label="Sobre mi" />
 
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                Save Changes
+                Guardar cambios
               </LoadingButton>
             </Stack>
           </Card>

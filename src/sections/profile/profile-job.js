@@ -55,13 +55,13 @@ ProfileJob.propTypes = {
 // ----------------------------------------------------------------------
 
 function JobItem({ job }) {
-  const { title, location, salary, experience, avatarUrl } = job;
+  const { title, location, salary, experience, avatarUrl , id} = job;
 
   const router = useRouter();
 
   const handleView = useCallback(
-    (id) => {
-      const url = paths.dashboard.students_job.details(id);
+    (idJob) => {
+      const url = paths.dashboard.students_job.details(idJob);
       router.push(url);
     },
     [router]
@@ -88,18 +88,16 @@ function JobItem({ job }) {
         }
       />
 
-
-
       <Button
         size="small"
-        startIcon={
-          <Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} />
-        }
-        onClick={handleView}
+        startIcon={<Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} />}
+        onClick={ () => handleView(id)}
         sx={{ flexShrink: 0, ml: 1.5 }}
       >
         ver
       </Button>
+
+
     </Card>
   );
 }
