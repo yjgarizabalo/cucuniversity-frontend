@@ -6,19 +6,15 @@ import Container from '@mui/material/Container';
 // routes
 import { paths } from 'src/routes/paths';
 // _mock
-import { _userAbout, _userPlans, _userPayment, _userInvoices, _userAddressBook } from 'src/_mock';
+import {  } from 'src/_mock';
 // components
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
 import AccountGeneral from '../account-general';
-
-// export { default as AccountView } from './user-account-view';
-// import AccountBilling from '../account-billing';
-// import AccountSocialLinks from '../account-social-links';
-// import AccountNotifications from '../account-notifications';
-// import AccountChangePassword from '../account-change-password';
+import AccountStudies from '../account-studies';
+import AccountExperience from '../account-exp';
 
 // ----------------------------------------------------------------------
 
@@ -85,20 +81,9 @@ export default function AccountView() {
 
       {currentTab === 'general' && <AccountGeneral />}
 
-      {/* {currentTab === 'billing' && (
-        <AccountBilling
-          plans={_userPlans}
-          cards={_userPayment}
-          invoices={_userInvoices}
-          addressBook={_userAddressBook}
-        />
-      )}
+      {currentTab === 'studies' && <AccountStudies/>}
 
-      {currentTab === 'notifications' && <AccountNotifications />}
-
-      {currentTab === 'social' && <AccountSocialLinks socialLinks={_userAbout.socialLinks} />}
-
-      {currentTab === 'security' && <AccountChangePassword />} */}
+      {currentTab === 'experience' && <AccountExperience />}
     </Container>
   );
 }
