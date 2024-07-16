@@ -15,6 +15,7 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import AccountGeneral from '../account-general';
 import AccountStudies from '../account-studies';
 import AccountExperience from '../account-exp';
+import AccountCv from '../account-cv';
 
 // ----------------------------------------------------------------------
 
@@ -84,6 +85,8 @@ export default function AccountView() {
       {currentTab === 'studies' && <AccountStudies/>}
 
       {currentTab === 'experience' && <AccountExperience />}
+
+      {currentTab === 'cv' && <AccountCv />}
     </Container>
   );
 }
