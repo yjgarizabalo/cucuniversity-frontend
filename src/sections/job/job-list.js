@@ -82,9 +82,5 @@ return (
       />
     )}
   </>
-);
+  );
 }
-
-// JobList.propTypes = {
-//   job: PropTypes.array,
-// };

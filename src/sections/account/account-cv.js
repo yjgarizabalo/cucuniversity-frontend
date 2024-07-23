@@ -8,6 +8,9 @@ import { paths } from 'src/routes/paths';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 
+// mock
+import {} from 'src/_mock/'
+
 // @mui
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
@@ -21,7 +24,7 @@ import { UploadBox } from 'src/components/upload';
 import FormProvider from 'src/components/hook-form';
 
 import AccountAddCv from './components/account-add-cv';
-import FileStorageOverview from './components/account-add-overview';
+import AccountAddOverview from './components/account-add-overview';
 
 // ----------------------------------------------------------------------
 
@@ -46,22 +49,22 @@ export default function AccountCv({ currentCv }) {
     [files]
   );
 
-  const renderStorageOverview = (
-    <FileStorageOverview
-      total={GB}
-      chart={{
-        series: 76,
-      }}
-      data={[
-        {
-          name: 'Documents',
-          usedStorage: GB / 5,
-          filesCount: 223,
-          icon: <Box component="img" src="/assets/icons/files/ic_document.svg" />,
-        },
-      ]}
-    />
-  );
+  // const renderStorageOverview = (
+  //   <FileStorageOverview
+  //     total={GB}
+  //     chart={{
+  //       series: 76,
+  //     }}
+  //     data={[
+  //       {
+  //         name: 'Documents',
+  //         usedStorage: GB / 5,
+  //         filesCount: 223,
+  //         icon: <Box component="img" src="/assets/icons/files/ic_document.svg" />,
+  //       },
+  //     ]}
+  //   />
+  // );
 
 
   return (
@@ -75,29 +78,30 @@ export default function AccountCv({ currentCv }) {
             sx={{ mt: 2 }}
           />
         </Stack>
-        <Grid xs={12} md={6} lg={4}>
-          <UploadBox
-            onDrop={handleDrop}
-            placeholder={
-              <Stack spacing={0.5} alignItems="center" sx={{ color: 'text.disabled' }}>
-                <Iconify icon="eva:cloud-upload-fill" width={40} />
-                <Typography variant="body2">Upload file</Typography>
-              </Stack>
-            }
-            sx={{
-              mb: 3,
-              py: 2.5,
-              width: 'auto',
-              height: 'auto',
-              borderRadius: 1.5,
-            }}
-          />
 
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>{renderStorageOverview}</Box>
-
-        </Grid>
+        <UploadBox
+          onDrop={handleDrop}
+          placeholder={
+            <Stack spacing={0.5} alignItems="center" sx={{ color: 'text.disabled' }}>
+              <Iconify icon="eva:cloud-upload-fill" width={40} />
+              <Typography variant="body2">Upload file</Typography>
+            </Stack>
+          }
+          sx={{
+            mb: 3,
+            py: 2.5,
+            mx: 2,
+            width: 'auto',
+            height: 'auto',
+            borderRadius: 1.5,
+          }}
+        />
       </Card>
+
+      <AccountAddOverview open={upload.value} onClose={upload.onFalse} />
+
     </FormProvider>
+
   )
 
 }

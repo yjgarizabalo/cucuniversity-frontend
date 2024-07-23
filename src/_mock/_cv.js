@@ -17,3 +17,7 @@ export const _yearsExperiencie = [
   "3 años",
   "mas de 3 años"
 ]
+
+export const _cvFiles = [
+
+]
