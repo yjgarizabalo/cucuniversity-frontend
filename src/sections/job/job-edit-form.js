@@ -221,7 +221,7 @@ export default function JobEditForm({ currentJob, open, onClose }) {
       <Button variant="outlined" onClick={onClose}>
         Cancelar
       </Button>
-      <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+      <LoadingButton type="submit" variant="contained" loadingDetail={isSubmitting}>
         Actulizar
       </LoadingButton>
     </DialogActions>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
@@ -12,20 +12,16 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
 // utils
-import { fData } from 'src/utils/format-number';
 
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Unstable_Grid2';
 import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
 
 // components
-import Label from 'src/components/label';
 import { useUserContext } from 'src/context/user/hooks/userUserContext';
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFTextField, RHFUploadAvatar, RHFAutocomplete } from 'src/components/hook-form';
-import Typography from '@mui/material/Typography';
+import FormProvider, { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
 //  ----------------------------------------------------------------------
 
@@ -37,6 +33,12 @@ const _gender = [
 const _programs = [
   'Lic. en Administración de Negocios Internacionales',
   'Administración de Negocios Internacionales',
+]
+
+const _documentType = [
+  'Cedula de Ciudadania',
+  'Tarjeta de Identidad',
+  'Cedula de Extranjeria'
 ]
 
 
@@ -81,13 +83,10 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
 
   const {
     reset,
-    watch,
-    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
 
 
   const onSubmit = handleSubmit(async (data) => {
@@ -187,6 +186,19 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
                   <RHFTextField name="lastName" label="Primer apellido" />
                   <RHFTextField name="secondSurname" label="Segundo apellido" />
                   <RHFTextField name="identification" label="Identificación" />
+
+                  <RHFAutocomplete
+                    name="documentType"
+                    label="Tipo de documento"
+                    options={_documentType}
+                    getOptionLabel={(option) => option}
+                    isOptionEqualToValue={(option, value) => option === value}
+                    renderOption={(props, option) =>
+                      <li {...props} key={option}>
+                        {option}
+                      </li>
+                    }
+                  />
 
                   <RHFAutocomplete
                     name="program"

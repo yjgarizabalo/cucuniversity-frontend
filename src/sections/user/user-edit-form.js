@@ -37,6 +37,12 @@ const _programs = [
   'Administración de Negocios Internacionales',
 ]
 
+const _documentType = [
+  'Cedula de Ciudadania',
+  'Tarjeta de Identidad',
+  'Cedula de Extranjeria'
+]
+
 
 export default function UserEditForm({ currentUser, currentRoles, open, onClose }, sx) {
   const { editUserAction } = useUserContext();
@@ -186,6 +192,19 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                   <RHFTextField name="lastName" label="Primer apellido" />
                   <RHFTextField name="secondSurname" label="Segundo apellido" />
                   <RHFTextField name="identification" label="Identificación" />
+
+                  <RHFAutocomplete
+                    name="documentType"
+                    label="Tipo de Documento"
+                    options={_documentType}
+                    getOptionLabel={(option) => option || ''}
+                    isOptionEqualToValue={(option, value) => option === value}
+                    renderOption={(props, option) =>
+                      <li {...props} key={option}>
+                        {option}
+                      </li>
+                    }
+                  />
 
                   <RHFAutocomplete
                     name="program"

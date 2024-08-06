@@ -19,7 +19,7 @@ import JobDetailsCandidates from '../job-details-candidates';
 // ----------------------------------------------------------------------
 
 export default function JobDetailsView({ id }) {
-  const { loading, jobSelected, getJobByIdAction  } = useJobContext();
+  const { loadingDetail, jobSelected, getJobByIdAction  } = useJobContext();
 
   useEffect(() => { getJobByIdAction(id) }, [getJobByIdAction, id]);
 
@@ -65,7 +65,7 @@ export default function JobDetailsView({ id }) {
   );
 
   return (
-    loading ? <LoadingScreen/> :
+    loadingDetail ? <LoadingScreen/> :
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <JobDetailsToolbar
         backLink={paths.dashboard.students_job.job}
