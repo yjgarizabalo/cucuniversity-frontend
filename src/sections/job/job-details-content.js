@@ -29,7 +29,7 @@ export default function JobDetailsContent({ job }) {
     company,
     location,
     roleJob
-  } = job;
+  } = job || {};
 
   const renderContent = (
     <Stack component={Card} spacing={3} sx={{ p: 3 }}>
@@ -131,19 +131,22 @@ export default function JobDetailsContent({ job }) {
   );
 
   return (
-    <Grid container spacing={3}>
-      <Grid xs={12} md={8}>
-        {renderContent}
-      </Grid>
 
-      <Grid xs={12} md={4}>
-        {renderGeneral}
+      <Grid container spacing={3}>
+        <Grid xs={12} md={8}>
+          {renderContent}
+        </Grid>
 
-        {renderCompany}
+        <Grid xs={12} md={4}>
+          {renderGeneral}
+
+          {renderCompany}
+        </Grid>
       </Grid>
-    </Grid>
   );
+
 }
+
 
 JobDetailsContent.propTypes = {
   job: PropTypes.object,

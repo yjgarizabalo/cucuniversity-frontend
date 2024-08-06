@@ -35,6 +35,7 @@ const reducer = (state, action) => {
         ...state,
         jobSelected: action.payload,
         loading: false,
+        loadingDetail: false,
         error: false,
       };
     case Payload.ADD_JOB:

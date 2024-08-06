@@ -20,7 +20,7 @@ export const useJobApi = () => {
   }, [getFetch, handleResponseMessage]);
 
   const addJob = useCallback(async job => {
-    const newJob = await postFetch(endpoints.jobs, job);;
+    const newJob = await postFetch(endpoints.jobs, job);
     handleResponseMessage(newJob);
     return newJob
   }, [postFetch, handleResponseMessage]);

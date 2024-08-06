@@ -1,6 +1,7 @@
 export const initialState = {
   jobs: [],
   jobSelected: {},
-  loading: false,
+  loading: true,
+  loadingDetail: true,
   error: false,
 }

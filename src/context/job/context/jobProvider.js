@@ -13,6 +13,7 @@ import { useJobDispatch } from '../hooks/useJobDispatch';
 export const JobProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const isJobListViewActive = useActiveLink(paths.dashboard.user.jobs);
+  // const isJobDetailsViewActive = useActiveLink(paths.dashboard.students_job.details(':id'));
   const { handleErrorMessageNotickBar } = useHandleResponseMessage();
   const { fetchJobs, fetchJobById, addJob, updateJob, deleteJob, multiDeleteJob } = useJobApi();
   const {
@@ -109,6 +110,7 @@ export const JobProvider = ({ children }) => {
         jobs: state.jobs,
         jobSelected: state.jobSelected,
         loading: state.loading,
+        loadingDetail: state.loadingDetail,
         error: state.error,
         getJobAction,
         getJobByIdAction,
@@ -121,6 +123,7 @@ export const JobProvider = ({ children }) => {
       state.jobs,
       state.jobSelected,
       state.loading,
+      state.loadingDetail,
       state.error,
       //
       getJobAction,

@@ -136,7 +136,6 @@ export default function JobEditForm({ currentJob, open, onClose }) {
               spacing={4}
               name="experience"
               options={JOB_EXPERIENCE_OPTIONS}
-
             />
           </Stack>
 
