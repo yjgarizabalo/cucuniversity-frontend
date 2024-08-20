@@ -35,6 +35,7 @@ const _gender = [
 const _programs = [
   'Lic. en Administración de Negocios Internacionales',
   'Administración de Negocios Internacionales',
+  'Funcionaro'
 ]
 
 const _documentType = [
@@ -73,7 +74,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
       program: currentUser?.program || '',
       gender: currentUser?.gender || '',
       phoneNumber: currentUser?.phoneNumber || '',
-      roleId: currentUser?.roleId || { id: '', name: '', description: '' },
+      roleId: typeof currentUser?.roleId === 'object'  ? currentUser.roleId : { id: currentUser?.roleId || '', name: '', description: '' }
     }),
     [currentUser]
   );

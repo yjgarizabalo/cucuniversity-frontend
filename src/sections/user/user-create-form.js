@@ -33,6 +33,7 @@ const _gender = [
 const _programs = [
   'Lic. en Administración de Negocios Internacionales',
   'Administración de Negocios Internacionales',
+  'Funcionaro'
 ]
 
 const _documentType = [
