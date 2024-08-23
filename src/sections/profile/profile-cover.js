@@ -17,7 +17,7 @@ export default function ProfileCover({ name, avatarUrl, role, coverProfileUrl })
     <Box
       sx={{
         ...bgGradient({
-          color: alpha(theme.palette.primary.darker, 0.2),
+          color: alpha(theme.palette.secondary.main, 0.2),
           imgUrl: coverProfileUrl,
         }),
         height: 1,
