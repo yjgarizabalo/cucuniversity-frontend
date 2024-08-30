@@ -143,7 +143,7 @@ export default function AccountGeneral() {
 
               <RHFAutocomplete
                 name="country"
-                label="Country"
+                label="Paies"
                 options={countries.map((country) => country.label)}
                 getOptionLabel={(option) => option}
                 renderOption={(props, option) => {
@@ -173,7 +173,6 @@ export default function AccountGeneral() {
               <RHFTextField name="state" label="Departamento / Estado" />
               <RHFTextField name="city" label="municipio / Ciudad" />
               <RHFTextField name="email" label="Correo personal" />
-              <RHFTextField name="zipCode" label="Codigo Postal" />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
