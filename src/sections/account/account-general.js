@@ -24,40 +24,27 @@ import FormProvider, {
   RHFAutocomplete,
 } from 'src/components/hook-form';
 
+// context
+import { useCvContext } from 'src/context/cv/hooks/useCvContext'
+import { displayName } from 'react-quill';
+
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
+  const { addCvAction } = useCvContext();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const { user } = useMockedUser();
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    photoURL: Yup.mixed().nullable().required('Avatar is required'),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    country: Yup.string().required('Country is required'),
-    address: Yup.string().required('Address is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
-    zipCode: Yup.string().required('Zip code is required'),
-    about: Yup.string().required('About is required'),
-    // not required
-    isPublic: Yup.boolean(),
+    displayName: Yup.string().required('Nombre es requerido'),
+    email: Yup.string().email('Email no válido').required('Email es requerido'),
   });
 
   const defaultValues = {
     displayName: user?.displayName || '',
     email: user?.email || '',
-    photoURL: user?.photoURL || null,
-    phoneNumber: user?.phoneNumber || '',
-    country: user?.country || '',
-    address: user?.address || '',
-    state: user?.state || '',
-    city: user?.city || '',
-    zipCode: user?.zipCode || '',
-    about: user?.about || '',
-    isPublic: user?.isPublic || false,
   };
 
   const methods = useForm({
@@ -72,6 +59,10 @@ export default function AccountGeneral() {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+    const dataCv = {
+
+    }
+
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar('Update success!');
