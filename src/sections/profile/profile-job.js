@@ -19,7 +19,7 @@ import { useRouter } from 'src/routes/hooks';
 
 
 export default function ProfileJob() {
-  const { jobs, getJobAction, } = useJobContext();
+  const { jobs, loading, getJobAction, } = useJobContext();
 
   useEffect(() => {
     getJobAction();

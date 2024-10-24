@@ -16,11 +16,12 @@ import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
 import AccountView from 'src/sections/account/view/user-account-view';
+import { useAuthContext } from 'src/auth/hooks';
+import { LoadingScreen } from 'src/components/loading-screen';
 import ProfileFavorite from '../profile-favorite';
 import ProfileAplications from '../profile-aplications';
 import ProfileHome from '../profile-home';
 import ProfileCover from '../profile-cover';
-
 
 // ----------------------------------------------------------------------
 
@@ -47,69 +48,78 @@ const TABS = [
 export default function UserProfileView() {
   const settings = useSettingsContext();
 
+  const { user: authUser, loading } = useAuthContext();
+
   const { user } = useMockedUser();
 
   const [currentTab, setCurrentTab] = useState('profile');
-
 
   const handleChangeTab = useCallback((event, newValue) => {
     setCurrentTab(newValue);
   }, []);
 
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-      <CustomBreadcrumbs
-        heading="Mi área"
-        links={[
-          { name: 'Inicio', href: paths.dashboard.root },
-          { name: 'Mi área', href: paths.dashboard.user.root },
-          { name: user?.displayName },
-        ]}
-        sx={{
-          mb: { xs: 3, md: 5 },
-        }}
-      />
-
-      <Card sx={{ mb: 3, height: 290, }}>
-
-        <ProfileCover
-          role={_userAbout.role}
-          name={user?.displayName}
-          avatarUrl={user?.coverProfileUrl}
-          coverUrl={_userAbout.coverUrl}
-          coverProfileUrl={_userAbout.coverProfileUrl}
-        />
-
-        <Tabs
-          value={currentTab}
-          onChange={handleChangeTab}
-          sx={{
-            width: 1,
-            bottom: 0,
-            zIndex: 9,
-            position: 'absolute',
-            bgcolor: 'background.paper',
-            [`& .${tabsClasses.flexContainer}`]: {
-              pr: { md: 3 },
-              justifyContent: {
-                sm: 'center',
-                md: 'flex-end',
+    <>
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+          <CustomBreadcrumbs
+            heading="Mi área"
+            links={[
+              { name: 'Inicio', href: paths.dashboard.root },
+              { name: 'Mi área', href: paths.dashboard.user.root },
+              {
+                name: authUser
+                  ? `${authUser.firstName} ${authUser.secondName} ${authUser.lastName} ${authUser.secondSurname}`
+                  : 'Invitado',
               },
-            },
-          }}
-        >
-          {TABS.map((tab) => (
-            <Tab key={tab.value} value={tab.value} icon={tab.icon} label={tab.label} />
-          ))}
-        </Tabs>
-      </Card>
+            ]}
+            sx={{
+              mb: { xs: 3, md: 5 },
+            }}
+          />
 
-      {currentTab === 'profile' && <ProfileHome info={_userAbout} posts={_userFeeds} />}
+          <Card sx={{ mb: 3, height: 290 }}>
+            <ProfileCover
+              role={authUser ? authUser.program : ''}
+              name={authUser ? `${authUser.firstName} ${authUser?.secondName} ${authUser?.lastName} ${authUser?.secondSurname}` : 'invitado'}
+              avatarUrl={user?.coverProfileUrl}
+              coverUrl={_userAbout.coverUrl}
+              coverProfileUrl={_userAbout.coverProfileUrl}
+            />
 
-      {currentTab === 'aplications' && <ProfileAplications aplications={_userAplications} />}
+            <Tabs
+              value={currentTab}
+              onChange={handleChangeTab}
+              sx={{
+                width: 1,
+                bottom: 0,
+                zIndex: 9,
+                position: 'absolute',
+                bgcolor: 'background.paper',
+                [`& .${tabsClasses.flexContainer}`]: {
+                  pr: { md: 3 },
+                  justifyContent: {
+                    sm: 'center',
+                    md: 'flex-end',
+                  },
+                },
+              }}
+            >
+              {TABS.map((tab) => (
+                <Tab key={tab.value} value={tab.value} icon={tab.icon} label={tab.label} />
+              ))}
+            </Tabs>
+          </Card>
 
-      {currentTab === 'cv' && <AccountView />}
+          {currentTab === 'profile' && <ProfileHome info={_userAbout} posts={_userFeeds} />}
 
-    </Container>
+          {currentTab === 'aplications' && <ProfileAplications aplications={_userAplications} />}
+
+          {currentTab === 'cv' && <AccountView />}
+        </Container>
+      )}
+    </>
   );
 }

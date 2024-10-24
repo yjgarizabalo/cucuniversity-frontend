@@ -30,7 +30,7 @@ export const dashboardRoutes = [
   {
     path: 'dashboard',
     element: (
-      // <AuthGuard>
+      <AuthGuard>
         <UserProvider>
           <RoleProvider>
           <JobProvider>
@@ -42,7 +42,7 @@ export const dashboardRoutes = [
           </JobProvider>
           </RoleProvider>
         </UserProvider>
-      // </AuthGuard>
+      </AuthGuard>
     ),
     children: [
       { element: <IndexPage />, index: true },

@@ -22,7 +22,7 @@ import { PATH_AFTER_LOGIN } from 'src/config-global';
 import { useAuthContext } from 'src/auth/hooks';
 // components
 import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -35,22 +35,26 @@ export default function JwtRegisterView() {
 
   const searchParams = useSearchParams();
 
+  const emailFromUrl = searchParams.get('ps') || '';
+
   const returnTo = searchParams.get('returnTo');
 
   const password = useBoolean();
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    password: Yup.string().required('Password is required'),
+    password: Yup.string().required('Registrar una contraseña valida'),
+    documentType: Yup.string().required('tipo de documento es requerido'),
+    gender: Yup.string().required('genero es requerido'),
+    phoneNumber: Yup.number().required('numero celular es requerido'),
+    program: Yup.string().required('programa es requerido'),
   });
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
     password: '',
+    documentType: 'Cedula de ciudadania',
+    gender: 'Masculino',
+    phoneNumber: '',
+    program: 'Marketing digital',
   };
 
   const methods = useForm({
@@ -66,7 +70,15 @@ export default function JwtRegisterView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register?.(data.email, data.password, data.firstName, data.lastName);
+      await register(
+        emailFromUrl,
+        data.password,
+        data.identification,
+        data.phoneNumber,
+        data.gender,
+        data.program,
+        data.documentType
+      );
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
@@ -78,13 +90,15 @@ export default function JwtRegisterView() {
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-      <Typography variant="h4">Get started absolutely free</Typography>
+      <Typography variant="h4">
+        registra tus datos para poder disfrutar de todas nuestras ofertas laborales
+      </Typography>
 
       <Stack direction="row" spacing={0.5}>
-        <Typography variant="body2"> Already have an account? </Typography>
+        <Typography variant="body2"> ya tienes una cuenta? </Typography>
 
         <Link href={paths.auth.jwt.login} component={RouterLink} variant="subtitle2">
-          Sign in
+          Iniciar sesion
         </Link>
       </Stack>
     </Stack>
@@ -102,11 +116,11 @@ export default function JwtRegisterView() {
     >
       {'By signing up, I agree to '}
       <Link underline="always" color="text.primary">
-        Terms of Service
+        Terminos de servicio
       </Link>
       {' and '}
       <Link underline="always" color="text.primary">
-        Privacy Policy
+        Politica de privacidad
       </Link>
       .
     </Typography>
@@ -117,16 +131,9 @@ export default function JwtRegisterView() {
       <Stack spacing={2.5}>
         {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <RHFTextField name="firstName" label="First name" />
-          <RHFTextField name="lastName" label="Last name" />
-        </Stack>
-
-        <RHFTextField name="email" label="Email address" />
-
         <RHFTextField
           name="password"
-          label="Password"
+          label="Contraseña"
           type={password.value ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -139,6 +146,28 @@ export default function JwtRegisterView() {
           }}
         />
 
+        <RHFAutocomplete
+          name="documentType"
+          label="Tipo de documento"
+          options={['Cedula de ciudadania', 'Tarjeta de identidad', 'Pasaporte']}
+        />
+
+        <RHFTextField name="identification" label="Numero de identificacion" type="number" />
+
+        <RHFAutocomplete name="gender" label="Genero" options={['Masculino', 'Femenino']} />
+
+        <RHFTextField name="phoneNumber" label="Numero de celular" type="number" />
+
+        <RHFAutocomplete
+          name="program"
+          label="Programa"
+          options={[
+            'Marketing digital',
+            'Lic. en Administración de Negocios Internacionales',
+            'Funcionaro',
+          ]}
+        />
+
         <LoadingButton
           fullWidth
           color="inherit"
@@ -147,7 +176,7 @@ export default function JwtRegisterView() {
           variant="contained"
           loading={isSubmitting}
         >
-          Create account
+          Registrarme
         </LoadingButton>
       </Stack>
     </FormProvider>

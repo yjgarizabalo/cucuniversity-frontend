@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 // config
-import { PATH_AFTER_LOGIN } from 'src/config-global';
+import { CUC_HOST_API, PATH_AFTER_LOGIN } from 'src/config-global';
 // routes
 import { useSearchParams, useRouter } from 'src/routes/hooks';
 // hooks
@@ -19,6 +19,8 @@ import { useAuthContext } from 'src/auth/hooks';
 // components
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import { endpoints } from 'src/utils/axios';
+import { Alert } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +28,8 @@ export default function ModernLoginView() {
   const { login } = useAuthContext();
 
   const router = useRouter();
+
+  const [isMicrosoftSubmitting, setIsMicrosoftSubmitting] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -40,10 +44,9 @@ export default function ModernLoginView() {
     password: Yup.string().required('Password is required'),
   });
 
-
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    email: 'ygarizabalo@estudiantes.areandina.edu.co',
+    password: '12345',
   };
 
   const methods = useForm({
@@ -57,26 +60,28 @@ export default function ModernLoginView() {
     formState: { isSubmitting },
   } = methods;
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     await new Promise((resolve) => setTimeout(resolve, 500));
-  //     console.info('DATA', data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // });
-
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await login?.(data.email, data.password);
+      await login(data.email, data.password);
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
-      console.error(error);
       reset();
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
+
+  const handleMicrosoftLogin = async () => {
+    setIsMicrosoftSubmitting(true);
+    // Aquí puedes llamar a tu función de autenticación con Microsoft
+    // Simulando un retraso para demostrar el comportamiento de carga
+    // Simula el inicio de sesión de Microsoft
+    setTimeout(() => {
+      // Aquí llamas a la API de Microsoft y manejas la respuesta
+      // Al finalizar, establece isMicrosoftSubmitting a false
+      setIsMicrosoftSubmitting(false);
+    }, 2000); // Simula un retraso de 2 segundos
+  };
 
 
   const renderHead = (
@@ -87,6 +92,8 @@ export default function ModernLoginView() {
 
   const renderForm = (
     <Stack spacing={2.5}>
+      {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+
       <RHFTextField name="email" label="Correo Electronico" />
 
       <RHFTextField
@@ -106,7 +113,7 @@ export default function ModernLoginView() {
 
       <LoadingButton
         fullWidth
-        color="inherit"
+        color="primary"
         size="large"
         type="submit"
         variant="contained"
@@ -114,7 +121,23 @@ export default function ModernLoginView() {
         endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         sx={{ justifyContent: 'space-between', pl: 2, pr: 1.5 }}
       >
-        Iniciar
+        Iniciar sesion
+      </LoadingButton>
+
+      <LoadingButton
+        fullWidth
+        color="inherit"
+        size="large"
+        variant="contained"
+        loading={isMicrosoftSubmitting}
+        endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
+        sx={{ justifyContent: 'space-between', pl: 2, pr: 1.5 }}
+        onClick={() => {
+          handleMicrosoftLogin();
+          window.location.href = `${CUC_HOST_API}${endpoints.auth.login}`;
+        }}
+      >
+        Iniciar sesión con mi cuenta Microsoft
       </LoadingButton>
     </Stack>
   );

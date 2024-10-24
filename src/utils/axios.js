@@ -8,7 +8,10 @@ const axiosInstance = axios.create({ baseURL: CUC_HOST_API });
 
 axiosInstance.interceptors.response.use(
   (res) => res,
-  (error) => Promise.reject((error.response && error.response.data) || 'Error en el servidor, intente mas tarde')
+  (error) =>
+    Promise.reject(
+      (error.response && error.response.data) || 'Error en el servidor, intente mas tarde'
+    )
 );
 
 export default axiosInstance;
@@ -60,4 +63,9 @@ export const endpoints = {
   roles: '/api/v1/roles',
   jobs: '/api/v1/jobs',
   cv: '/api/v1/cv',
+  auth: {
+    login: '/api/v1/auth/login',
+    auth: '/api/v1/auth/auth',
+    me: '/api/v1/auth/me',
+  },
 };

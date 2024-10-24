@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useCallback, useMemo } from 'react';
 // utils
-import axios, { endpoints } from 'src/utils/axios';
+import { endpoints, getFetch, postFetch, updateFetch } from 'src/utils/axios';
 //
+import { useSearchParams } from 'src/routes/hooks';
 import { AuthContext } from './auth-context';
 import { isValidToken, setSession } from './utils';
 
@@ -53,15 +54,22 @@ const STORAGE_KEY = 'accessToken';
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const searchParams = useSearchParams();
+  const tokenFromUrl = searchParams.get('token');
 
   const initialize = useCallback(async () => {
     try {
+      if (tokenFromUrl) {
+        setSession(tokenFromUrl);
+        sessionStorage.setItem(STORAGE_KEY, tokenFromUrl);
+      }
+
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
 
-        const response = await axios.get(endpoints.auth.me);
+        const response = await getFetch(endpoints.auth.me);
 
         const { user } = response.data;
 
@@ -88,7 +96,7 @@ export function AuthProvider({ children }) {
         },
       });
     }
-  }, []);
+  }, [tokenFromUrl]);
 
   useEffect(() => {
     initialize();
@@ -101,11 +109,11 @@ export function AuthProvider({ children }) {
       password,
     };
 
-    const response = await axios.post(endpoints.auth.login, data);
+    const response = await postFetch(endpoints.auth.auth, data);
 
-    const { accessToken, user } = response.data;
+    const { token, user } = response.data;
 
-    setSession(accessToken);
+    setSession(token);
 
     dispatch({
       type: 'LOGIN',
@@ -116,27 +124,34 @@ export function AuthProvider({ children }) {
   }, []);
 
   // REGISTER
-  const register = useCallback(async (email, password, firstName, lastName) => {
-    const data = {
-      email,
-      password,
-      firstName,
-      lastName,
-    };
+  const register = useCallback(
+    async (email, password, identification, phoneNumber, gender, program, documentType) => {
+      const data = {
+        password,
+        identification,
+        phoneNumber,
+        gender,
+        program,
+        documentType,
+      };
 
-    const response = await axios.post(endpoints.auth.register, data);
+      const response = await updateFetch(`${endpoints.users}/email/${email}`, data);
 
-    const { accessToken, user } = response.data;
+      const { token, user } = response.data;
 
-    sessionStorage.setItem(STORAGE_KEY, accessToken);
+      setSession(token);
 
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        user,
-      },
-    });
-  }, []);
+      sessionStorage.setItem(STORAGE_KEY, token);
+
+      dispatch({
+        type: 'REGISTER',
+        payload: {
+          user,
+        },
+      });
+    },
+    []
+  );
 
   // LOGOUT
   const logout = useCallback(async () => {

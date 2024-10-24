@@ -47,7 +47,7 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function JobListView(rowAdd) {
-  const { jobs, getJobAction } = useJobContext();
+  const { jobs, loading, getJobAction } = useJobContext();
 
   const settings = useSettingsContext();
 
