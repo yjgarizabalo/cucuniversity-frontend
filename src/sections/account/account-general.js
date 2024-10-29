@@ -25,13 +25,13 @@ import FormProvider, {
 } from 'src/components/hook-form';
 
 // context
-import { useCvContext } from 'src/context/cv/hooks/useCvContext'
-import { displayName } from 'react-quill';
+// import { useCvContext } from 'src/context/cv/hooks/useCvContext'
+// import { displayName } from 'react-quill';
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
-  const { addCvAction } = useCvContext();
+  // const { addCvAction } = useCvContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -166,7 +166,10 @@ export default function AccountGeneral() {
               <RHFTextField name="email" label="Correo personal" />
             </Box>
 
+
+
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
+              <RHFTextField name="socialNetwork" label="Linkedin" />
               <RHFTextField name="about" multiline rows={4} label="Sobre mi" />
 
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>

@@ -47,8 +47,8 @@ export const dashboardRoutes = [
     children: [
       { element: <IndexPage />, index: true },
       { path: 'application', element: <PageApplication /> },
-      { path: 'favorite', element: <PageFavorite /> },
-      { path: 'courses', element: <PageCourses /> },
+      // { path: 'favorite', element: <PageFavorite /> },
+      // { path: 'courses', element: <PageCourses /> },
 
       {
         path: 'students_job',
