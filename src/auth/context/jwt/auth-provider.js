@@ -3,7 +3,7 @@ import { useEffect, useReducer, useCallback, useMemo } from 'react';
 // utils
 import { endpoints, getFetch, postFetch, updateFetch } from 'src/utils/axios';
 //
-import { useSearchParams } from 'src/routes/hooks';
+import { useSearchParams, useRouter } from 'src/routes/hooks';
 import { AuthContext } from './auth-context';
 import { isValidToken, setSession } from './utils';
 
@@ -18,6 +18,7 @@ import { isValidToken, setSession } from './utils';
 const initialState = {
   user: null,
   loading: true,
+  errorMsg: '',
 };
 
 const reducer = (state, action) => {
@@ -31,18 +32,29 @@ const reducer = (state, action) => {
     return {
       ...state,
       user: action.payload.user,
+      errorMsg: '',
     };
   }
   if (action.type === 'REGISTER') {
     return {
       ...state,
       user: action.payload.user,
+      errorMsg: '',
     };
   }
   if (action.type === 'LOGOUT') {
     return {
       ...state,
       user: null,
+      errorMsg: '',
+    };
+  }
+  if (action.type === 'ERRORMSG') {
+    return {
+      ...state,
+      user: null,
+      errorMsg: action.payload.errorMsg,
+      loading: false,
     };
   }
   return state;
@@ -55,9 +67,20 @@ const STORAGE_KEY = 'accessToken';
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const searchParams = useSearchParams();
+  const router = useRouter();
   const tokenFromUrl = searchParams.get('token');
+  const inactiveUserError = searchParams.get('ms');
 
   const initialize = useCallback(async () => {
+    if (inactiveUserError) {
+      dispatch({
+        type: 'ERRORMSG',
+        payload: {
+          errorMsg: inactiveUserError,
+        },
+      });
+      return;
+    }
     try {
       if (tokenFromUrl) {
         setSession(tokenFromUrl);
@@ -96,11 +119,15 @@ export function AuthProvider({ children }) {
         },
       });
     }
-  }, [tokenFromUrl]);
+  }, [tokenFromUrl, inactiveUserError]);
 
   useEffect(() => {
     initialize();
-  }, [initialize]);
+    if (!state.user && !state.loading && window.location.pathname === 'http://localhost:5173/auth/jwt/login') {
+      console.log('estoy aqui');
+      router.push('/');
+    }
+  }, [initialize, router, state.loading, state.user]);
 
   // LOGIN
   const login = useCallback(async (email, password) => {
@@ -174,12 +201,13 @@ export function AuthProvider({ children }) {
       loading: status === 'loading',
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',
+      errorMsg: state.errorMsg,
       //
       login,
       register,
       logout,
     }),
-    [login, logout, register, state.user, status]
+    [login, logout, register, state.user, status, state.errorMsg]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;

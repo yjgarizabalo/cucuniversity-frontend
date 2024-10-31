@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -25,7 +25,7 @@ import { Alert } from '@mui/material';
 // ----------------------------------------------------------------------
 
 export default function ModernLoginView() {
-  const { login } = useAuthContext();
+  const { login, errorMsg: inactiveUser } = useAuthContext();
 
   const router = useRouter();
 
@@ -37,6 +37,8 @@ export default function ModernLoginView() {
 
   const returnTo = searchParams.get('returnTo');
 
+  const msParam = searchParams.get('ms');
+
   const password = useBoolean();
 
   const LoginSchema = Yup.object().shape({
@@ -45,7 +47,7 @@ export default function ModernLoginView() {
   });
 
   const defaultValues = {
-    email: 'ygarizabalo@estudiantes.areandina.edu.co',
+    email: 'test-jobs@cucusa.org',
     password: '12345',
   };
 
@@ -59,6 +61,16 @@ export default function ModernLoginView() {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+
+  useEffect(() => {
+    if (msParam) {
+      setErrorMsg(decodeURIComponent(msParam)); // Mostrar mensaje de error
+      
+      // Actualizar la URL sin el parámetro ms para redirigir al inicio
+      const updatedUrl = `${window.location.origin}/auth/jwt/login?returnTo=${encodeURIComponent(returnTo)}`;
+      window.history.replaceState(null, '', updatedUrl); // Reemplazar el historial con la URL de inicio
+    }
+  }, [msParam, returnTo]);;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -83,7 +95,6 @@ export default function ModernLoginView() {
     }, 2000); // Simula un retraso de 2 segundos
   };
 
-
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5, mt: 2 }}>
       <Typography variant="h4">Iniciar sesión</Typography>
@@ -92,7 +103,7 @@ export default function ModernLoginView() {
 
   const renderForm = (
     <Stack spacing={2.5}>
-      {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+      {!!errorMsg  && <Alert severity="error">{errorMsg }</Alert>}
 
       <RHFTextField name="email" label="Correo Electronico" />
 
