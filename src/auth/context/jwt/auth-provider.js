@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { useEffect, useReducer, useCallback, useMemo } from 'react';
 // utils
 import { endpoints, getFetch, postFetch, updateFetch } from 'src/utils/axios';
-//
 import { useSearchParams } from 'src/routes/hooks';
 import { AuthContext } from './auth-context';
 import { isValidToken, setSession } from './utils';
@@ -45,13 +44,7 @@ const reducer = (state, action) => {
       user: null,
     };
   }
-  if (action.type === 'ERRORMSG') {
-    return {
-      ...state,
-      user: null,
-      loading: false,
-    };
-  }
+
   return state;
 };
 
@@ -63,18 +56,8 @@ export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const searchParams = useSearchParams();
   const tokenFromUrl = searchParams.get('token');
-  const inactiveUserError = searchParams.get('ms');
 
   const initialize = useCallback(async () => {
-    if (inactiveUserError) {
-      dispatch({
-        type: 'ERRORMSG',
-        payload: {
-          errorMsg: inactiveUserError,
-        },
-      });
-      return;
-    }
     try {
       if (tokenFromUrl) {
         setSession(tokenFromUrl);
@@ -113,7 +96,7 @@ export function AuthProvider({ children }) {
         },
       });
     }
-  }, [tokenFromUrl, inactiveUserError]);
+  }, [tokenFromUrl]);
 
   useEffect(() => {
     initialize();

@@ -13,8 +13,8 @@ import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
 import AccountGeneral from '../account-general';
-import AccountStudies from '../account-studies';
-import AccountExperience from '../account-exp';
+// import AccountStudies from '../account-studies';
+// import AccountExperience from '../account-exp';
 import AccountCv from '../account-cv';
 
 // ----------------------------------------------------------------------
@@ -25,16 +25,16 @@ const TABS = [
     label: 'General',
     icon: <Iconify icon="solar:user-id-bold" width={24} />,
   },
-  {
-    value: 'studies',
-    label: 'Estudios',
-    icon: <Iconify icon="solar:book-2-bold" width={24} />,
-  },
-  {
-    value: 'experience',
-    label: 'Experiencia',
-    icon: <Iconify icon="carbon:skill-level-basic" width={24} />,
-  },
+  // {
+  //   value: 'studies',
+  //   label: 'Estudios',
+  //   icon: <Iconify icon="solar:book-2-bold" width={24} />,
+  // },
+  // {
+  //   value: 'experience',
+  //   label: 'Experiencia',
+  //   icon: <Iconify icon="carbon:skill-level-basic" width={24} />,
+  // },
 
   {
     value: 'cv',
@@ -82,9 +82,9 @@ export default function AccountView() {
 
       {currentTab === 'general' && <AccountGeneral />}
 
-      {currentTab === 'studies' && <AccountStudies/>}
+      {/* {currentTab === 'studies' && <AccountStudies/>}
 
-      {currentTab === 'experience' && <AccountExperience />}
+      {currentTab === 'experience' && <AccountExperience />} */}
 
       {currentTab === 'cv' && <AccountCv />}
     </Container>

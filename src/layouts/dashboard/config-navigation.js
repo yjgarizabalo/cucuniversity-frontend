@@ -58,8 +58,8 @@ export function useNavData() {
         items: [
           { title: 'Perfil empleo', path: paths.dashboard.root, icon: ICONS.user },
           { title: 'Aplicaciones', path: paths.dashboard.application, icon: ICONS.application },
-          { title: 'Mis favoritos', path: paths.dashboard.favorite, icon: ICONS.favorite },
-          { title: 'Cursos', path: paths.dashboard.courses, icon: ICONS.book },
+          // { title: 'Mis favoritos', path: paths.dashboard.favorite, icon: ICONS.favorite },
+          // { title: 'Cursos', path: paths.dashboard.courses, icon: ICONS.book },
           // { title: 'Inicio', path: paths.dashboard.root, icon: ICONS.home },
         ],
       },
