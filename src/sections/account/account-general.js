@@ -27,24 +27,30 @@ import FormProvider, {
 // context
 // import { useCvContext } from 'src/context/cv/hooks/useCvContext'
 // import { displayName } from 'react-quill';
+import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
   // const { addCvAction } = useCvContext();
 
+  const { user: authUser } = useAuthContext();
+
   const { enqueueSnackbar } = useSnackbar();
 
-  const { user } = useMockedUser();
+  // const { user } = useMockedUser();
 
   const UpdateUserSchema = Yup.object().shape({
     displayName: Yup.string().required('Nombre es requerido'),
     email: Yup.string().email('Email no válido').required('Email es requerido'),
   });
 
+  console.log(authUser.firstName);
+
+
   const defaultValues = {
-    displayName: user?.displayName || '',
-    email: user?.email || '',
+    displayName: `${authUser.firstName} ${authUser.lastName} ${authUser.secondSurname}` || 'Nombre no disponible',
+    email: authUser?.email || '',
   };
 
   const methods = useForm({
@@ -127,8 +133,8 @@ export default function AccountGeneral() {
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="displayName" label="Nombre completo" />
-              <RHFTextField name="email" label="Correo instucional" />
+              <RHFTextField name="displayName" label="Nombre completo" disabled/>
+              <RHFTextField name="email" label="Correo instucional" disabled/>
               <RHFTextField name="phoneNumber" label="Teléfono" />
               <RHFTextField name="address" label="Dirección" />
 

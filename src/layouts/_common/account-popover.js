@@ -14,6 +14,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // auth
 import { useAuthContext } from 'src/auth/hooks';
+
 // components
 import { varHover } from 'src/components/animate';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
@@ -22,7 +23,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 const OPTIONS = [
   {
-    label: 'Mi area',
+    label: 'Inicio',
     linkTo: '/',
   },
   {
@@ -42,7 +43,7 @@ export default function AccountPopover() {
 
   const { user } = useMockedUser();
 
-  const { logout } = useAuthContext();
+  const { logout, user: authUser  } = useAuthContext();
 
   const popover = usePopover();
 
@@ -81,7 +82,7 @@ export default function AccountPopover() {
       >
         <Avatar
           src={user?.photoURL}
-          alt={user?.displayName}
+          alt={authUser?.firstName}
           sx={{
             width: 36,
             height: 36,
@@ -93,7 +94,7 @@ export default function AccountPopover() {
       <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 200, p: 0 }}>
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
+          {authUser ? `${authUser.firstName} ${authUser.secondName} ${authUser.lastName} ${authUser.secondSurname}`: 'Invitado'}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>

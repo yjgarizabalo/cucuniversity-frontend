@@ -68,7 +68,7 @@ export default function UserProfileView() {
             heading="Mi área"
             links={[
               { name: 'Inicio', href: paths.dashboard.root },
-              { name: 'Mi área', href: paths.dashboard.user.root },
+              { name: 'Mi área', href: paths.dashboard.user },
               {
                 name: authUser
                   ? `${authUser.firstName} ${authUser.secondName} ${authUser.lastName} ${authUser.secondSurname}`
@@ -80,7 +80,7 @@ export default function UserProfileView() {
             }}
           />
 
-          <Card sx={{ mb: 3, height: 290 }}>
+          <Card sx={{ mb: 3, height: 250 }}>
             <ProfileCover
               role={authUser ? authUser.program : ''}
               name={authUser ? `${authUser.firstName} ${authUser?.secondName} ${authUser?.lastName} ${authUser?.secondSurname}` : 'invitado'}

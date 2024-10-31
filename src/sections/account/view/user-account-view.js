@@ -60,7 +60,7 @@ export default function AccountView() {
         heading="Hoja de vida"
         links={[
           { name: 'Inicio', href: paths.dashboard.root },
-          { name: 'Mi area', href: paths.dashboard.user.root },
+          { name: 'Perfil', href: paths.dashboard.root },
           { name: 'Hoja de vida' },
         ]}
         sx={{
