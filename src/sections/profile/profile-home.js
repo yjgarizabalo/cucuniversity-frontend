@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
 // @mui
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';

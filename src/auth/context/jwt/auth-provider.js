@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { useEffect, useReducer, useCallback, useMemo } from 'react';
 // utils
 import { endpoints, getFetch, postFetch, updateFetch } from 'src/utils/axios';
-//
 import { useSearchParams } from 'src/routes/hooks';
 import { AuthContext } from './auth-context';
 import { isValidToken, setSession } from './utils';
@@ -45,6 +44,7 @@ const reducer = (state, action) => {
       user: null,
     };
   }
+
   return state;
 };
 

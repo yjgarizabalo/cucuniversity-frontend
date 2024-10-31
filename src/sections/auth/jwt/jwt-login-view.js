@@ -25,7 +25,7 @@ import { Alert } from '@mui/material';
 // ----------------------------------------------------------------------
 
 export default function ModernLoginView() {
-  const { login } = useAuthContext();
+  const { login, errorMsg: inactiveUser } = useAuthContext();
 
   const router = useRouter();
 
