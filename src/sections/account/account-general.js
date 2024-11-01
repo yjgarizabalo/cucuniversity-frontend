@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
@@ -9,8 +9,6 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-// hooks
-import { useMockedUser } from 'src/hooks/use-mocked-user';
 // utils
 import { fData } from 'src/utils/format-number';
 // assets
@@ -25,33 +23,46 @@ import FormProvider, {
 } from 'src/components/hook-form';
 
 // context
-// import { useCvContext } from 'src/context/cv/hooks/useCvContext'
-// import { displayName } from 'react-quill';
+import { useCvContext } from 'src/context/cv/hooks/useCvContext'
 import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
-  // const { addCvAction } = useCvContext();
-
   const { user: authUser } = useAuthContext();
+
+  const {cv, editCvAction } = useCvContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
-  // const { user } = useMockedUser();
+  console.log(authUser);
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Nombre es requerido'),
-    email: Yup.string().email('Email no válido').required('Email es requerido'),
+    phoneNumber: Yup.string().required('Teléfono es requerido'),
+    address: Yup.string().required('Dirección es requerida'),
+    country: Yup.string().required('País es requerido'),
+    state: Yup.string().required('Departamento / Estado es requerido'),
+    city: Yup.string().required('Municipio / Ciudad es requerido'),
+    personalEmail: Yup.string().email('Email no válido'),
+    socialNetwork: Yup.string().optional(),
+    aboutMe: Yup.string().optional(),
   });
 
-  console.log(authUser.firstName);
 
-
-  const defaultValues = {
-    displayName: `${authUser.firstName} ${authUser.lastName} ${authUser.secondSurname}` || 'Nombre no disponible',
-    email: authUser?.email || '',
-  };
+  const defaultValues = useMemo(
+    () => ({
+      displayName: `${authUser.firstName} ${authUser.lastName} ${authUser.secondSurname}` || 'Nombre no disponible',
+      email: authUser?.email || '',
+      phoneNumber: cv?.phoneNumber || '',
+      address: cv?.address || '',
+      country: cv?.country || '',
+      state: cv?.state || '',
+      city: cv?.city || '',
+      socialNetwork: cv?.socialNetwork || '',
+      aboutMe: cv?.aboutMe || '',
+    }),
+    [authUser, cv]
+  )
 
   const methods = useForm({
     resolver: yupResolver(UpdateUserSchema),
@@ -65,14 +76,25 @@ export default function AccountGeneral() {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-    const dataCv = {
 
-    }
 
     try {
+      const { displayName, email, ...restData } = data;
+      const dataCv = {
+        ...restData,
+        id: authUser.id,
+        phoneNumber: data.phoneNumber,
+        address: data.address,
+        country: data.country,
+        state: data.state,
+        city: data.city,
+        personalEmail: data.personalEmail,
+        socialNetwork: data.socialNetwork,
+        aboutMe: data.aboutMe,
+      }
       await new Promise((resolve) => setTimeout(resolve, 500));
-      enqueueSnackbar('Update success!');
-      console.info('DATA', data);
+      enqueueSnackbar('Hoja de vida actualizada', 'success' );
+      editCvAction(dataCv);
     } catch (error) {
       console.error(error);
     }
@@ -169,14 +191,14 @@ export default function AccountGeneral() {
 
               <RHFTextField name="state" label="Departamento / Estado" />
               <RHFTextField name="city" label="municipio / Ciudad" />
-              <RHFTextField name="email" label="Correo personal" />
+              <RHFTextField name="personalEmail" label="Correo personal" />
             </Box>
 
 
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
               <RHFTextField name="socialNetwork" label="Linkedin" />
-              <RHFTextField name="about" multiline rows={4} label="Sobre mi" />
+              <RHFTextField name="aboutMe" multiline rows={4} label="Sobre mi" />
 
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
                 Guardar cambios

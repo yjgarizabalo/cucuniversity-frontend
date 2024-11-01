@@ -9,13 +9,14 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { UserProvider } from 'src/context/user/context/userProvider';
 import { RoleProvider } from 'src/context/role/context/roleProvider';
 import { JobProvider } from 'src/context/job/context/jobProvider';
+import { CvProvider } from 'src/context/cv/context/cvProvider';
 
 // ----------------------------------------------------------------------
 
 
 const IndexPage = lazy(() => import('src/pages/dashboard/profile/index'));
-const PageCourses = lazy(() => import('src/pages/dashboard/cursos'));
-const PageFavorite = lazy(() => import('src/pages/dashboard/favorite/list'));
+// const PageCourses = lazy(() => import('src/pages/dashboard/cursos'));
+// const PageFavorite = lazy(() => import('src/pages/dashboard/favorite/list'));
 const PageApplication = lazy(() => import('src/pages/dashboard/application/list'));
 const PageUsers = lazy(() => import('src/pages/dashboard/user/list'));
 const PageRoles = lazy(() => import('src/pages/dashboard/roles/list'));
@@ -32,6 +33,7 @@ export const dashboardRoutes = [
     element: (
       <AuthGuard>
         <UserProvider>
+          <CvProvider>
           <RoleProvider>
           <JobProvider>
             <DashboardLayout>
@@ -41,6 +43,7 @@ export const dashboardRoutes = [
             </DashboardLayout>
           </JobProvider>
           </RoleProvider>
+          </CvProvider>
         </UserProvider>
       </AuthGuard>
     ),

@@ -25,7 +25,7 @@ export const useCvApi = () => {
   }, [postFetch, handleResponseMessage]);
 
   const updateCv = useCallback(async (cv) => {
-    const cvEdited = await updateFetch(`${endpoints.cvs}/${cv.id}`, cv);
+    const cvEdited = await updateFetch(`${endpoints.cv}/${cv.id}`, cv);
     handleResponseMessage(cvEdited);
     return cvEdited;
   }, [updateFetch, handleResponseMessage]);

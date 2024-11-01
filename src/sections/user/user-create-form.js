@@ -57,7 +57,6 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
     email: Yup.string().email('Email no válido').required('Email es requerido'),
     program: Yup.string().required('Programa es requerido'),
     gender: Yup.string().required('Género es requerido'),
-    phoneNumber: Yup.string().required('Teléfono es requerido'),
     roleId: Yup.object().shape({ id: Yup.string().required('Rol es requerido') }),
   });
 
@@ -71,7 +70,6 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
       email: currentUser?.email || '',
       program: currentUser?.program || '',
       gender: currentUser?.gender || '',
-      phoneNumber: currentUser?.phoneNumber || '',
       roleId: currentUser?.roleId || { id: '', name: '', description: '' },
     }),
     [currentUser]
@@ -99,7 +97,6 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
       identification: data.identification,
       email: data.email,
       program: data.program,
-      phoneNumber: data.phoneNumber,
       roleId: data.roleId.id,
       gender: data.gender
     };
@@ -227,7 +224,6 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
                       </li>
                     }
                   />
-                  <RHFTextField name="phoneNumber" label="Teléfono" />
 
                   <RHFAutocomplete
                     name="roleId"

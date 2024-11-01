@@ -19,7 +19,7 @@ import { useRouter } from 'src/routes/hooks';
 
 
 export default function ProfileJob() {
-  const { jobs, loading, getJobAction, } = useJobContext();
+  const { jobs, getJobAction, } = useJobContext();
 
   useEffect(() => {
     getJobAction();
@@ -27,7 +27,7 @@ export default function ProfileJob() {
 
   return (
     <>
-      <Typography variant="h4" sx={{ my: 5 }}>
+      <Typography variant="h4" sx={{ my: 1 }}>
         Mis ofertas de empleo
       </Typography>
 
