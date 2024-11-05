@@ -11,7 +11,7 @@ export const ASSETS_API = import.meta.env.VITE_ASSETS_API;
 // SUPABASE
 export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-export const SUPABASE_AVATAR_URL = import.meta.env.VITE_SUPABASE_ASSETS_AVATAR_URL;
+
 
 // ----------------------------------------------------------------------
 

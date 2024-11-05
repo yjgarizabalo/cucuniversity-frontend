@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import { fData } from 'src/utils/format-number';
 // assets
 import { countries } from 'src/assets/data';
-import { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_AVATAR_URL } from 'src/config-global';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from 'src/config-global';
 // components
 import { LoadingScreen } from 'src/components/loading-screen';
 import Iconify from 'src/components/iconify';
@@ -40,10 +40,13 @@ export default function AccountGeneral() {
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  const [avatarFile, setAvatarFile] = useState(null);
+
 
   const { enqueueSnackbar } = useSnackbar();
 
   const UpdateCvShema = Yup.object().shape({
+    avatar: Yup.string().optional(),
     phoneNumber: Yup.string().required('Teléfono es requerido'),
     address: Yup.string().required('Dirección es requerida'),
     country: Yup.string().required('País es requerido'),
@@ -59,6 +62,7 @@ export default function AccountGeneral() {
     return {
       displayName: `${authUser.firstName} ${authUser.lastName} ${authUser.secondSurname}` || 'Nombre no disponible',
       email: authUser?.email || '',
+      avatar: cvData.avatar || '',
       phoneNumber: cvData.phoneNumber || '',
       address: cvData.address || '',
       country: cvData.country || '',
@@ -102,6 +106,7 @@ export default function AccountGeneral() {
       const dataCv = {
         ...restData,
         userId: authUser.id,
+        avatar: data.avatar,
         phoneNumber: data.phoneNumber,
         address: data.address,
         country: data.country,
@@ -111,6 +116,27 @@ export default function AccountGeneral() {
         socialNetwork: data.socialNetwork,
         aboutMe: data.aboutMe,
       };
+
+      if (avatarFile) {
+        const { error: avatarError } = await supabase.storage
+          .from('avatars')
+          .upload(`/avatar_${Date.now()}`, avatarFile);
+
+        if (avatarError) {
+          throw avatarError;
+        }
+
+        // Obtener la URL pública de la imagen subida
+        const { data: publicUrlData } = supabase.storage
+          .from('avatars')
+          .getPublicUrl(`avatars/avatar_${Date.now()}`);
+
+        if (publicUrlData?.publicUrl) {
+          dataCv.avatar = publicUrlData.publicUrl;
+        } else {
+          throw new Error("No se pudo obtener la URL pública del avatar");
+        }
+      }
 
       if (cv.length > 0 && cv[0].id) {
         const cvId = Number(cv[0].id);
@@ -131,36 +157,22 @@ export default function AccountGeneral() {
 
 
   const handleDrop = useCallback(
-    async (acceptedFiles) => {
+    (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (!file) return;
-      console.log('file', file);
 
       const newFile = Object.assign(file, {
         preview: URL.createObjectURL(file),
       });
-      setValue('photoURL', newFile, { shouldValidate: true });
 
-      try {
-        const { data, error } = await supabase.storage
-          .from('avatars')
-          .upload(`avatars_${Date.now()}`, file);
-        if (error) {
-          throw error;
-        }
-
-        const publicUrl = `${SUPABASE_AVATAR_URL}/${data.path}`;
-
-        setValue('photoURL', publicUrl, { shouldValidate: true });
-        enqueueSnackbar('Imagen cargada exitosamente', 'success' );
-      } catch (error) {
-        console.error('Error subiendo la imagen:', error);
-        enqueueSnackbar('Error al cargar la imagen', 'error');
-      }
+      setAvatarFile(file);
+      setValue('avatar', newFile, { shouldValidate: true });
+      enqueueSnackbar('Imagen lista para subir', 'info');
     },
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     [setValue, enqueueSnackbar]
   );
+
+
 
   return (
     loading ? <LoadingScreen /> :
@@ -169,7 +181,7 @@ export default function AccountGeneral() {
           <Grid xs={12} md={4}>
             <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: 'center' }}>
               <RHFUploadAvatar
-                name="photoURL"
+                name="avatar"
                 maxSize={2145728}
                 onDrop={handleDrop}
                 helperText={
