@@ -12,18 +12,15 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
 // utils
-import { fData } from 'src/utils/format-number';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Unstable_Grid2';
 import Card from '@mui/material/Card';
 
 // components
-import Label from 'src/components/label';
 import { useUserContext } from 'src/context/user/hooks/userUserContext';
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFTextField, RHFUploadAvatar, RHFAutocomplete } from 'src/components/hook-form';
-import Typography from '@mui/material/Typography';
+import FormProvider, { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
 //  ----------------------------------------------------------------------
 

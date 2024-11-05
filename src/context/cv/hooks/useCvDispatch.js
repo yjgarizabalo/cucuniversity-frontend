@@ -23,16 +23,23 @@ export const useCvDispatch = () => {
     }, 4000);
   }, []);
 
-  const getCvs = useCallback((dispatch, cvs) => {
+  const getCvs = useCallback((dispatch, cv) => {
     dispatch({
       type: Payload.GET_CVS,
-      payload: cvs
+      payload: cv
     });
   }, []);
 
   const getCvByIdSuccess = useCallback((dispatch, cv) => {
     dispatch({
       type: Payload.GET_CV,
+      payload: cv
+    });
+  }, []);
+
+  const getCvByUserIdSuccess = useCallback((dispatch, cv) => {
+    dispatch({
+      type: Payload.GET_CV_BY_USER_ID,
       payload: cv
     });
   }, []);
@@ -63,6 +70,7 @@ export const useCvDispatch = () => {
     errorAction,
     getCvs,
     getCvByIdSuccess,
+    getCvByUserIdSuccess,
     addCvSuccess,
     editCvSuccess,
     deleteCvSuccess
