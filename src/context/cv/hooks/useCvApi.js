@@ -8,30 +8,36 @@ export const useCvApi = () => {
   const { handleResponseMessage } = useHandleResponseMessage();
 
   const fetchCvs = useCallback(async () => {
-    const cvs = await getFetch(endpoints.cvs);
+    const cvs = await getFetch(endpoints.cv);
     return cvs;
   }, [getFetch]);
 
   const fetchCvById = useCallback(async (id) => {
-    const cv = await getFetch(`${endpoints.cvs}/${id}`);
+    const cv = await getFetch(`${endpoints.cv}/${id}`);
     handleResponseMessage(cv);
     return cv;
   }, [getFetch, handleResponseMessage]);
 
+  const fetchCvByUserId = useCallback(async (id) => {
+    const cv = await getFetch(`${endpoints.cv}/user/${id}`);
+    handleResponseMessage(cv);
+    return cv
+  }, [ getFetch, handleResponseMessage]);
+
   const addCv = useCallback(async (cv) => {
-    const newCv = await postFetch(endpoints.cvs, cv);
+    const newCv = await postFetch(endpoints.cv, cv);
     handleResponseMessage(newCv);
     return newCv;
   }, [postFetch, handleResponseMessage]);
 
-  const updateCv = useCallback(async (cv) => {
-    const cvEdited = await updateFetch(`${endpoints.cv}/${cv.id}`, cv);
+  const updateCv = useCallback(async (id, cv) => {
+    const cvEdited = await updateFetch(`${endpoints.cv}/${id}`, cv);
     handleResponseMessage(cvEdited);
     return cvEdited;
   }, [updateFetch, handleResponseMessage]);
 
   const deleteCv = useCallback(async (id) => {
-    const cvDelete = await deleteFetch(`${endpoints.cvs}/${id}`);
+    const cvDelete = await deleteFetch(`${endpoints.cv}/${id}`);
     handleResponseMessage(cvDelete);
   }, [deleteFetch, handleResponseMessage]);
 
@@ -45,6 +51,7 @@ export const useCvApi = () => {
   return {
     fetchCvs,
     fetchCvById,
+    fetchCvByUserId,
     addCv,
     updateCv,
     deleteCv,

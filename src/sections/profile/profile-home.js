@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 // @mui
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -10,18 +11,33 @@ import CardHeader from '@mui/material/CardHeader';
 import { _socials } from 'src/_mock';
 // components
 import Iconify from 'src/components/iconify';
+// context
+import { useCvContext } from 'src/context/cv/hooks/useCvContext'
+import { useAuthContext } from 'src/auth/hooks';
 //
 import ProfileJob from './profile-job';
 
 // ----------------------------------------------------------------------
 
 export default function ProfileHome({ info }) {
+  const { user: authUser } = useAuthContext();
+  const { cv, getCvByUserIdAction } = useCvContext();
+
+  useEffect(() => {
+    if (authUser?.id) {
+      getCvByUserIdAction(authUser.id);
+    }
+  }, [authUser?.id, getCvByUserIdAction]);
+
+  const data = cv[0] || {};
+
+
   const renderAbout = (
     <Card>
       <CardHeader title="Sobre mi" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Box sx={{ typography: 'body2' }}>{info.quote}</Box>
+        <Box sx={{ typography: 'body2' }}>{data.aboutMe}</Box>
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="mingcute:location-fill" width={24} />
@@ -29,14 +45,14 @@ export default function ProfileHome({ info }) {
           <Box sx={{ typography: 'body2' }}>
             {`Residencia `}
             <Link variant="subtitle2" color="inherit">
-              {info.country}
+              {data.country}
             </Link>
           </Box>
         </Stack>
 
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
-          {info.email}
+          {data.personalEmail}
         </Stack>
 
 
@@ -46,7 +62,7 @@ export default function ProfileHome({ info }) {
           <Box sx={{ typography: 'body2' }}>
             {`Estudios `}
             <Link variant="subtitle2" color="inherit">
-              {info.school}
+              {info.school} 🇺🇸
             </Link>
           </Box>
         </Stack>
@@ -75,7 +91,7 @@ export default function ProfileHome({ info }) {
               }}
             />
             <Link color="inherit">
-              {link.value === 'linkedin' && info.socialLinks.linkedin}
+              {link.value === 'linkedin' && data.socialNetwork}
             </Link>
           </Stack>
         ))}
