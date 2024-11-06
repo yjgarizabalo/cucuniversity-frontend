@@ -68,7 +68,7 @@ const reducer = (state, action) => {
     case Payload.DELETE_CV:
       return {
         ...state,
-        cvs: state.cvs.filter((cv) => cv.id !== action.payload),
+        cv: state.cv.filter((cv) => cv.id !== action.payload),
         loading: false,
         error: false,
       };

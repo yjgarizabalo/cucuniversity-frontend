@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { m } from 'framer-motion';
 // @mui
 import { alpha } from '@mui/material/styles';
@@ -14,6 +15,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // auth
 import { useAuthContext } from 'src/auth/hooks';
+import { useCvContext } from 'src/context/cv/hooks/useCvContext';
 
 // components
 import { varHover } from 'src/components/animate';
@@ -30,22 +32,31 @@ const OPTIONS = [
     label: 'Perfil',
     linkTo: '/#1',
   },
-  {
-    label: 'Configuración',
-    linkTo: '/#2',
-  },
+  // {
+  //   label: 'Configuración',
+  //   linkTo: '/#2',
+  // },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
   const router = useRouter();
+  const { cv, getCvByUserIdAction } = useCvContext();
 
-  const { user } = useMockedUser();
+  // const { user } = useMockedUser();
 
   const { logout, user: authUser  } = useAuthContext();
 
   const popover = usePopover();
+
+  useEffect(() => {
+    if (authUser?.id) {
+      getCvByUserIdAction(authUser.id);
+    }
+  }, [authUser?.id, getCvByUserIdAction]);
+
+  const data = cv[0] || {};
 
   const handleLogout = async () => {
     try {
@@ -81,7 +92,7 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={user?.photoURL}
+          src={data?.avatar}
           alt={authUser?.firstName}
           sx={{
             width: 36,
