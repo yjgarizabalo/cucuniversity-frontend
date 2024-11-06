@@ -3,6 +3,7 @@ export const Payload = {
   'ERROR_ACTION': 'ERROR_ACTION',
   GET_CVS: "GET_CVS",
   GET_CV: "GET_CV",
+  GET_CV_BY_USER_ID: "GET_CV_BY_USER_ID",
   ADD_CV: "ADD_CV",
   EDIT_CV: "EDIT_CV",
   DELETE_CV: "DELETE_CV",
@@ -37,24 +38,37 @@ const reducer = (state, action) => {
         loadingDetail: false,
         error: false,
       };
+    case Payload.GET_CV_BY_USER_ID:
+      return {
+        ...state,
+        cv: action.payload,
+        loading: false,
+        loadingDetail: false,
+        error: false,
+      };
     case Payload.ADD_CV:
       return {
         ...state,
-        cvs: [action.payload, ...state.cvs],
+        cv: [action.payload, ...state.cv],
         loading: false,
         error: false,
       };
     case Payload.EDIT_CV:
       return {
         ...state,
-        cvs: action.payload && action.payload.id ? state.cvs.map((cv) => (cv.id === action.payload.id ? action.payload : cv)) : state.cvs,
+        cv: action.payload && action.payload.id
+          ? state.cv.map((cv) => (cv.id === action.payload.id ? action.payload : cv))
+          : state.cv,
+        cvSelected: action.payload && action.payload.id === state.cvSelected?.id
+          ? action.payload
+          : state.cvSelected,
         loading: false,
         error: false,
       };
     case Payload.DELETE_CV:
       return {
         ...state,
-        cvs: state.cvs.filter((cv) => cv.id !== action.payload),
+        cv: state.cv.filter((cv) => cv.id !== action.payload),
         loading: false,
         error: false,
       };

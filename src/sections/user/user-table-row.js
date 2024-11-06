@@ -27,7 +27,7 @@ import UserEditForm from './user-edit-form';
 
 export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }) {
   const { permissions } = useAuthContext();
-  const { firstName, secondName, lastName, secondSurname, program, email, phoneNumber } = row;
+  const { firstName, secondName, lastName, secondSurname, program, email, identification } = row;
   const { roles } = useRoleContext();
 
   const confirm = useBoolean();
@@ -61,7 +61,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }
           />
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{phoneNumber}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{identification}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{program}</TableCell>
 

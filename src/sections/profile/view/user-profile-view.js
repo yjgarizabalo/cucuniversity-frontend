@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback,useEffect } from 'react';
 // @mui
 import Tab from '@mui/material/Tab';
 import Card from '@mui/material/Card';
@@ -14,11 +14,15 @@ import { _userAbout, _userFeeds, _userAplications } from 'src/_mock';
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-//
-import AccountView from 'src/sections/account/view/user-account-view';
+
+// context
 import { useAuthContext } from 'src/auth/hooks';
+import { useCvContext } from 'src/context/cv/hooks/useCvContext'
 import { LoadingScreen } from 'src/components/loading-screen';
-import ProfileFavorite from '../profile-favorite';
+// import ProfileFavorite from '../profile-favorite';
+
+// views
+import AccountView from 'src/sections/account/view/user-account-view';
 import ProfileAplications from '../profile-aplications';
 import ProfileHome from '../profile-home';
 import ProfileCover from '../profile-cover';
@@ -50,6 +54,8 @@ export default function UserProfileView() {
 
   const { user: authUser, loading } = useAuthContext();
 
+  const { cv, getCvByUserIdAction  } = useCvContext();
+
   const { user } = useMockedUser();
 
   const [currentTab, setCurrentTab] = useState('profile');
@@ -57,6 +63,14 @@ export default function UserProfileView() {
   const handleChangeTab = useCallback((event, newValue) => {
     setCurrentTab(newValue);
   }, []);
+
+  useEffect(() => {
+    if (authUser?.id) {
+      getCvByUserIdAction(authUser.id);
+    }
+  }, [authUser?.id, getCvByUserIdAction]);
+
+  const data = cv[0] || {};
 
   return (
     <>
@@ -68,7 +82,7 @@ export default function UserProfileView() {
             heading="Mi área"
             links={[
               { name: 'Inicio', href: paths.dashboard.root },
-              { name: 'Mi área', href: paths.dashboard.user.root },
+              { name: 'Mi área', href: paths.dashboard.user },
               {
                 name: authUser
                   ? `${authUser.firstName} ${authUser.secondName} ${authUser.lastName} ${authUser.secondSurname}`
@@ -80,15 +94,11 @@ export default function UserProfileView() {
             }}
           />
 
-          <Card sx={{ mb: 3, height: 290 }}>
+          <Card sx={{ mb: 3, height: 250 }}>
             <ProfileCover
               role={authUser ? authUser.program : ''}
-              name={
-                authUser
-                  ? `${authUser.firstName} ${authUser?.secondName} ${authUser?.lastName} ${authUser?.secondSurname}`
-                  : 'invitado'
-              }
-              avatarUrl={user?.coverProfileUrl}
+              name={authUser ? `${authUser.firstName} ${authUser?.secondName} ${authUser?.lastName} ${authUser?.secondSurname}` : 'invitado'}
+              avatarUrl={data?.avatar}
               coverUrl={_userAbout.coverUrl}
               coverProfileUrl={_userAbout.coverProfileUrl}
             />

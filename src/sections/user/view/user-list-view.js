@@ -47,7 +47,7 @@ const _roles = ['Administrador', 'Coodinador Academico', 'Estudiante'];
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nombre' },
-  { id: 'phoneNumber', label: 'Teléfono', width: 180 },
+  { id: 'identification', label: 'Identifiación', width: 180 },
   { id: 'company', label: 'Programa', width: 220 },
   // { id: 'role', label: 'Rol', width: 180 },
   { id: '', width: 88 },
