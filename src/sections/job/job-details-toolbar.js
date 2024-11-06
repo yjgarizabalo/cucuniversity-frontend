@@ -11,18 +11,18 @@ import Stack from '@mui/material/Stack';
 import { RouterLink } from 'src/routes/components';
 // components
 import Iconify from 'src/components/iconify';
+import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
-export default function JobDetailsToolbar({
-  backLink,
-  sx,
-  ...other
-}) {
+export default function JobDetailsToolbar({ backLink, sx, ...other }) {
+  const { permissions } = useAuthContext();
+
+  const canApplyJob = permissions.includes('apply_jobOffers');
 
   const handleApllyJob = () => {
     console.log('Apply Job');
-  }
+  };
 
   return (
     <Stack
@@ -43,8 +43,8 @@ export default function JobDetailsToolbar({
       </Button>
 
       <Box sx={{ flexGrow: 1 }} />
-
-      <LoadingButton
+      {canApplyJob && (
+        <LoadingButton
           color="inherit"
           variant="contained"
           loading={false}
@@ -55,12 +55,12 @@ export default function JobDetailsToolbar({
         >
           Aplicar Oferta
         </LoadingButton>
-
+      )}
     </Stack>
   );
 }
 
 JobDetailsToolbar.propTypes = {
   backLink: PropTypes.string,
-  sx: PropTypes.object
+  sx: PropTypes.object,
 };

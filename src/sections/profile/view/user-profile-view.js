@@ -83,7 +83,11 @@ export default function UserProfileView() {
           <Card sx={{ mb: 3, height: 290 }}>
             <ProfileCover
               role={authUser ? authUser.program : ''}
-              name={authUser ? `${authUser.firstName} ${authUser?.secondName} ${authUser?.lastName} ${authUser?.secondSurname}` : 'invitado'}
+              name={
+                authUser
+                  ? `${authUser.firstName} ${authUser?.secondName} ${authUser?.lastName} ${authUser?.secondSurname}`
+                  : 'invitado'
+              }
               avatarUrl={user?.coverProfileUrl}
               coverUrl={_userAbout.coverUrl}
               coverProfileUrl={_userAbout.coverProfileUrl}

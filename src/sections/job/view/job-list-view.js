@@ -21,13 +21,10 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 // contexts
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
 // _mock
-import {
-  _roles,
-  JOB_BENEFIT_OPTIONS,
-  JOB_EXPERIENCE_OPTIONS,
-} from 'src/_mock';
+import { _roles, JOB_BENEFIT_OPTIONS, JOB_EXPERIENCE_OPTIONS } from 'src/_mock';
 //
 
+import { useAuthContext } from 'src/auth/hooks';
 import JobList from '../job-list';
 import JobSearch from '../job-search';
 import JobFilters from '../job-filters';
@@ -47,19 +44,23 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function JobListView(rowAdd) {
+  const { permissions } = useAuthContext();
   const { jobs, loading, getJobAction } = useJobContext();
 
   const settings = useSettingsContext();
 
-  const openFilters = useBoolean();
+  const canCreateJob = permissions.includes('create_jobOffers');
 
+  const openFilters = useBoolean();
 
   const [search, setSearch] = useState({
     query: '',
     results: [],
   });
 
-  useEffect(() => { getJobAction() }, [getJobAction]);
+  useEffect(() => {
+    getJobAction();
+  }, [getJobAction]);
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -67,7 +68,6 @@ export default function JobListView(rowAdd) {
     inputData: jobs,
     filters,
   });
-
 
   const canReset = !isEqual(defaultFilters, filters);
 
@@ -136,7 +136,6 @@ export default function JobListView(rowAdd) {
           benefitOptions={JOB_BENEFIT_OPTIONS.map((option) => option.label)}
           experienceOptions={['Todas', ...JOB_EXPERIENCE_OPTIONS.map((option) => option.label)]}
         />
-
       </Stack>
     </Stack>
   );
@@ -153,7 +152,6 @@ export default function JobListView(rowAdd) {
     />
   );
 
-
   const CreateJob = useBoolean();
 
   return (
@@ -169,25 +167,23 @@ export default function JobListView(rowAdd) {
           { name: 'Lista' },
         ]}
         action={
-          <Button
-            component={RouterLink}
-            onClick={CreateJob.onTrue}
-            variant="contained"
-            startIcon={<Iconify icon="mingcute:add-line" />}
-          >
-            Nueva Oferta
-          </Button>
+          canCreateJob && (
+            <Button
+              component={RouterLink}
+              onClick={CreateJob.onTrue}
+              variant="contained"
+              startIcon={<Iconify icon="mingcute:add-line" />}
+            >
+              Nueva Oferta
+            </Button>
+          )
         }
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
 
-      <JobCreateForm
-        currentJob={rowAdd}
-        open={CreateJob.value}
-        onClose={CreateJob.onFalse}
-      />
+      <JobCreateForm currentJob={rowAdd} open={CreateJob.value} onClose={CreateJob.onFalse} />
 
       <Stack
         spacing={2.5}
