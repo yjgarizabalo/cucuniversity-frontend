@@ -132,6 +132,7 @@ export default function AccountGeneral() {
           .from('avatars')
           .getPublicUrl(`avatar/${fileName}`);
 
+
         if (publicUrlData?.publicUrl) {
           dataCv.avatar = publicUrlData.publicUrl;
         } else {
@@ -173,6 +174,8 @@ export default function AccountGeneral() {
     [setValue, enqueueSnackbar]
   );
 
+
+
   return (
     loading ? <LoadingScreen /> :
       <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -199,9 +202,9 @@ export default function AccountGeneral() {
                   </Typography>
                 }
               />
-
             </Card>
           </Grid>
+
 
           <Grid xs={12} md={8}>
             <Card sx={{ p: 3 }}>
