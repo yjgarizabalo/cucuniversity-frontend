@@ -60,7 +60,7 @@ export default function AccountGeneral() {
   const defaultValues = useMemo(() => {
     const cvData = cv[0] || {};
     return {
-      displayName: `${authUser.firstName} ${authUser.lastName} ${authUser.secondSurname}` || 'Nombre no disponible',
+      displayName: authUser ? `${authUser.firstName} ${authUser.lastName} ${authUser.secondSurname}`: 'Invitado',
       email: authUser?.email || '',
       avatar: cvData.avatar || '',
       phoneNumber: cvData.phoneNumber || '',
@@ -118,18 +118,20 @@ export default function AccountGeneral() {
       };
 
       if (avatarFile) {
+        const fileName = `avatar_${Date.now()}`;
+
         const { error: avatarError } = await supabase.storage
           .from('avatars')
-          .upload(`/avatar_${Date.now()}`, avatarFile);
+          .upload(`avatar/${fileName}`, avatarFile);
 
         if (avatarError) {
           throw avatarError;
         }
 
-        // Obtener la URL pública de la imagen subida
         const { data: publicUrlData } = supabase.storage
           .from('avatars')
-          .getPublicUrl(`avatars/avatar_${Date.now()}`);
+          .getPublicUrl(`avatar/${fileName}`);
+
 
         if (publicUrlData?.publicUrl) {
           dataCv.avatar = publicUrlData.publicUrl;
@@ -200,9 +202,9 @@ export default function AccountGeneral() {
                   </Typography>
                 }
               />
-
             </Card>
           </Grid>
+
 
           <Grid xs={12} md={8}>
             <Card sx={{ p: 3 }}>
