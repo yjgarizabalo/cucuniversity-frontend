@@ -36,6 +36,7 @@ import {
 // contexts
 import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
 //
+import { useAuthContext } from 'src/auth/hooks';
 import RoleTableRow from '../role-table-row';
 import RoleTableToolbar from '../role-table-toolbar';
 import RoleTableFiltersResult from '../role-table-filters-result';
@@ -59,6 +60,9 @@ const defaultFilters = {
 
 export default function RoleListView(rowAdd) {
   const { roles, getRoleAction, deleteRoleAction } = useRoleContext();
+  const { permissions } = useAuthContext();
+
+  const canCreateRoles = permissions.includes('create_roles');
 
   const table = useTable();
 
@@ -139,25 +143,24 @@ export default function RoleListView(rowAdd) {
             { name: 'Lista' },
           ]}
           action={
-            <Button
-              component={RouterLink}
-              onClick={EditRole.onTrue}
-              variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />}
-            >
-              Nuevo Rol
-            </Button>
+            canCreateRoles && (
+              <Button
+                component={RouterLink}
+                onClick={EditRole.onTrue}
+                variant="contained"
+                startIcon={<Iconify icon="mingcute:add-line" />}
+              >
+                Nuevo Rol
+              </Button>
+            )
           }
           sx={{
             mb: { xs: 3, md: 5 },
           }}
         />
-
-        <RoleCreateForm
-          currentRoles={rowAdd}
-          open={EditRole.value}
-          onClose={EditRole.onFalse}
-        />
+        {canCreateRoles && (
+          <RoleCreateForm currentRoles={rowAdd} open={EditRole.value} onClose={EditRole.onFalse} />
+        )}
 
         <Card>
           <RoleTableToolbar

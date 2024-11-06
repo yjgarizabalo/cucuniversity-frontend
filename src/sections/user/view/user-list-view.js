@@ -37,16 +37,13 @@ import { useUserContext } from 'src/context/user/hooks/userUserContext';
 import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
 // components
 import { useSnackbar } from 'src/components/snackbar';
+import { useAuthContext } from 'src/auth/hooks';
 import UserTableRow from '../user-table-row';
 import UserTableToolbar from '../user-table-toolbar';
 import UserCreateForm from '../user-create-form';
 import UserTableFiltersResult from '../user-table-filters-result';
 // ----------------------------------------------------------------------
-const _roles = [
-  'Administrador',
-  'Coodinador Academico',
-  'Estudiante',
-];
+const _roles = ['Administrador', 'Coodinador Academico', 'Estudiante'];
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nombre' },
@@ -65,8 +62,11 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function UserListView(rowAdd) {
-  const { users, getUserAction, deleteUserAction } = useUserContext()
+  const { permissions } = useAuthContext();
+  const { users, getUserAction, deleteUserAction } = useUserContext();
   const { roles, getRoleAction } = useRoleContext();
+
+  const canCreateUser = permissions.includes('create_users');
 
   const table = useTable();
 
@@ -81,11 +81,9 @@ export default function UserListView(rowAdd) {
   const [filters, setFilters] = useState(defaultFilters);
 
   useEffect(() => {
-    getUserAction()
+    getUserAction();
     getRoleAction();
-  },
-    [getUserAction, getRoleAction]
-  );
+  }, [getUserAction, getRoleAction]);
 
   const dataFiltered = applyFilter({
     inputData: users,
@@ -155,7 +153,7 @@ export default function UserListView(rowAdd) {
 
   const createUser = useBoolean();
 
-  const filteredUsers = users.filter(user => user.status !== false);
+  const filteredUsers = users.filter((user) => user.status !== false);
 
   return (
     <>
@@ -168,30 +166,31 @@ export default function UserListView(rowAdd) {
             { name: 'Lista' },
           ]}
           action={
-            <Button
-              component={RouterLink}
-              onClick={createUser.onTrue}
-              variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />}
-            >
-              Nuevo usuario
-            </Button>
+            canCreateUser && (
+              <Button
+                component={RouterLink}
+                onClick={createUser.onTrue}
+                variant="contained"
+                startIcon={<Iconify icon="mingcute:add-line" />}
+              >
+                Nuevo usuario
+              </Button>
+            )
           }
           sx={{
             mb: { xs: 3, md: 5 },
           }}
         />
-
-        <UserCreateForm
-          currentRoles={roles}
-          currentUser={rowAdd}
-          open={createUser.value}
-          onClose={createUser.onFalse}
-        />
-
+        {canCreateUser && (
+          <UserCreateForm
+            currentRoles={roles}
+            currentUser={rowAdd}
+            open={createUser.value}
+            onClose={createUser.onFalse}
+          />
+        )}
 
         <Card>
-
           <UserTableToolbar
             filters={filters}
             onFilters={handleFilters}
@@ -250,7 +249,7 @@ export default function UserListView(rowAdd) {
 
                 <TableBody>
                   {dataFiltered
-                    .filter((row) => row.status !== false)  // Filtrar usuarios con status false
+                    .filter((row) => row.status !== false) // Filtrar usuarios con status false
                     .slice(
                       table.page * table.rowsPerPage,
                       table.page * table.rowsPerPage + table.rowsPerPage

@@ -19,17 +19,23 @@ import Iconify from 'src/components/iconify';
 import { RouterLink } from 'src/routes/components';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
+import { useAuthContext } from 'src/auth/hooks';
 import JobEditForm from './job-edit-form';
 
 // ----------------------------------------------------------------------
 
 export default function JobItem({ job, onView, onDelete }) {
+  const { permissions } = useAuthContext();
 
   const popover = usePopover();
 
   const { title, company, createAt, experience, salary, roleJob } = job;
 
   const EditJob = useBoolean();
+
+  const canViewJobDetail = permissions.includes('read_jobOffers');
+  const canUpdateJob = permissions.includes('update_jobOffers');
+  const canDeleteJob = permissions.includes('delete_jobOffers');
 
   return (
     <>
@@ -106,28 +112,42 @@ export default function JobItem({ job, onView, onDelete }) {
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        <MenuItem onClick={() => { popover.onClose(); onView(); }}>
-          <Iconify icon="solar:eye-bold" />
-          Ver
-        </MenuItem>
+        {canViewJobDetail && (
+          <MenuItem
+            onClick={() => {
+              popover.onClose();
+              onView();
+            }}
+          >
+            <Iconify icon="solar:eye-bold" />
+            Ver
+          </MenuItem>
+        )}
 
-        <MenuItem onClick={() => {  EditJob.onTrue(); popover.onClose(); }}>
-          <Iconify icon="solar:pen-bold" />
-          Editar
-        </MenuItem>
+        {canUpdateJob && (
+          <MenuItem
+            onClick={() => {
+              EditJob.onTrue();
+              popover.onClose();
+            }}
+          >
+            <Iconify icon="solar:pen-bold" />
+            Editar
+          </MenuItem>
+        )}
 
-
-
-        <MenuItem
-          onClick={() => {
-            popover.onClose();
-            onDelete();
-          }}
-          sx={{ color: 'error.main' }}
-        >
-          <Iconify icon="solar:trash-bin-trash-bold" />
-          Eliminar
-        </MenuItem>
+        {canDeleteJob && (
+          <MenuItem
+            onClick={() => {
+              popover.onClose();
+              onDelete();
+            }}
+            sx={{ color: 'error.main' }}
+          >
+            <Iconify icon="solar:trash-bin-trash-bold" />
+            Eliminar
+          </MenuItem>
+        )}
       </CustomPopover>
 
       <JobEditForm currentJob={job} open={EditJob.value} onClose={EditJob.onFalse} />

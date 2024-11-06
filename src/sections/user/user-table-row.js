@@ -20,12 +20,13 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 //
 import { useRoleContext } from 'src/context/role/hooks/useRoleContext';
+import { useAuthContext } from 'src/auth/hooks';
 import UserEditForm from './user-edit-form';
-
 
 // ----------------------------------------------------------------------
 
 export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }) {
+  const { permissions } = useAuthContext();
   const { firstName, secondName, lastName, secondSurname, program, email, identification } = row;
   const { roles } = useRoleContext();
 
@@ -35,6 +36,9 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }
 
   const popover = usePopover();
 
+  const canUpdateUsers = permissions.includes('update_users');
+  const canDeleteUsers = permissions.includes('delete_users');
+
   return (
     <>
       <TableRow hover selected={selected}>
@@ -43,10 +47,11 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }
         </TableCell>
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-
           <ListItemText
             // eslint-disable-next-line no-unneeded-ternary
-            primary={`${firstName} ${secondName ? secondName : ''} ${lastName} ${secondSurname ? secondSurname : ''}`}
+            primary={`${firstName} ${secondName ? secondName : ''} ${lastName} ${
+              secondSurname || ''
+            }`}
             secondary={email}
             primaryTypographyProps={{ typography: 'body2' }}
             secondaryTypographyProps={{
@@ -68,20 +73,33 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }
               <Iconify icon="mdi:password-reset" />
             </IconButton>
           </Tooltip> */}
+          {canUpdateUsers && (
+            <Tooltip title="Editar usuario" placement="top" arrow>
+              <IconButton
+                color={quickEdit.value ? 'inherit' : 'default'}
+                onClick={quickEdit.onTrue}
+              >
+                <Iconify icon="solar:pen-bold" />
+              </IconButton>
+            </Tooltip>
+          )}
 
-          <Tooltip title="Editar usuario" placement="top" arrow>
-            <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
-              <Iconify icon="solar:pen-bold" />
+          {canDeleteUsers && (
+            <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+              <Iconify icon="eva:more-vertical-fill" />
             </IconButton>
-          </Tooltip>
-
-          <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
+          )}
         </TableCell>
       </TableRow>
 
-      <UserEditForm currentUser={row} currentRoles={roles}  open={quickEdit.value} onClose={quickEdit.onFalse} />
+      {canUpdateUsers && (
+        <UserEditForm
+          currentUser={row}
+          currentRoles={roles}
+          open={quickEdit.value}
+          onClose={quickEdit.onFalse}
+        />
+      )}
 
       <CustomPopover
         open={popover.open}
@@ -89,16 +107,18 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        <MenuItem
-          onClick={() => {
-            confirm.onTrue();
-            popover.onClose();
-          }}
-          sx={{ color: 'error.main' }}
-        >
-          <Iconify icon="solar:trash-bin-trash-bold" />
-          Eliminar
-        </MenuItem>
+        {canDeleteUsers && (
+          <MenuItem
+            onClick={() => {
+              confirm.onTrue();
+              popover.onClose();
+            }}
+            sx={{ color: 'error.main' }}
+          >
+            <Iconify icon="solar:trash-bin-trash-bold" />
+            Eliminar
+          </MenuItem>
+        )}
 
         {/* <MenuItem  onClick={quickEdit.onTrue}>
           <Iconify icon="solar:pen-bold" />

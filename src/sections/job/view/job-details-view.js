@@ -70,7 +70,6 @@ export default function JobDetailsView({ id }) {
       <JobDetailsToolbar
         backLink={paths.dashboard.students_job.job}
         // editLink={paths.dashboard.job.edit(`${jobSelected?.id}`)}
-        liveLink="#"
         // publish={publish || ''}
         // onChangePublish={handleChangePublish}
         // publishOptions={JOB_PUBLISH_OPTIONS}

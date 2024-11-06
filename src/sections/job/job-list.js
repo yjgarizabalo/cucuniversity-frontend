@@ -14,8 +14,8 @@ import JobItem from './job-item';
 
 // ----------------------------------------------------------------------
 
-export default function JobList() {
-  const { jobs, getJobAction, deleteJobAction } = useJobContext();
+export default function JobList({jobs}) {
+  const { getJobAction, deleteJobAction } = useJobContext();
 
   const router = useRouter();
 
@@ -84,3 +84,7 @@ return (
   </>
   );
 }
+
+JobList.propTypes = {
+  jobs: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

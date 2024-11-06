@@ -34,7 +34,7 @@ export const JOB_EXPERIENCE_OPTIONS = [
   { value: 'Sin Experiencia', label: 'Sin Experiencia' },
   { value: '1 años exp', label: '1 año exp' },
   { value: '2 años exp', label: '2 años exp' },
-  { value: '3 años exp', label: 'mayor a 3 años exp' },
+  { value: 'Mayor a 3 años exp', label: 'Mayor a 3 años exp' },
 ];
 
 export const JOB_LOCATION = [

@@ -3,34 +3,32 @@ import { m } from 'framer-motion';
 // @mui
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-// hooks
-import { useMockedUser } from 'src/hooks/use-mocked-user';
 // assets
 import { ForbiddenIllustration } from 'src/assets/illustrations';
 // components
 import { MotionContainer, varBounce } from 'src/components/animate';
+import { useAuthContext } from '../hooks';
 
 // ----------------------------------------------------------------------
 
-export default function RoleBasedGuard({ hasContent, roles, children, sx }) {
-  // Logic here to get current user role
-  const { user } = useMockedUser();
+export default function RoleBasedGuard({ hasContent, permissions, children, sx }) {
+  const { permissions: userPermissions } = useAuthContext();
 
-  // const currentRole = 'user';
-  const currentRole = user?.role; // admin;
+  // Verificar si el usuario tiene todos los permisos requeridos
+  const hasPermission = permissions.every((perm) => userPermissions.includes(perm));
 
-  if (typeof roles !== 'undefined' && !roles.includes(currentRole)) {
+  if (!hasPermission) {
     return hasContent ? (
       <Container component={MotionContainer} sx={{ textAlign: 'center', ...sx }}>
         <m.div variants={varBounce().in}>
           <Typography variant="h3" sx={{ mb: 2 }}>
-            Permission Denied
+            Permiso Denegado
           </Typography>
         </m.div>
 
         <m.div variants={varBounce().in}>
           <Typography sx={{ color: 'text.secondary' }}>
-            You do not have permission to access this page
+            No tienes permiso para acceder a esta página
           </Typography>
         </m.div>
 
@@ -46,12 +44,18 @@ export default function RoleBasedGuard({ hasContent, roles, children, sx }) {
     ) : null;
   }
 
-  return <> {children} </>;
+  return <>{children}</>;
 }
 
 RoleBasedGuard.propTypes = {
   children: PropTypes.node,
   hasContent: PropTypes.bool,
-  roles: PropTypes.arrayOf(PropTypes.string),
+  permissions: PropTypes.arrayOf(PropTypes.string),
   sx: PropTypes.object,
 };
+
+// Establece hasContent en true por defecto
+RoleBasedGuard.defaultProps = {
+  hasContent: true,
+};
+

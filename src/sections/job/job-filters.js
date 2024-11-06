@@ -170,32 +170,17 @@ export default function JobFilters({
       <Autocomplete
         multiple
         disableCloseOnSelect
-        options={locationOptions.map((option) => option.label)}
+        options={locationOptions.map((option) => option)}
         getOptionLabel={(option) => option}
         value={filters.locations}
         onChange={(event, newValue) => handleFilterLocations(newValue)}
         renderInput={(params) => <TextField placeholder="Select Locations" {...params} />}
-        renderOption={(props, option) => {
-          const { code, label, phone } = locationOptions.filter(
-            (country) => country.label === option
-          )[0];
+        renderOption={(props, option) => (
+          <li {...props} key={option}>
+            {option}
+          </li>
+        )}
 
-          if (!label) {
-            return null;
-          }
-
-          return (
-            <li {...props} key={label}>
-              <Iconify
-                key={label}
-                icon={`circle-flags:${code.toLowerCase()}`}
-                width={28}
-                sx={{ mr: 1 }}
-              />
-              {label} ({code}) +{phone}
-            </li>
-          );
-        }}
         renderTags={(selected, getTagProps) =>
           selected.map((option, index) => (
             <Chip

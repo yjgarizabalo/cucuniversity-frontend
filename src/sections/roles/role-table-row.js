@@ -17,12 +17,17 @@ import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 //
+import { useAuthContext } from 'src/auth/hooks';
 import RoleEditForm from './role-edit-form';
 
 // ----------------------------------------------------------------------
 
 export default function RoleTableRow({ row, selected, onSelectRow, onDeleteRow }) {
+  const { permissions } = useAuthContext();
   const { name, avatarUrl, description } = row;
+
+  const canUpdateRoles = permissions.includes('update_roles');
+  const canDeleteRoles = permissions.includes('delete_roles');
 
   const confirm = useBoolean();
 
@@ -53,19 +58,28 @@ export default function RoleTableRow({ row, selected, onSelectRow, onDeleteRow }
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{description}</TableCell>
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-          <Tooltip title="Editar" placement="top" arrow>
-            <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
-              <Iconify icon="solar:pen-bold" />
-            </IconButton>
-          </Tooltip>
+          {canUpdateRoles && (
+            <Tooltip title="Editar" placement="top" arrow>
+              <IconButton
+                color={quickEdit.value ? 'inherit' : 'default'}
+                onClick={quickEdit.onTrue}
+              >
+                <Iconify icon="solar:pen-bold" />
+              </IconButton>
+            </Tooltip>
+          )}
 
-          <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
+          {canDeleteRoles && (
+            <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+              <Iconify icon="eva:more-vertical-fill" />
+            </IconButton>
+          )}
         </TableCell>
       </TableRow>
 
-      <RoleEditForm currentRoles={row} open={quickEdit.value} onClose={quickEdit.onFalse} />
+      {canUpdateRoles && (
+        <RoleEditForm currentRoles={row} open={quickEdit.value} onClose={quickEdit.onFalse} />
+      )}
 
       <CustomPopover
         open={popover.open}
@@ -73,16 +87,18 @@ export default function RoleTableRow({ row, selected, onSelectRow, onDeleteRow }
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        <MenuItem
-          onClick={() => {
-            confirm.onTrue();
-            popover.onClose();
-          }}
-          sx={{ color: 'error.main' }}
-        >
-          <Iconify icon="solar:trash-bin-trash-bold" />
-          Eliminar
-        </MenuItem>
+        {canDeleteRoles && (
+          <MenuItem
+            onClick={() => {
+              confirm.onTrue();
+              popover.onClose();
+            }}
+            sx={{ color: 'error.main' }}
+          >
+            <Iconify icon="solar:trash-bin-trash-bold" />
+            Eliminar
+          </MenuItem>
+        )}
       </CustomPopover>
 
       <ConfirmDialog

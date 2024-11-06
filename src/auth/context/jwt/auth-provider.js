@@ -3,6 +3,7 @@ import { useEffect, useReducer, useCallback, useMemo } from 'react';
 // utils
 import { endpoints, getFetch, postFetch, updateFetch } from 'src/utils/axios';
 import { useSearchParams } from 'src/routes/hooks';
+import getUserPermissions from 'src/utils/permissions';
 import { AuthContext } from './auth-context';
 import { isValidToken, setSession } from './utils';
 
@@ -17,6 +18,7 @@ import { isValidToken, setSession } from './utils';
 const initialState = {
   user: null,
   loading: true,
+  userPermissions: [], 
 };
 
 const reducer = (state, action) => {
@@ -24,24 +26,28 @@ const reducer = (state, action) => {
     return {
       loading: false,
       user: action.payload.user,
+      userPermissions: action.payload.permissions,
     };
   }
   if (action.type === 'LOGIN') {
     return {
       ...state,
       user: action.payload.user,
+      userPermissions: action.payload.permissions,
     };
   }
   if (action.type === 'REGISTER') {
     return {
       ...state,
       user: action.payload.user,
+      userPermissions: action.payload.permissions,
     };
   }
   if (action.type === 'LOGOUT') {
     return {
       ...state,
       user: null,
+      userPermissions: [], 
     };
   }
 
@@ -73,10 +79,13 @@ export function AuthProvider({ children }) {
 
         const { user } = response.data;
 
+        const userPermissions = getUserPermissions(user);
+
         dispatch({
           type: 'INITIAL',
           payload: {
             user,
+            permissions: userPermissions,
           },
         });
       } else {
@@ -84,6 +93,7 @@ export function AuthProvider({ children }) {
           type: 'INITIAL',
           payload: {
             user: null,
+            permissions: [],
           },
         });
       }
@@ -93,6 +103,7 @@ export function AuthProvider({ children }) {
         type: 'INITIAL',
         payload: {
           user: null,
+          permissions: [],
         },
       });
     }
@@ -113,12 +124,15 @@ export function AuthProvider({ children }) {
 
     const { token, user } = response.data;
 
+    const userPermissions = getUserPermissions(user);
+
     setSession(token);
 
     dispatch({
       type: 'LOGIN',
       payload: {
         user,
+        permissions: userPermissions,
       },
     });
   }, []);
@@ -139,6 +153,8 @@ export function AuthProvider({ children }) {
 
       const { token, user } = response.data;
 
+      const userPermissions = getUserPermissions(user);
+
       setSession(token);
 
       sessionStorage.setItem(STORAGE_KEY, token);
@@ -147,6 +163,7 @@ export function AuthProvider({ children }) {
         type: 'REGISTER',
         payload: {
           user,
+          permissions: userPermissions,
         },
       });
     },
@@ -172,6 +189,7 @@ export function AuthProvider({ children }) {
       user: state.user,
       method: 'jwt',
       loading: status === 'loading',
+      permissions: state.userPermissions,
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',
       //
@@ -179,7 +197,7 @@ export function AuthProvider({ children }) {
       register,
       logout,
     }),
-    [login, logout, register, state.user, status]
+    [login, logout, register, state.user, status, state.userPermissions]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;

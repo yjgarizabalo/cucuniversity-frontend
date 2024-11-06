@@ -20,10 +20,6 @@ export default function JobFiltersResult({
   results,
   ...other
 }) {
-  const handleRemoveEmploymentTypes = (inputValue) => {
-    const newValue = filters.employmentTypes.filter((item) => item !== inputValue);
-    onFilters('employmentTypes', newValue);
-  };
 
   const handleRemoveExperience = () => {
     onFilters('experience', 'todas');
@@ -31,7 +27,7 @@ export default function JobFiltersResult({
 
   const handleRemoveRoles = (inputValue) => {
     const newValue = filters.roles.filter((item) => item !== inputValue);
-    onFilters('role', newValue);
+    onFilters('roles', newValue);
   };
 
   const handleRemoveLocations = (inputValue) => {
@@ -54,19 +50,6 @@ export default function JobFiltersResult({
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {!!filters.employmentTypes.length && (
-          <Block label="Tipos de empleos:">
-            {filters.employmentTypes.map((item) => (
-              <Chip
-                key={item}
-                label={item}
-                size="small"
-                onDelete={() => handleRemoveEmploymentTypes(item)}
-              />
-            ))}
-          </Block>
-        )}
-
         {filters.experience !== 'todas' && (
           <Block label="Experiencia:">
             <Chip size="small" label={filters.experience} onDelete={handleRemoveExperience} />
