@@ -195,7 +195,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
 
           <Stack spacing={1}>
             <Typography variant="subtitle2">Benficios</Typography>
-            <RHFRadioGroup row spacing={4} name="experience" options={JOB_BENEFIT_OPTIONS} />
+            <RHFRadioGroup row spacing={4} name="benefits" options={JOB_BENEFIT_OPTIONS} />
           </Stack>
         </Stack>
       </Card>

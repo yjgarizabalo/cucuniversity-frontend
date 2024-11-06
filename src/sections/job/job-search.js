@@ -26,7 +26,11 @@ export default function JobSearch({ query, results, onSearch, hrefItem }) {
       if (event.key === 'Enter') {
         const selectProduct = results.filter((job) => job.title === query)[0];
 
-        handleClick(selectProduct.id);
+        if (selectProduct) {
+          handleClick(selectProduct.id);
+        } else {
+          console.warn("No se encontró un trabajo con el título exacto ingresado.");
+        }
       }
     }
   };

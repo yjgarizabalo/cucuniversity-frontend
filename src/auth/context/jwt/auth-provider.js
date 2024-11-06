@@ -81,9 +81,6 @@ export function AuthProvider({ children }) {
 
         const userPermissions = getUserPermissions(user);
 
-        console.log(user);
-        console.log(userPermissions)
-
         dispatch({
           type: 'INITIAL',
           payload: {
@@ -127,7 +124,6 @@ export function AuthProvider({ children }) {
 
     const { token, user } = response.data;
 
-    console.log(user)
     const userPermissions = getUserPermissions(user);
 
     setSession(token);

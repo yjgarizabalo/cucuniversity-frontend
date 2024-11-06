@@ -9,6 +9,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { UserProvider } from 'src/context/user/context/userProvider';
 import { RoleProvider } from 'src/context/role/context/roleProvider';
 import { JobProvider } from 'src/context/job/context/jobProvider';
+import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +24,29 @@ const PageStudentsJob = lazy(() => import('src/pages/dashboard/job/list'));
 const JobDetailsPage = lazy(() => import('src/pages/dashboard/job/details'));
 
 // ----------------------------------------------------------------------
+
+function ConditionalIndexPage() {
+  const { user } = useAuthContext(); // asumimos que `role` está disponible en el contexto del usuario
+
+  const role = user ? user.role.name : '';
+
+  if (role.toLowerCase() === 'estudiante') {
+    return (
+      <RoleBasedGuard permissions={['read_employment_profile']}>
+        <IndexPage />
+      </RoleBasedGuard>
+    );
+  }
+
+  if (role.toLowerCase() === 'funcionario' || role.toLowerCase() === 'super administrador') {
+    return (
+      <RoleBasedGuard permissions={['read_jobOffers']}>
+        <PageStudentsJob />
+      </RoleBasedGuard>
+    );
+  }
+  return null; // o una página de error si el rol no es válido
+}
 
 export const dashboardRoutes = [
   {
@@ -44,11 +68,7 @@ export const dashboardRoutes = [
     ),
     children: [
       {
-        element: (
-          <RoleBasedGuard permissions={['read_employment_profile']}>
-            <IndexPage />
-          </RoleBasedGuard>
-        ),
+        element: <ConditionalIndexPage />,
         index: true,
       },
       {

@@ -21,7 +21,7 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 // contexts
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
 // _mock
-import { _roles, JOB_BENEFIT_OPTIONS, JOB_EXPERIENCE_OPTIONS } from 'src/_mock';
+import { ROLES, JOB_BENEFIT_OPTIONS, JOB_EXPERIENCE_OPTIONS , JOB_LOCATION} from 'src/_mock';
 //
 
 import { useAuthContext } from 'src/auth/hooks';
@@ -38,7 +38,6 @@ const defaultFilters = {
   locations: [],
   benefits: [],
   experience: 'todas',
-  employmentTypes: [],
 };
 
 // ----------------------------------------------------------------------
@@ -68,6 +67,8 @@ export default function JobListView(rowAdd) {
     inputData: jobs,
     filters,
   });
+
+  console.log(dataFiltered);
 
   const canReset = !isEqual(defaultFilters, filters);
 
@@ -116,7 +117,7 @@ export default function JobListView(rowAdd) {
         query={search.query}
         results={search.results}
         onSearch={handleSearch}
-        hrefItem={(id) => paths.dashboard.job.details(id)}
+        hrefItem={(id) => paths.dashboard.students_job.details(id)}
       />
 
       <Stack direction="row" spacing={1} flexShrink={0}>
@@ -131,8 +132,8 @@ export default function JobListView(rowAdd) {
           canReset={canReset}
           onResetFilters={handleResetFilters}
           //
-          locationOptions={countries}
-          roleOptions={_roles}
+          locationOptions={JOB_LOCATION}
+          roleOptions={ROLES}
           benefitOptions={JOB_BENEFIT_OPTIONS.map((option) => option.label)}
           experienceOptions={['Todas', ...JOB_EXPERIENCE_OPTIONS.map((option) => option.label)]}
         />
@@ -198,7 +199,7 @@ export default function JobListView(rowAdd) {
 
       {notFound && <EmptyContent filled title="No hay información" sx={{ py: 10 }} />}
 
-      <JobList jobs={jobs} />
+      <JobList jobs={dataFiltered} />
     </Container>
   );
 }
@@ -206,42 +207,22 @@ export default function JobListView(rowAdd) {
 // ----------------------------------------------------------------------
 
 const applyFilter = ({ inputData, filters, sortBy }) => {
-  const { employmentTypes, experience, roles, locations, benefits } = filters;
-
-  // SORT BY
-  if (sortBy === 'nuevas') {
-    inputData = orderBy(inputData, ['createdAt'], ['desc']);
-  }
-
-  if (sortBy === 'recientes') {
-    inputData = orderBy(inputData, ['createdAt'], ['asc']);
-  }
-
-  if (sortBy === 'popular') {
-    inputData = orderBy(inputData, ['totalViews'], ['desc']);
-  }
-
-  // FILTERS
-  if (employmentTypes.length) {
-    inputData = inputData.filter((job) =>
-      job.employmentTypes.some((item) => employmentTypes.includes(item))
-    );
-  }
+  const { experience, roles, locations, benefits } = filters;
 
   if (experience !== 'todas') {
     inputData = inputData.filter((job) => job.experience === experience);
   }
 
   if (roles.length) {
-    inputData = inputData.filter((job) => roles.includes(job.role));
+    inputData = inputData.filter((job) => roles.includes(job.roleJob));
   }
 
   if (locations.length) {
-    inputData = inputData.filter((job) => job.locations.some((item) => locations.includes(item)));
+    inputData = inputData.filter((job) => locations.includes(job.location));
   }
 
   if (benefits.length) {
-    inputData = inputData.filter((job) => job.benefits.some((item) => benefits.includes(item)));
+    inputData = inputData.filter((job) => benefits.includes(job.benefits));
   }
 
   return inputData;
