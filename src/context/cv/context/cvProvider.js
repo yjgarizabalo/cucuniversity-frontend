@@ -22,6 +22,7 @@ export const CvProvider = ({ children }) => {
     getCvByIdSuccess,
     getCvByUserIdSuccess,
     addCvSuccess,
+    addUserCvSuccess,
     editCvSuccess,
     deleteCvSuccess,
   } = useCvDispatch();
@@ -89,6 +90,21 @@ export const CvProvider = ({ children }) => {
     [loadingAction, addCvSuccess, errorAction, handleErrorMessageNotickBar, addCv]
   );
 
+  const addUserCvAction = useCallback(
+    async (data) => {
+      loadingAction(dispatch);
+      try {
+        const cv = await addCv(data);
+        addUserCvSuccess(dispatch, cv);
+      } catch (error) {
+        console.error('se a presentado un error', error);
+        errorAction(dispatch);
+        handleErrorMessageNotickBar(error);
+      }
+    },
+    [loadingAction, addUserCvSuccess, errorAction, handleErrorMessageNotickBar, addCv]
+  );
+
   const editCvAction = useCallback(
     async (id, data) => {
       loadingAction(dispatch);
@@ -139,6 +155,7 @@ export const CvProvider = ({ children }) => {
     ({
       cv: state.cv,
       cvSelected: state.cvSelected,
+      userCV: state.userCV,
       loading: state.loading,
       loadingDetail: state.loadingDetail,
       error: state.error,
@@ -146,6 +163,7 @@ export const CvProvider = ({ children }) => {
       getCvByIdAction,
       getCvByUserIdAction,
       addCvAction,
+      addUserCvAction,
       editCvAction,
       deleteCvAction,
       multiDeleteCvAction,
@@ -156,11 +174,13 @@ export const CvProvider = ({ children }) => {
       state.loading,
       state.loadingDetail,
       state.error,
+      state.userCV,
       //
       getCvAction,
       getCvByIdAction,
       getCvByUserIdAction,
       addCvAction,
+      addUserCvAction,
       editCvAction,
       deleteCvAction,
       multiDeleteCvAction

@@ -1,4 +1,3 @@
-import * as Yup from 'yup';
 import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { createClient } from '@supabase/supabase-js';
@@ -10,13 +9,13 @@ import { SUPABASE_URL, SUPABASE_ANON_KEY } from 'src/config-global';
 import { useCvContext } from 'src/context/cv/hooks/useCvContext';
 import { useAuthContext } from 'src/auth/hooks';
 import { UploadBox } from 'src/components/upload';
-import { yupResolver } from '@hookform/resolvers/yup';
+
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function AccountCv({ currentCv }) {
   const { user: authUser } = useAuthContext();
-  const { cv, addCvAction, editCvAction, getCvByUserIdAction, deleteCvAction, loading } = useCvContext();
+  const { userCV, addCvAction, editCvAction, getCvByUserIdAction, deleteCvAction, loading } = useCvContext();
   const { enqueueSnackbar } = useSnackbar();
 
   const [file, setFile] = useState(null);
@@ -27,8 +26,6 @@ export default function AccountCv({ currentCv }) {
       getCvByUserIdAction(authUser.id);
     }
   }, [authUser?.id, getCvByUserIdAction]);
-
-
 
   const handleDrop = useCallback(
     (acceptedFiles) => {
@@ -70,8 +67,8 @@ export default function AccountCv({ currentCv }) {
       };
 
 
-      if (cv.length > 0 && cv[0].id) {
-        await editCvAction(cv[0].id, cvData);
+      if (userCV !== null && userCV.id) {
+        await editCvAction(userCV.id, cvData);
         enqueueSnackbar('CV actualizado exitosamente', 'success');
       } else {
         await addCvAction(cvData);
@@ -136,14 +133,14 @@ export default function AccountCv({ currentCv }) {
         </Stack>
       )}
 
-      {cv.length > 0 && cv[0].cvFile && (
+      {userCV !== null && userCV.cvFile && (
         <Box sx={{ mt: 3 }}>
           <Typography variant="body2">Archivo Actual:</Typography>
           <Stack direction="row" spacing={1} alignItems="center">
-            <Typography variant="body2" component="a" href={cv[0].cvFile} target="_blank" rel="noopener noreferrer">
+            <Typography variant="body2" component="a" href={userCV.cvFile} target="_blank" rel="noopener noreferrer">
               Ver PDF
             </Typography>
-            <IconButton color="error" component="a" href={cv[0].cvFile} target="_blank" rel="noopener noreferrer">
+            <IconButton color="error" component="a" href={userCV.cvFile} target="_blank" rel="noopener noreferrer">
               <Iconify icon="eva:eye-outline"  />
             </IconButton>
           </Stack>

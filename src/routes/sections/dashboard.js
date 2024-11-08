@@ -11,7 +11,7 @@ import { RoleProvider } from 'src/context/role/context/roleProvider';
 import { JobProvider } from 'src/context/job/context/jobProvider';
 import { useAuthContext } from 'src/auth/hooks';
 import { CvProvider } from 'src/context/cv/context/cvProvider';
-
+import { ApplyJobsProvider } from 'src/context/apply-jobs/context/applyJobsProvider';
 
 // ----------------------------------------------------------------------
 
@@ -57,15 +57,17 @@ export const dashboardRoutes = [
       <AuthGuard>
         <UserProvider>
           <CvProvider>
-          <RoleProvider>
-            <JobProvider>
-              <DashboardLayout>
-                <Suspense fallback={<LoadingScreen />}>
-                  <Outlet />
-                </Suspense>
-              </DashboardLayout>
-            </JobProvider>
-          </RoleProvider>
+            <RoleProvider>
+              <JobProvider>
+                <ApplyJobsProvider>
+                  <DashboardLayout>
+                    <Suspense fallback={<LoadingScreen />}>
+                      <Outlet />
+                    </Suspense>
+                  </DashboardLayout>
+                </ApplyJobsProvider>
+              </JobProvider>
+            </RoleProvider>
           </CvProvider>
         </UserProvider>
       </AuthGuard>

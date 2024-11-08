@@ -63,6 +63,11 @@ export const endpoints = {
   roles: '/api/v1/roles',
   jobs: '/api/v1/jobs',
   cv: '/api/v1/cv',
+  applyJobs: {
+    apply: '/api/v1/applications',
+    jobsByUser: '/api/v1/applications/jobs-by-users/',
+    usersByJob: '/api/v1/applications//users-by-jobs/',
+  },
   auth: {
     login: '/api/v1/auth/login',
     auth: '/api/v1/auth/auth',

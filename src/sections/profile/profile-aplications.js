@@ -1,5 +1,5 @@
-import  PropTypes from 'prop-types';
-import { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { useState, useCallback, useEffect } from 'react';
 
 // @mui
 import Box from '@mui/material/Box';
@@ -10,26 +10,33 @@ import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 // components
 import Iconify from 'src/components/iconify';
+import { useApplyJobsContext } from 'src/context/apply-jobs/hooks/useApplyJobsContext';
+import { useAuthContext } from 'src/auth/hooks';
+import { LoadingScreen } from 'src/components/loading-screen';
+import { useRouter } from 'src/routes/hooks';
+import { paths } from 'src/routes/paths';
 
+export default function ProfileAplications() {
+  const { user } = useAuthContext();
+  const { jobsByUser, loading, getJobsByUserIdAction } = useApplyJobsContext();
 
+  const router = useRouter();
 
-export default function ProfileAplications({ aplications }) {
-  const _mockFollowed = aplications.slice(4, 8).map((i) => i.id);
+  useEffect(() => {
+    getJobsByUserIdAction(user.id);
+  }, [getJobsByUserIdAction, user]);
 
-  const [followed, setFollowed] = useState(_mockFollowed);
-
-  const handleClick = useCallback(
-    (item) => {
-      const selected = followed.includes(item)
-        ? followed.filter((value) => value !== item)
-        : [...followed, item];
-
-      setFollowed(selected);
+  const handleView = useCallback(
+    (id) => {
+      const url = paths.dashboard.students_job.details(id);
+      router.push(url);
     },
-    [followed]
+    [router]
   );
 
-  return (
+  return loading ? (
+    <LoadingScreen />
+  ) : (
     <>
       <Typography variant="h4" sx={{ my: 5 }}>
         Aplicaciones 💼
@@ -44,28 +51,18 @@ export default function ProfileAplications({ aplications }) {
           md: 'repeat(1, 1fr)',
         }}
       >
-        {aplications.map((follower) => (
-          <FollowerItem
-            key={follower.id}
-            follower={follower}
-            selected={followed.includes(follower.id)}
-            onSelected={() => handleClick(follower.id)}
-          />
+        {jobsByUser.map((job) => (
+          <JobItem key={job.id} job={job} onView={handleView} />
         ))}
       </Box>
     </>
   );
 }
 
-ProfileAplications.propTypes = {
-  aplications: PropTypes.array
-};
-
-
 // ----------------------------------------------------------------------
 
-function FollowerItem({ follower, selected, onSelected }) {
-  const { name, country, avatarUrl } = follower;
+function JobItem({ job, onView }) {
+  const { roleJob, company, location } = job;
 
   return (
     <Card
@@ -75,14 +72,20 @@ function FollowerItem({ follower, selected, onSelected }) {
         p: (theme) => theme.spacing(3, 2, 3, 3),
       }}
     >
-      <Avatar alt={name} src={avatarUrl} sx={{ width: 48, height: 48, mr: 2 }} />
+      <Avatar alt={roleJob} src={roleJob} sx={{ width: 48, height: 48, mr: 2 }} />
 
       <ListItemText
-        primary={name}
+        primary={roleJob}
         secondary={
           <>
-            <Iconify icon="mingcute:location-fill" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
-            {country}
+            <Box display="flex" alignItems="center">
+              <Iconify icon="mdi:office-building" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
+              {company}
+            </Box>
+            <Box component="span" sx={{ display: 'block', mt: 0.5 }}>
+              <Iconify icon="mingcute:location-fill" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
+              {location}
+            </Box>
           </>
         }
         primaryTypographyProps={{
@@ -93,8 +96,9 @@ function FollowerItem({ follower, selected, onSelected }) {
           mt: 0.5,
           noWrap: true,
           display: 'flex',
+          flexDirection: 'column',
           component: 'span',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           typography: 'caption',
           color: 'text.disabled',
         }}
@@ -102,22 +106,18 @@ function FollowerItem({ follower, selected, onSelected }) {
 
       <Button
         size="small"
-        variant={selected ? 'text' : 'outlined'}
-        color={selected ? 'success' : 'inherit'}
-        startIcon={
-          selected ? <Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} /> : null
-        }
-        onClick={onSelected}
+        onClick={() => {
+          onView(job.id);
+        }}
         sx={{ flexShrink: 0, ml: 1.5 }}
       >
-        {selected ? 'Ya no me gusta' : 'Me gusta'}
+        Ver detalle
       </Button>
     </Card>
   );
 }
 
-FollowerItem.propTypes = {
-  follower: PropTypes.object,
-  selected: PropTypes.bool,
-  onSelected: PropTypes.func
+JobItem.propTypes = {
+  job: PropTypes.object,
+  onView: PropTypes.func,
 };

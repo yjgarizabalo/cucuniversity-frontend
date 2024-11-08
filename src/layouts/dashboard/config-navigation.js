@@ -60,12 +60,12 @@ export function useNavData() {
             icon: ICONS.user,
             requiredPermission: 'read_employment_profile',
           },
-          {
-            title: 'Aplicaciones',
-            path: paths.dashboard.application,
-            icon: ICONS.application,
-            requiredPermission: 'read_jobApplications',
-          },
+          // {
+          //   title: 'Aplicaciones',
+          //   path: paths.dashboard.application,
+          //   icon: ICONS.application,
+          //   requiredPermission: 'read_jobApplications',
+          // },
         ],
       },
 

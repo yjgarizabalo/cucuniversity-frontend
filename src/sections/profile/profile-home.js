@@ -21,7 +21,7 @@ import ProfileJob from './profile-job';
 
 export default function ProfileHome({ info }) {
   const { user: authUser } = useAuthContext();
-  const { cv, getCvByUserIdAction } = useCvContext();
+  const { userCV, getCvByUserIdAction } = useCvContext();
 
   useEffect(() => {
     if (authUser?.id) {
@@ -29,15 +29,12 @@ export default function ProfileHome({ info }) {
     }
   }, [authUser?.id, getCvByUserIdAction]);
 
-  const data = cv[0] || {};
-
-
   const renderAbout = (
     <Card>
       <CardHeader title="Sobre mi" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Box sx={{ typography: 'body2' }}>{data.aboutMe}</Box>
+        <Box sx={{ typography: 'body2' }}>{userCV.aboutMe}</Box>
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="mingcute:location-fill" width={24} />
@@ -45,14 +42,14 @@ export default function ProfileHome({ info }) {
           <Box sx={{ typography: 'body2' }}>
             {`Residencia `}
             <Link variant="subtitle2" color="inherit">
-              {data.country}
+              {userCV.country}
             </Link>
           </Box>
         </Stack>
 
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
-          {data.personalEmail}
+          {userCV.personalEmail}
         </Stack>
 
 
@@ -91,7 +88,7 @@ export default function ProfileHome({ info }) {
               }}
             />
             <Link color="inherit">
-              {link.value === 'linkedin' && data.socialNetwork}
+              {link.value === 'linkedin' && userCV.socialNetwork}
             </Link>
           </Stack>
         ))}

@@ -51,9 +51,16 @@ export const useCvDispatch = () => {
     });
   }, []);
 
+  const addUserCvSuccess = useCallback((dispatch, cv) => {
+    dispatch({
+      type: Payload.ADD_USERCV,
+      payload:  cv
+    });
+  }, []);
+
   const editCvSuccess = useCallback((dispatch, cv) => {
     dispatch({
-      type: Payload.EDIT_CV,
+      type: Payload.EDIT_USERCV,
       payload:  cv
     });
   }, []);
@@ -72,6 +79,7 @@ export const useCvDispatch = () => {
     getCvByIdSuccess,
     getCvByUserIdSuccess,
     addCvSuccess,
+    addUserCvSuccess,
     editCvSuccess,
     deleteCvSuccess
   };

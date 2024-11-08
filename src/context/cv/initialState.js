@@ -3,4 +3,5 @@ export const initialState = {
   loading: true,
   loadingDetail: true,
   error: false,
+  userCV: null
 }

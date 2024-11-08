@@ -54,9 +54,7 @@ export default function UserProfileView() {
 
   const { user: authUser, loading } = useAuthContext();
 
-  const { cv, getCvByUserIdAction  } = useCvContext();
-
-  const { user } = useMockedUser();
+  const { userCV, getCvByUserIdAction  } = useCvContext();
 
   const [currentTab, setCurrentTab] = useState('profile');
 
@@ -70,7 +68,6 @@ export default function UserProfileView() {
     }
   }, [authUser?.id, getCvByUserIdAction]);
 
-  const data = cv[0] || {};
 
   return (
     <>
@@ -98,7 +95,7 @@ export default function UserProfileView() {
             <ProfileCover
               role={authUser ? authUser.program : ''}
               name={authUser ? `${authUser.firstName} ${authUser?.secondName} ${authUser?.lastName} ${authUser?.secondSurname}` : 'invitado'}
-              avatarUrl={data?.avatar}
+              avatarUrl={userCV?.avatar}
               coverUrl={_userAbout.coverUrl}
               coverProfileUrl={_userAbout.coverProfileUrl}
             />

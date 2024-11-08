@@ -41,7 +41,7 @@ const reducer = (state, action) => {
     case Payload.GET_CV_BY_USER_ID:
       return {
         ...state,
-        cv: action.payload,
+        userCV: action.payload,
         loading: false,
         loadingDetail: false,
         error: false,
@@ -53,6 +53,13 @@ const reducer = (state, action) => {
         loading: false,
         error: false,
       };
+      case Payload.ADD_USERCV:
+        return {
+          ...state,
+          userCV: action.payload,
+          loading: false,
+          error: false,
+        };
     case Payload.EDIT_CV:
       return {
         ...state,
@@ -65,6 +72,13 @@ const reducer = (state, action) => {
         loading: false,
         error: false,
       };
+      case Payload.EDIT_USERCV:
+        return {
+          ...state,
+          userCV: action.payload,
+          loading: false,
+          error: false,
+        };
     case Payload.DELETE_CV:
       return {
         ...state,

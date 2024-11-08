@@ -36,7 +36,7 @@ import { useAuthContext } from 'src/auth/hooks';
 export default function AccountGeneral() {
   const { user: authUser } = useAuthContext();
 
-  const { cv, editCvAction, addCvAction, getCvByUserIdAction, loading } = useCvContext();
+  const { userCV, editCvAction, addUserCvAction, getCvByUserIdAction, loading } = useCvContext();
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -57,22 +57,19 @@ export default function AccountGeneral() {
     aboutMe: Yup.string().optional(),
   });
 
-  const defaultValues = useMemo(() => {
-    const cvData = cv[0] || {};
-    return {
+  const defaultValues = useMemo(() => ({
       displayName: authUser ? `${authUser.firstName} ${authUser.lastName} ${authUser.secondSurname}`: 'Invitado',
       email: authUser?.email || '',
-      avatar: cvData.avatar || '',
-      phoneNumber: cvData.phoneNumber || '',
-      address: cvData.address || '',
-      country: cvData.country || '',
-      state: cvData.state || '',
-      city: cvData.city || '',
-      personalEmail: cvData.personalEmail || '',
-      socialNetwork: cvData.socialNetwork || '',
-      aboutMe: cvData.aboutMe || '',
-    };
-  }, [authUser, cv]);
+      avatar: userCV.avatar || '',
+      phoneNumber: userCV.phoneNumber || '',
+      address: userCV.address || '',
+      country: userCV.country || '',
+      state: userCV.state || '',
+      city: userCV.city || '',
+      personalEmail: userCV.personalEmail || '',
+      socialNetwork: userCV.socialNetwork || '',
+      aboutMe: userCV.aboutMe || '',
+    }), [authUser, userCV]);
 
   const methods = useForm({
     resolver: yupResolver(UpdateCvShema),
@@ -93,10 +90,10 @@ export default function AccountGeneral() {
   }, [authUser?.id, getCvByUserIdAction]);
 
   useEffect(() => {
-    if (cv.length > 0) {
+    if (userCV !== null) {
       reset(defaultValues);
     }
-  }, [cv, reset, defaultValues]);
+  }, [userCV, reset, defaultValues]);
 
 
   const onSubmit = handleSubmit(async (data) => {
@@ -140,12 +137,12 @@ export default function AccountGeneral() {
         }
       }
 
-      if (cv.length > 0 && cv[0].id) {
-        const cvId = Number(cv[0].id);
+      if (userCV !== null && userCV.id) {
+        const cvId = Number(userCV.id);
         await editCvAction(cvId, dataCv);
         enqueueSnackbar('Hoja de vida actualizada', 'success');
       } else {
-        await addCvAction(dataCv);
+        await addUserCvAction(dataCv);
         enqueueSnackbar('Hoja de vida creada', 'success');
       }
 
