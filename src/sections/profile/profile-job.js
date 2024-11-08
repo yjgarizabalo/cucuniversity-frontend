@@ -90,7 +90,7 @@ function JobItem({ job }) {
 
       <Button
         size="small"
-        startIcon={<Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} />}
+        startIcon={<Iconify width={18} icon="eva:eye-fill" sx={{ mr: -0.75 }} />}
         onClick={ () => handleView(id)}
         sx={{ flexShrink: 0, ml: 1.5 }}
       >

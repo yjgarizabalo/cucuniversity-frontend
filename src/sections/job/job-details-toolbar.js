@@ -37,7 +37,7 @@ export default function JobDetailsToolbar({ backLink, sx, ...other }) {
       <Button
         component={RouterLink}
         href={backLink}
-        startIcon={<Iconify icon="eva:checkmark-fill" width={16} />}
+        startIcon={<Iconify icon="eva:arrow-back-fill" width={16} />}
       >
         Atras
       </Button>

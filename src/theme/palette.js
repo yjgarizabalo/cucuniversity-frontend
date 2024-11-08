@@ -106,7 +106,7 @@ export function palette(mode) {
     },
     background: {
       paper: '#FFFFFF',
-      default: '#F4F6F8',
+      default: '#EBEBEB',
       neutral: GREY[200],
     },
     action: {
