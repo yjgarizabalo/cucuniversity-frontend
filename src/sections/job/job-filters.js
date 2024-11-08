@@ -38,15 +38,6 @@ export default function JobFilters({
   experienceOptions,
   employmentTypeOptions,
 }) {
-  const handleFilterEmploymentTypes = useCallback(
-    (newValue) => {
-      const checked = filters.employmentTypes.includes(newValue)
-        ? filters.employmentTypes.filter((value) => value !== newValue)
-        : [...filters.employmentTypes, newValue];
-      onFilters('employmentTypes', checked);
-    },
-    [filters.employmentTypes, onFilters]
-  );
 
   const handleFilterExperience = useCallback(
     (newValue) => {
@@ -119,11 +110,11 @@ export default function JobFilters({
             />
           }
           label={option}
-          sx={{
-            ...(option === 'todas' && {
-              textTransform: 'capitalize',
-            }),
-          }}
+          // sx={{
+          //   ...(option === 'todas' && {
+          //     textTransform: 'capitalize',
+          //   }),
+          // }}
         />
       ))}
     </Stack>

@@ -20,9 +20,9 @@ export default function UserTableFiltersResult({
   results,
   ...other
 }) {
-  const handleRemoveStatus = () => {
-    onFilters('status', 'all');
-  };
+  // const handleRemoveStatus = () => {
+  //   onFilters('status', 'all');
+  // };
 
   const handleRemoveRole = (inputValue) => {
     const newValue = filters.role.filter((item) => item !== inputValue);
@@ -39,11 +39,11 @@ export default function UserTableFiltersResult({
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {filters.status !== 'all' && (
+        {/* {filters.status !== 'all' && (
           <Block label="Status:">
             <Chip size="small" label={filters.status} onDelete={handleRemoveStatus} />
           </Block>
-        )}
+        )} */}
 
         {!!filters.role.length && (
           <Block label="Role:">

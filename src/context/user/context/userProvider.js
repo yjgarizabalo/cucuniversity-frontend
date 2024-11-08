@@ -62,6 +62,7 @@ export const UserProvider = ({ children }) => {
     async (user) => {
       try {
         const newUser = await addUser(user);
+        console.log(newUser);
         addUserSuccess(dispatch, newUser);
       } catch (error) {
         console.error('error connection', error);

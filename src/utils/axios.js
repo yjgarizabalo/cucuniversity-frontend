@@ -67,5 +67,6 @@ export const endpoints = {
     login: '/api/v1/auth/login',
     auth: '/api/v1/auth/auth',
     me: '/api/v1/auth/me',
+    logout: '/api/v1/auth/logout'
   },
 };

@@ -15,6 +15,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         loading: action.payload,
+        loadingDetail: action.payload,
         error: false,
       };
     case Payload.ERROR_ACTION:

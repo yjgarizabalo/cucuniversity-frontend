@@ -12,8 +12,8 @@ import { useJobDispatch } from '../hooks/useJobDispatch';
 // eslint-disable-next-line react/prop-types
 export const JobProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const isJobListViewActive = useActiveLink(paths.dashboard.user.jobs);
-  // const isJobDetailsViewActive = useActiveLink(paths.dashboard.students_job.details(':id'));
+  const isJobListViewActive = useActiveLink(paths.dashboard.students_job.job);
+  const isJobDetailsViewActive = useActiveLink(paths.dashboard.students_job.details());
   const { handleErrorMessageNotickBar } = useHandleResponseMessage();
   const { fetchJobs, fetchJobById, addJob, updateJob, deleteJob, multiDeleteJob } = useJobApi();
   const {
@@ -27,10 +27,10 @@ export const JobProvider = ({ children }) => {
   } = useJobDispatch();
 
   useEffect(() => {
-    if (!isJobListViewActive) {
+    if (!isJobListViewActive || !isJobDetailsViewActive) {
       loadingAction(dispatch);
     }
-  }, [isJobListViewActive, loadingAction]);
+  }, [isJobListViewActive, isJobDetailsViewActive, loadingAction]);
 
   const getJobAction = useCallback(async () => {
     loadingAction(dispatch);

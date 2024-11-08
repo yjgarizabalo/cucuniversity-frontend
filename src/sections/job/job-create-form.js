@@ -24,15 +24,18 @@ import {
   JOB_WORKING_HOURS,
   JOB_BENEFIT_OPTIONS,
   JOB_EXPERIENCE_OPTIONS,
-  JOB_LOCATION
+  JOB_LOCATION,
 } from 'src/_mock';
 
 // components
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFEditor, RHFTextField, RHFAutocomplete, RHFRadioGroup } from 'src/components/hook-form';
-
-
+import FormProvider, {
+  RHFEditor,
+  RHFTextField,
+  RHFAutocomplete,
+  RHFRadioGroup,
+} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -72,7 +75,11 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
     defaultValues,
   });
 
-  const { reset, handleSubmit, formState: { isSubmitting } } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     const dataJob = {
@@ -119,7 +126,6 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
     <Grid xs={12} md={4}>
       <Card>
         <Stack spacing={3} sx={{ p: 3 }}>
-
           <Stack spacing={1}>
             <Typography variant="subtitle2">Experiencia</Typography>
             <RHFRadioGroup row spacing={4} name="experience" options={JOB_EXPERIENCE_OPTIONS} />
@@ -204,7 +210,13 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
 
   const renderActions = (
     <DialogActions>
-      <Button variant="outlined" onClick={onClose}>
+      <Button
+        variant="outlined"
+        onClick={() => {
+          onClose();
+          reset();
+        }}
+      >
         Cancelar
       </Button>
       <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
@@ -218,7 +230,10 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
       fullWidth
       maxWidth={false}
       open={open}
-      onClose={onClose}
+      onClose={() => {
+        onClose();
+        reset();
+      }}
       PaperProps={{
         sx: { maxWidth: 1080 },
       }}
@@ -239,16 +254,13 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
               md: 'repeat(2, 1fr)',
             }}
           >
-
             {renderDetails}
 
             {renderContent}
 
             {renderActions}
-
           </Box>
         </DialogContent>
-
       </FormProvider>
     </Dialog>
   );

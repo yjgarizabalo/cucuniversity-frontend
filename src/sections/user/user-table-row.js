@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
 
 // @mui
 import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
@@ -27,7 +25,7 @@ import UserEditForm from './user-edit-form';
 
 export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }) {
   const { permissions } = useAuthContext();
-  const { firstName, secondName, lastName, secondSurname, program, email, identification } = row;
+  const { firstName, secondName, lastName, secondSurname, program, email, identification, role : {name} } = row;
   const { roles } = useRoleContext();
 
   const confirm = useBoolean();
@@ -65,7 +63,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow }
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{program}</TableCell>
 
-        {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell> */}
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{name}</TableCell>
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           {/* <Tooltip title="Cambiar contraseña" placement="top" arrow>

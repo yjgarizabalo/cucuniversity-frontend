@@ -176,6 +176,8 @@ export function AuthProvider({ children }) {
     dispatch({
       type: 'LOGOUT',
     });
+
+    await getFetch(endpoints.auth.logout);
   }, []);
 
   // ----------------------------------------------------------------------

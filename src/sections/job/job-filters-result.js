@@ -22,7 +22,7 @@ export default function JobFiltersResult({
 }) {
 
   const handleRemoveExperience = () => {
-    onFilters('experience', 'todas');
+    onFilters('experience', '');
   };
 
   const handleRemoveRoles = (inputValue) => {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
@@ -24,23 +24,15 @@ import FormProvider, { RHFTextField, RHFAutocomplete } from 'src/components/hook
 
 //  ----------------------------------------------------------------------
 
-const _gender = [
-  'Masculino',
-  'Femenino',
-]
+const _gender = ['Masculino', 'Femenino'];
 
 const _programs = [
   'Lic. en Administración de Negocios Internacionales',
   'Administración de Negocios Internacionales',
-  'Funcionaro'
-]
+  'Funcionaro',
+];
 
-const _documentType = [
-  'Cedula de Ciudadania',
-  'Tarjeta de Identidad',
-  'Cedula de Extranjeria'
-]
-
+const _documentType = ['Cedula de Ciudadania', 'Tarjeta de Identidad', 'Cedula de Extranjeria'];
 
 export default function UserEditForm({ currentUser, currentRoles, open, onClose }, sx) {
   const { editUserAction } = useUserContext();
@@ -57,7 +49,6 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
     email: Yup.string().email('Email no válido').required('Email es requerido'),
     program: Yup.string().required('Programa es requerido'),
     gender: Yup.string().required('Género es requerido'),
-    phoneNumber: Yup.string().required('Teléfono es requerido'),
     roleId: Yup.object().shape({ id: Yup.string().required('Rol es requerido') }),
   });
 
@@ -72,8 +63,10 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
       email: currentUser?.email || '',
       program: currentUser?.program || '',
       gender: currentUser?.gender || '',
-      phoneNumber: currentUser?.phoneNumber || '',
-      roleId: typeof currentUser?.roleId === 'object'  ? currentUser.roleId : { id: currentUser?.roleId || '', name: '', description: '' }
+      roleId:
+        typeof currentUser?.roleId === 'object'
+          ? currentUser.roleId
+          : { id: currentUser?.roleId || '', name: '', description: '' },
     }),
     [currentUser]
   );
@@ -85,55 +78,50 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
 
   const {
     reset,
-    watch,
-    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
+  useEffect(() => {
+    // Reseteamos el formulario cada vez que currentUser cambia
+    reset({
+      firstName: currentUser?.firstName || '',
+      secondName: currentUser?.secondName || '',
+      lastName: currentUser?.lastName || '',
+      secondSurname: currentUser?.secondSurname || '',
+      identification: currentUser?.identification || '',
+      documentType: currentUser?.documentType || '',
+      email: currentUser?.email || '',
+      program: currentUser?.program || '',
+      gender: currentUser?.gender || '',
+      roleId: currentUser?.roleId ? { id: currentUser.roleId } : { id: '', name: '', description: '' },
+    });
+  }, [currentUser, reset]); 
 
   const onSubmit = handleSubmit(async (data) => {
-
+    const dataUser = {
+      id: currentUser.id,
+      firstName: data.firstName,
+      secondName: data.secondName,
+      lastName: data.lastName,
+      secondSurname: data.secondSurname,
+      identification: data.identification,
+      documentType: data.documentType,
+      email: data.email,
+      program: data.program,
+      phoneNumber: data.phoneNumber,
+      roleId: data.roleId.id,
+      gender: data.gender,
+    };
     try {
+      await editUserAction(dataUser);
       reset();
       onClose();
-      const dataUser = {
-        id: currentUser.id,
-        firstName: data.firstName,
-        secondName: data.secondName,
-        lastName: data.lastName,
-        secondSurname: data.secondSurname,
-        identification: data.identification,
-        documentType: data.documentType,
-        email: data.email,
-        program: data.program,
-        phoneNumber: data.phoneNumber,
-        roleId: data.roleId.id,
-        gender: data.gender
-      };
-
       enqueueSnackbar('Usuaria actualizado con exito', 'success');
-      editUserAction(dataUser);
     } catch (error) {
       console.error(error);
     }
   });
-
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
-
-      if (file) {
-        setValue('avatarUrl', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
 
   const logo = (
     <Box
@@ -151,7 +139,8 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
       onClose={onClose}
       PaperProps={{
         sx: { maxWidth: 1180 },
-      }}>
+      }}
+    >
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <DialogTitle>Actualizar Usuario</DialogTitle>
 
@@ -159,7 +148,6 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
           <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
             Actualizar usuario
           </Alert>
-
 
           <Box
             rowGap={3}
@@ -171,9 +159,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
             }}
           >
             <Grid xs={12} md={4}>
-              <Card sx={{ pt: 10, pb: 5, px: 3 }}>
-              {logo}
-              </Card>
+              <Card sx={{ pt: 10, pb: 5, px: 3 }}>{logo}</Card>
             </Grid>
 
             <Grid xs={12} md={8}>
@@ -187,7 +173,6 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                     sm: 'repeat(2, 1fr)',
                   }}
                 >
-
                   <RHFTextField name="firstName" label="Primer nombre" />
                   <RHFTextField name="secondName" label="Segundo nombre" />
                   <RHFTextField name="lastName" label="Primer apellido" />
@@ -200,11 +185,11 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                     options={_documentType}
                     getOptionLabel={(option) => option || ''}
                     isOptionEqualToValue={(option, value) => option === value}
-                    renderOption={(props, option) =>
+                    renderOption={(props, option) => (
                       <li {...props} key={option}>
                         {option}
                       </li>
-                    }
+                    )}
                   />
 
                   <RHFAutocomplete
@@ -213,11 +198,11 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                     options={_programs}
                     getOptionLabel={(option) => option || ''}
                     isOptionEqualToValue={(option, value) => option === value}
-                    renderOption={(props, option) =>
+                    renderOption={(props, option) => (
                       <li {...props} key={option}>
                         {option}
                       </li>
-                    }
+                    )}
                   />
 
                   <RHFTextField name="email" label="Correo Electronico" />
@@ -227,13 +212,12 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                     options={_gender}
                     getOptionLabel={(option) => option || ''}
                     isOptionEqualToValue={(option, value) => option === value}
-                    renderOption={(props, option) =>
+                    renderOption={(props, option) => (
                       <li {...props} key={option}>
                         {option}
                       </li>
-                    }
+                    )}
                   />
-                  <RHFTextField name="phoneNumber" label="Teléfono" />
 
                   <RHFAutocomplete
                     name="roleId"
@@ -244,12 +228,13 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
                     isOptionEqualToValue={(option, value) => option.name === value.name}
                     renderOption={(props, option) => {
                       if (option === '') {
-                        return null
-                      };
+                        return null;
+                      }
                       return (
                         <li {...props} key={option.id}>
                           {option.name}
-                        </li>)
+                        </li>
+                      );
                     }}
                   />
                 </Box>
@@ -257,7 +242,6 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
             </Grid>
           </Box>
         </DialogContent>
-
 
         <DialogActions>
           <Button variant="outlined" onClick={onClose}>
@@ -271,11 +255,11 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
       </FormProvider>
     </Dialog>
   );
-};
+}
 
 UserEditForm.propTypes = {
   currentUser: PropTypes.object,
   currentRoles: PropTypes.array,
   open: PropTypes.bool,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
 };

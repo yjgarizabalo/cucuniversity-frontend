@@ -43,20 +43,18 @@ import UserTableToolbar from '../user-table-toolbar';
 import UserCreateForm from '../user-create-form';
 import UserTableFiltersResult from '../user-table-filters-result';
 // ----------------------------------------------------------------------
-const _roles = ['Administrador', 'Coodinador Academico', 'Estudiante'];
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nombre' },
   { id: 'identification', label: 'Identifiación', width: 180 },
   { id: 'company', label: 'Programa', width: 220 },
-  // { id: 'role', label: 'Rol', width: 180 },
+  { id: 'role', label: 'Rol', width: 180 },
   { id: '', width: 88 },
 ];
 
 const defaultFilters = {
   name: '',
   role: [],
-  status: 'all',
 };
 
 // ----------------------------------------------------------------------
@@ -140,20 +138,18 @@ export default function UserListView(rowAdd) {
     [router]
   );
 
-  const handleFilterStatus = useCallback(
-    (event, newValue) => {
-      handleFilters('status', newValue);
-    },
-    [handleFilters]
-  );
+  // const handleFilterStatus = useCallback(
+  //   (event, newValue) => {
+  //     handleFilters('status', newValue);
+  //   },
+  //   [handleFilters]
+  // );
 
   const handleResetFilters = useCallback(() => {
     setFilters(defaultFilters);
   }, []);
 
   const createUser = useBoolean();
-
-  const filteredUsers = users.filter((user) => user.status !== false);
 
   return (
     <>
@@ -195,7 +191,7 @@ export default function UserListView(rowAdd) {
             filters={filters}
             onFilters={handleFilters}
             //
-            roleOptions={_roles}
+            roleOptions={roles.map((role) => role.name)}
           />
 
           {canReset && (
@@ -249,7 +245,6 @@ export default function UserListView(rowAdd) {
 
                 <TableBody>
                   {dataFiltered
-                    .filter((row) => row.status !== false) // Filtrar usuarios con status false
                     .slice(
                       table.page * table.rowsPerPage,
                       table.page * table.rowsPerPage + table.rowsPerPage
@@ -318,7 +313,7 @@ export default function UserListView(rowAdd) {
 // ----------------------------------------------------------------------
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { firstName, lastName, secondSurname, role } = filters;
+  const { name, role } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -330,22 +325,23 @@ function applyFilter({ inputData, comparator, filters }) {
 
   inputData = stabilizedThis.map((el) => el[0]);
 
-  if (firstName) {
-    inputData = inputData.filter(
-      (user) => user.firstName.toLowerCase().indexOf(firstName.toLowerCase()) !== -1
-    );
-  }
+  if (name) {
+    inputData = inputData.filter((user) => {
+      // Construir nombre completo del usuario, omitiendo cualquier campo opcional que esté vacío
+      const fullName = [user.firstName, user.secondName, user.lastName, user.secondSurname]
+        .filter(Boolean)
+        .join(' ');
 
-  if (lastName) {
-    inputData = inputData.filter((user) => user.lastName === lastName);
-  }
-
-  if (secondSurname) {
-    inputData = inputData.filter((user) => user.secondSurname === secondSurname);
+      // Comprobar si el texto ingresado coincide con el nombre completo o la identificación
+      return (
+        fullName.toLowerCase().includes(name.toLowerCase()) ||
+        (user.identification && user.identification.toLowerCase().includes(name.toLowerCase()))
+      );
+    });
   }
 
   if (role.length) {
-    inputData = inputData.filter((user) => role.includes(user.role));
+    inputData = inputData.filter((user) => role.includes(user.role.name));
   }
 
   return inputData;

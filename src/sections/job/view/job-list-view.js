@@ -1,4 +1,3 @@
-import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
 import { useState, useCallback, useEffect } from 'react';
 // @mui
@@ -11,8 +10,6 @@ import { RouterLink } from 'src/routes/components';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 
-// assets
-import { countries } from 'src/assets/data';
 // components
 import Iconify from 'src/components/iconify';
 import EmptyContent from 'src/components/empty-content';
@@ -37,14 +34,14 @@ const defaultFilters = {
   roles: [],
   locations: [],
   benefits: [],
-  experience: 'todas',
+  experience: '',
 };
 
 // ----------------------------------------------------------------------
 
 export default function JobListView(rowAdd) {
   const { permissions } = useAuthContext();
-  const { jobs, loading, getJobAction } = useJobContext();
+  const { jobs,  getJobAction } = useJobContext();
 
   const settings = useSettingsContext();
 
@@ -67,8 +64,6 @@ export default function JobListView(rowAdd) {
     inputData: jobs,
     filters,
   });
-
-  console.log(dataFiltered);
 
   const canReset = !isEqual(defaultFilters, filters);
 
@@ -135,7 +130,7 @@ export default function JobListView(rowAdd) {
           locationOptions={JOB_LOCATION}
           roleOptions={ROLES}
           benefitOptions={JOB_BENEFIT_OPTIONS.map((option) => option.label)}
-          experienceOptions={['Todas', ...JOB_EXPERIENCE_OPTIONS.map((option) => option.label)]}
+          experienceOptions={JOB_EXPERIENCE_OPTIONS.map((option) => option.label)}
         />
       </Stack>
     </Stack>
@@ -206,10 +201,10 @@ export default function JobListView(rowAdd) {
 
 // ----------------------------------------------------------------------
 
-const applyFilter = ({ inputData, filters, sortBy }) => {
+const applyFilter = ({ inputData, filters }) => {
   const { experience, roles, locations, benefits } = filters;
 
-  if (experience !== 'todas') {
+  if (experience.length) {
     inputData = inputData.filter((job) => job.experience === experience);
   }
 

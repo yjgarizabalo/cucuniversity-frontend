@@ -15,20 +15,20 @@ import JobDetailsToolbar from '../job-details-toolbar';
 import JobDetailsContent from '../job-details-content';
 import JobDetailsCandidates from '../job-details-candidates';
 
-
 // ----------------------------------------------------------------------
 
 export default function JobDetailsView({ id }) {
-  const { loadingDetail, jobSelected, getJobByIdAction  } = useJobContext();
+  const { loadingDetail, jobSelected, getJobByIdAction } = useJobContext();
 
-  useEffect(() => { getJobByIdAction(id) }, [getJobByIdAction, id]);
+  useEffect(() => {
+    getJobByIdAction(id);
+  }, [getJobByIdAction, id]);
 
   const settings = useSettingsContext();
 
   // const [publish, setPublish] = useState(jobSelected?.publish);
 
   const [currentTab, setCurrentTab] = useState('content');
-
 
   const handleChangeTab = useCallback((event, newValue) => {
     setCurrentTab(newValue);
@@ -64,8 +64,9 @@ export default function JobDetailsView({ id }) {
     </Tabs>
   );
 
-  return (
-    loadingDetail ? <LoadingScreen/> :
+  return loadingDetail ? (
+    <LoadingScreen />
+  ) : (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <JobDetailsToolbar
         backLink={paths.dashboard.students_job.job}
