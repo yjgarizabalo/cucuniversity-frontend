@@ -33,6 +33,14 @@ export default function JobList({jobs}) {
     [router]
   );
 
+  const handleCandidatesView = useCallback(
+    (id) => {
+      const url = paths.dashboard.students_job.usersApplied(id);
+      router.push(url);
+    },
+    [router]
+  );
+
   const handleEdit = useCallback(
     (id) => {
       router.push(paths.dashboard.job.edit(id));
@@ -64,6 +72,7 @@ return (
           key={job.id}
           job={job}
           onView={() => handleView(job.id)}
+          onCandidatesView={()=>handleCandidatesView(job.id)}
           onEdit={() => handleEdit(job.id)}
           onDelete={() => handleDelete(job.id)}
         />

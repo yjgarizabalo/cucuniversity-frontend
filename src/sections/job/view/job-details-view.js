@@ -11,75 +11,33 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
 import { useSettingsContext } from 'src/components/settings';
 //
+import { useAuthContext } from 'src/auth/hooks';
+import { useApplyJobsContext } from 'src/context/apply-jobs/hooks/useApplyJobsContext';
 import JobDetailsToolbar from '../job-details-toolbar';
 import JobDetailsContent from '../job-details-content';
-import JobDetailsCandidates from '../job-details-candidates';
+import JobDetailsCandidates from '../job-candidates-list';
 
 // ----------------------------------------------------------------------
 
 export default function JobDetailsView({ id }) {
+  const { user } = useAuthContext();
   const { loadingDetail, jobSelected, getJobByIdAction } = useJobContext();
+  const { loading, getJobsByUserIdAction } = useApplyJobsContext();
 
   useEffect(() => {
     getJobByIdAction(id);
-  }, [getJobByIdAction, id]);
+    getJobsByUserIdAction(user.id);
+  }, [getJobByIdAction, id, getJobsByUserIdAction, user.id]);
 
   const settings = useSettingsContext();
 
-  // const [publish, setPublish] = useState(jobSelected?.publish);
-
-  const [currentTab, setCurrentTab] = useState('content');
-
-  const handleChangeTab = useCallback((event, newValue) => {
-    setCurrentTab(newValue);
-  }, []);
-
-  // const handleChangePublish = useCallback((newValue) => {
-  //   setPublish(newValue);
-  // }, []);
-
-  const renderTabs = (
-    <Tabs
-      value={currentTab}
-      onChange={handleChangeTab}
-      sx={{
-        mb: { xs: 3, md: 5 },
-      }}
-    >
-      {/* {JOB_DETAILS_TABS.map((tab) => (
-        <Tab
-          key={tab.value}
-          iconPosition="end"
-          value={tab.value}
-          label={tab.label}
-          icon={
-            tab.value === 'candidates' ? (
-              <Label variant="filled">{jobSelected?.candidates.length}</Label>
-            ) : (
-              ''
-            )
-          }
-        />
-      ))} */}
-    </Tabs>
-  );
-
-  return loadingDetail ? (
+  return loadingDetail || loading ? (
     <LoadingScreen />
   ) : (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-      <JobDetailsToolbar
-        backLink={paths.dashboard.students_job.job}
-        // editLink={paths.dashboard.job.edit(`${jobSelected?.id}`)}
-        // publish={publish || ''}
-        // onChangePublish={handleChangePublish}
-        // publishOptions={JOB_PUBLISH_OPTIONS}
-      />
-      {renderTabs}
+      <JobDetailsToolbar backLink={paths.dashboard.students_job.job} />
 
-      {currentTab === 'content' && <JobDetailsContent job={jobSelected} />}
-
-      {currentTab === 'candidates' && <JobDetailsCandidates candidates={jobSelected?.candidates} />}
+      <JobDetailsContent job={jobSelected} />
     </Container>
   );
 }

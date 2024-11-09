@@ -14,16 +14,19 @@ export const useApplyJobsApi = () => {
 
   const fetchUserByJobId = useCallback(async id => {
     const users = await getFetch(`${endpoints.applyJobs.usersByJob}${id}`);
+    console.log(users);
     return users;
   }, [getFetch]);
 
   const applyToJob = useCallback(async data => {
-    await postFetch(endpoints.applyJobs.apply, data);  
-  }, [postFetch]);
+    const response = await postFetch(endpoints.applyJobs.apply, data); 
+    handleResponseMessage(response) 
+  }, [postFetch, handleResponseMessage]);
 
   const disapplyToJob = useCallback(async data => {
-    await updateFetch(`${endpoints.applyJobs.apply}/${data.id}`, data);
-  }, [updateFetch, ]);
+    const response = await updateFetch(`${endpoints.applyJobs.apply}/${data.id}`, data);
+    handleResponseMessage(response) 
+  }, [updateFetch, handleResponseMessage ]);
 
 
   return {

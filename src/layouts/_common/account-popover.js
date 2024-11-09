@@ -42,7 +42,7 @@ const OPTIONS = [
 
 export default function AccountPopover() {
   const router = useRouter();
-  const { cv, getCvByUserIdAction } = useCvContext();
+  const { userCV, getCvByUserIdAction } = useCvContext();
 
   // const { user } = useMockedUser();
 
@@ -55,8 +55,6 @@ export default function AccountPopover() {
       getCvByUserIdAction(authUser.id);
     }
   }, [authUser?.id, getCvByUserIdAction]);
-
-  const data = cv[0] || {};
 
   const handleLogout = async () => {
     try {
@@ -92,7 +90,7 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={data?.avatar}
+          src={userCV && userCV.avatar}
           alt={authUser?.firstName}
           sx={{
             width: 36,

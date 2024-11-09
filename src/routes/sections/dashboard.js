@@ -24,6 +24,7 @@ const PageRoles = lazy(() => import('src/pages/dashboard/roles/list'));
 const UserAccountPage = lazy(() => import('src/pages/dashboard/user/account'));
 const PageStudentsJob = lazy(() => import('src/pages/dashboard/job/list'));
 const JobDetailsPage = lazy(() => import('src/pages/dashboard/job/details'));
+const JobUsersAppliedPage = lazy(()=> import('src/pages/dashboard/job/users-applied'))
 
 // ----------------------------------------------------------------------
 
@@ -104,6 +105,14 @@ export const dashboardRoutes = [
             element: (
               <RoleBasedGuard permissions={['read_jobOffers']}>
                 <PageStudentsJob />
+              </RoleBasedGuard>
+            ),
+          },
+          {
+            path: 'usersApplied/:id',
+            element: (
+              <RoleBasedGuard permissions={['read_usersAppliedForJobList']}>
+                <JobUsersAppliedPage />
               </RoleBasedGuard>
             ),
           },

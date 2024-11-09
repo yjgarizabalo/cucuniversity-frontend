@@ -24,7 +24,7 @@ import JobEditForm from './job-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function JobItem({ job, onView, onDelete }) {
+export default function JobItem({ job, onView, onCandidatesView, onDelete }) {
   const { permissions } = useAuthContext();
 
   const popover = usePopover();
@@ -36,6 +36,7 @@ export default function JobItem({ job, onView, onDelete }) {
   const canViewJobDetail = permissions.includes('read_jobOffers');
   const canUpdateJob = permissions.includes('update_jobOffers');
   const canDeleteJob = permissions.includes('delete_jobOffers');
+  const cantViewCandidates = permissions.includes('read_usersAppliedForJobList');
 
   return (
     <>
@@ -124,6 +125,18 @@ export default function JobItem({ job, onView, onDelete }) {
           </MenuItem>
         )}
 
+        {cantViewCandidates && (
+          <MenuItem
+            onClick={() => {
+              popover.onClose();
+              onCandidatesView();
+            }}
+          >
+            <Iconify icon="solar:eye-bold" />
+            Ver Candidatos
+          </MenuItem>
+        )}
+
         {canUpdateJob && (
           <MenuItem
             onClick={() => {
@@ -159,4 +172,5 @@ JobItem.propTypes = {
   job: PropTypes.object,
   onDelete: PropTypes.func,
   onView: PropTypes.func,
+  onCandidatesView: PropTypes.func,
 };

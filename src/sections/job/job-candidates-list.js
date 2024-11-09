@@ -10,11 +10,16 @@ import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 // components
 import Iconify from 'src/components/iconify';
+import { useApplyJobsContext } from 'src/context/apply-jobs/hooks/useApplyJobsContext';
+import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-export default function JobDetailsCandidates({ candidates }) {
-  return (
+export default function JobCandidatesList() {
+  const { usersByJob, loading } = useApplyJobsContext();
+  return loading ? (
+    <LoadingScreen />
+  ) : (
     <Box
       gap={3}
       display="grid"
@@ -23,18 +28,27 @@ export default function JobDetailsCandidates({ candidates }) {
         md: 'repeat(3, 1fr)',
       }}
     >
-      {candidates.map((candidate) => (
-        <Stack component={Card} direction="row" spacing={2} key={candidate.id} sx={{ p: 3 }}>
+      {usersByJob.map((user) => (
+        <Stack component={Card} direction="row" spacing={2} key={user.id} sx={{ p: 3 }}>
           <IconButton sx={{ position: 'absolute', top: 8, right: 8 }}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
 
-          <Avatar alt={candidate.name} src={candidate.avatarUrl} sx={{ width: 48, height: 48 }} />
+          <Avatar alt={user.firstName} src={user.firstName} sx={{ width: 48, height: 48 }} />
 
           <Stack spacing={2}>
             <ListItemText
-              primary={candidate.name}
-              secondary={candidate.role}
+              primary={
+                user
+                  ? `${user?.firstName} ${user?.secondName} ${user?.lastName} ${user?.secondSurname}`
+                  : 'Nombre no disponibel'
+              }
+              secondary={
+                <Box display="flex" alignItems="center">
+                  <Iconify icon="fluent:mail-24-filled" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
+                  {user.email}
+                </Box>
+              }
               secondaryTypographyProps={{
                 mt: 0.5,
                 component: 'span',
@@ -108,7 +122,3 @@ export default function JobDetailsCandidates({ candidates }) {
     </Box>
   );
 }
-
-JobDetailsCandidates.propTypes = {
-  candidates: PropTypes.array,
-};

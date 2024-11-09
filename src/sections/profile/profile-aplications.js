@@ -11,20 +11,20 @@ import ListItemText from '@mui/material/ListItemText';
 // components
 import Iconify from 'src/components/iconify';
 import { useApplyJobsContext } from 'src/context/apply-jobs/hooks/useApplyJobsContext';
-import { useAuthContext } from 'src/auth/hooks';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
+import { useAuthContext } from 'src/auth/hooks';
 
 export default function ProfileAplications() {
-  const { user } = useAuthContext();
-  const { jobsByUser, loading, getJobsByUserIdAction } = useApplyJobsContext();
+  const { user } = useAuthContext()
+  const { jobsByUser, loading, getJobsByUserIdAction} = useApplyJobsContext();
 
   const router = useRouter();
 
   useEffect(() => {
-    getJobsByUserIdAction(user.id);
-  }, [getJobsByUserIdAction, user]);
+    getJobsByUserIdAction(user.id)
+  }, [ getJobsByUserIdAction, user.id]);
 
   const handleView = useCallback(
     (id) => {

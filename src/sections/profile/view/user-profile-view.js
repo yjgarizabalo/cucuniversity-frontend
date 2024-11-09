@@ -53,7 +53,6 @@ export default function UserProfileView() {
   const settings = useSettingsContext();
 
   const { user: authUser, loading } = useAuthContext();
-
   const { userCV, getCvByUserIdAction  } = useCvContext();
 
   const [currentTab, setCurrentTab] = useState('profile');
@@ -68,7 +67,6 @@ export default function UserProfileView() {
     }
   }, [authUser?.id, getCvByUserIdAction]);
 
-
   return (
     <>
       {loading ? (
@@ -79,7 +77,7 @@ export default function UserProfileView() {
             heading="Mi área"
             links={[
               { name: 'Inicio', href: paths.dashboard.root },
-              { name: 'Mi área', href: paths.dashboard.user },
+              { name: 'Mi área', href: paths.dashboard.root },
               {
                 name: authUser
                   ? `${authUser.firstName} ${authUser.secondName} ${authUser.lastName} ${authUser.secondSurname}`

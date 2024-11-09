@@ -27,6 +27,7 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/students_job`,
       job: `${ROOTS.DASHBOARD}/students_job/job`,
       details: (id) => `${ROOTS.DASHBOARD}/students_job/${id}`,
+      usersApplied: (id)=> `${ROOTS.DASHBOARD}/students_job/usersApplied/${id}`
     },
 
     user: {

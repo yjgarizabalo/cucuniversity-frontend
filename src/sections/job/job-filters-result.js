@@ -50,7 +50,7 @@ export default function JobFiltersResult({
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {filters.experience !== 'todas' && (
+        {filters.experience.length && (
           <Block label="Experiencia:">
             <Chip size="small" label={filters.experience} onDelete={handleRemoveExperience} />
           </Block>

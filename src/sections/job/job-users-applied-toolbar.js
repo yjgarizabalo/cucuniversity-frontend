@@ -13,10 +13,11 @@ import { useAuthContext } from 'src/auth/hooks';
 import { useApplyJobsContext } from 'src/context/apply-jobs/hooks/useApplyJobsContext';
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
 import { useEffect } from 'react';
+import { Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-export default function JobDetailsToolbar({ backLink, sx, ...other }) {
+export default function JobUsersAppliedToolbar({ backLink, sx, ...other }) {
   const { jobsByUser, applyJobAction, getJobsByUserIdAction } = useApplyJobsContext();
   const { user } = useAuthContext();
   const { jobSelected } = useJobContext();
@@ -61,33 +62,12 @@ export default function JobDetailsToolbar({ backLink, sx, ...other }) {
       </Button>
 
       <Box sx={{ flexGrow: 1 }} />
-      {canApplyJob && (
-        <LoadingButton
-          color={userAlreadyApplied ? 'success' : 'inherit'} // Cambia el color a success si ya aplicó
-          variant="contained"
-          endIcon={
-            userAlreadyApplied ? (
-              <Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} />
-            ) : null
-          }
-          loading={false}
-          loadingIndicator="Loading…"
-          onClick={() => {
-            if (!userAlreadyApplied) {
-              handleApllyJob();
-            }
-          }}
-          // disabled={userAlreadyApplied} // Desactiva el botón si ya aplicó
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {userAlreadyApplied ? 'Ya aplicado' : 'Aplicar Oferta'}
-        </LoadingButton>
-      )}
+     
     </Stack>
   );
 }
 
-JobDetailsToolbar.propTypes = {
+JobUsersAppliedToolbar.propTypes = {
   backLink: PropTypes.string,
   sx: PropTypes.object,
 };

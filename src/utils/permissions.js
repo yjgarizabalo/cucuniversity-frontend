@@ -9,6 +9,7 @@ const permissions = {
   ],
   funcionario: [
     'read_jobOffers',
+    'read_usersAppliedForJobList',
     'create_jobOffers',
     'update_jobOffers',
     'delete_jobOffers',
@@ -18,6 +19,7 @@ const permissions = {
   ],
   'super administrador': [
     'read_jobOffers',
+    'read_usersAppliedForJobList',
     'create_jobOffers',
     'update_jobOffers',
     'delete_jobOffers',

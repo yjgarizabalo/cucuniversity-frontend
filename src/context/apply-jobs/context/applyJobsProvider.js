@@ -50,7 +50,7 @@ export const ApplyJobsProvider = ({ children }) => {
     ]
   );
 
-  const getUserByJobIdAction = useCallback(
+  const getUsersByJobIdAction = useCallback(
     async (id) => {
       loadingAction(dispatch);
       try {
@@ -106,13 +106,13 @@ export const ApplyJobsProvider = ({ children }) => {
       loading: state.loading,
       error: state.error,
       getJobsByUserIdAction,
-      getUserByJobIdAction,
+      getUsersByJobIdAction,
       applyJobAction,
       disapplyJobAction,
     }),
     [
       getJobsByUserIdAction,
-      getUserByJobIdAction,
+      getUsersByJobIdAction,
       applyJobAction,
       disapplyJobAction,
       state.jobsByUser,
