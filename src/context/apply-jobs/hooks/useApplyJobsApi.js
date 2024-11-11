@@ -14,7 +14,6 @@ export const useApplyJobsApi = () => {
 
   const fetchUserByJobId = useCallback(async id => {
     const users = await getFetch(`${endpoints.applyJobs.usersByJob}${id}`);
-    console.log(users);
     return users;
   }, [getFetch]);
 
