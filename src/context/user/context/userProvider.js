@@ -75,17 +75,25 @@ export const UserProvider = ({ children }) => {
 
   const editUserAction = useCallback(
     async (user) => {
+      const userId = Number(user.id);
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(userId)) {
+        console.error('Error: "id" debe ser un número válido');
+        throw new Error('"id" debe ser un número válido');
+      }
+      user.id = userId;
       try {
         const userUpdate = await updateUser(user);
         editUserSuccess(dispatch, userUpdate);
       } catch (error) {
-        console.error('error connection', error);
-        handleErrorMessageNotickBar(error, 'usuario no encontrado');
+        console.error('Error de conexión', error);
+        handleErrorMessageNotickBar(error);
         throw error;
       }
     },
     [editUserSuccess, handleErrorMessageNotickBar, updateUser]
   );
+
 
   const deleteUserAction = useCallback(
     async (id) => {
