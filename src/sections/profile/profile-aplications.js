@@ -15,16 +15,17 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { useAuthContext } from 'src/auth/hooks';
+import { TableNoData } from 'src/components/table';
 
 export default function ProfileAplications() {
-  const { user } = useAuthContext()
-  const { jobsByUser, loading, getJobsByUserIdAction} = useApplyJobsContext();
+  const { user } = useAuthContext();
+  const { jobsByUser, loading, getJobsByUserIdAction } = useApplyJobsContext();
 
   const router = useRouter();
 
   useEffect(() => {
-    getJobsByUserIdAction(user.id)
-  }, [ getJobsByUserIdAction, user.id]);
+    getJobsByUserIdAction(user.id);
+  }, [getJobsByUserIdAction, user.id]);
 
   const handleView = useCallback(
     (id) => {
@@ -37,11 +38,10 @@ export default function ProfileAplications() {
   return loading ? (
     <LoadingScreen />
   ) : (
-    <>
+    <Box>
       <Typography variant="h4" sx={{ my: 5 }}>
         Aplicaciones 💼
       </Typography>
-
       <Box
         gap={3}
         display="grid"
@@ -55,7 +55,20 @@ export default function ProfileAplications() {
           <JobItem key={job.id} job={job} onView={handleView} />
         ))}
       </Box>
-    </>
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <TableNoData
+          notFound={jobsByUser.length === 0}
+          sx={{
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            flexGrow: 1,
+          }}
+        />
+      </Box>
+    </Box>
   );
 }
 

@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useActiveLink } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { useHandleResponseMessage } from 'src/hooks/use-handler-rosponse-msg';
-import reducer from './cvReducer'
-import { initialState } from '../initialState'
+import reducer from './cvReducer';
+import { initialState } from '../initialState';
 import { CvContext } from './cvContext';
 import { useCvApi } from '../hooks/useCvApi';
 import { useCvDispatch } from '../hooks/useCvDispatch';
@@ -13,7 +13,8 @@ export const CvProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const isCvListViewActive = useActiveLink(paths.dashboard.user.cv);
   const { handleErrorMessageNotickBar } = useHandleResponseMessage();
-  const { fetchCvs, fetchCvById, fetchCvByUserId, addCv, updateCv, deleteCv, multiDeleteCv } = useCvApi();
+  const { fetchCvs, fetchCvById, fetchCvByUserId, addCv, updateCv, deleteCv, multiDeleteCv } =
+    useCvApi();
 
   const {
     loadingAction,
@@ -65,7 +66,7 @@ export const CvProvider = ({ children }) => {
       loadingAction(dispatch);
       try {
         const cv = await fetchCvByUserId(id);
-        getCvByUserIdSuccess(dispatch, cv);
+          getCvByUserIdSuccess(dispatch, cv);
       } catch (error) {
         console.error('se a presentado un error', error);
         errorAction(dispatch);
@@ -73,7 +74,7 @@ export const CvProvider = ({ children }) => {
       }
     },
     [loadingAction, getCvByUserIdSuccess, errorAction, handleErrorMessageNotickBar, fetchCvByUserId]
-  )
+  );
 
   const addCvAction = useCallback(
     async (data) => {
@@ -151,8 +152,7 @@ export const CvProvider = ({ children }) => {
   );
 
   const memorizedState = useMemo(
-    () =>
-    ({
+    () => ({
       cv: state.cv,
       cvSelected: state.cvSelected,
       userCV: state.userCV,
@@ -183,7 +183,7 @@ export const CvProvider = ({ children }) => {
       addUserCvAction,
       editCvAction,
       deleteCvAction,
-      multiDeleteCvAction
+      multiDeleteCvAction,
     ]
   );
   return <CvContext.Provider value={memorizedState}>{children}</CvContext.Provider>;

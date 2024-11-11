@@ -45,7 +45,6 @@ export default function JwtRegisterView() {
     password: Yup.string().required('Registrar una contraseña valida'),
     documentType: Yup.string().required('tipo de documento es requerido'),
     gender: Yup.string().required('genero es requerido'),
-    phoneNumber: Yup.number().required('numero celular es requerido'),
     program: Yup.string().required('programa es requerido'),
   });
 
@@ -53,7 +52,6 @@ export default function JwtRegisterView() {
     password: '',
     documentType: 'Cedula de ciudadania',
     gender: 'Masculino',
-    phoneNumber: '',
     program: 'Marketing digital',
   };
 
@@ -74,7 +72,6 @@ export default function JwtRegisterView() {
         emailFromUrl,
         data.password,
         data.identification,
-        data.phoneNumber,
         data.gender,
         data.program,
         data.documentType
@@ -155,8 +152,6 @@ export default function JwtRegisterView() {
         <RHFTextField name="identification" label="Numero de identificacion" type="number" />
 
         <RHFAutocomplete name="gender" label="Genero" options={['Masculino', 'Femenino']} />
-
-        <RHFTextField name="phoneNumber" label="Numero de celular" type="number" />
 
         <RHFAutocomplete
           name="program"

@@ -12,9 +12,10 @@ import { _socials } from 'src/_mock';
 // components
 import Iconify from 'src/components/iconify';
 // context
-import { useCvContext } from 'src/context/cv/hooks/useCvContext'
+import { useCvContext } from 'src/context/cv/hooks/useCvContext';
 import { useAuthContext } from 'src/auth/hooks';
 //
+import { LoadingScreen } from 'src/components/loading-screen';
 import ProfileJob from './profile-job';
 
 // ----------------------------------------------------------------------
@@ -34,7 +35,7 @@ export default function ProfileHome({ info }) {
       <CardHeader title="Sobre mi" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Box sx={{ typography: 'body2' }}>{userCV.aboutMe}</Box>
+        <Box sx={{ typography: 'body2' }}>{userCV?.aboutMe}</Box>
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="mingcute:location-fill" width={24} />
@@ -42,16 +43,15 @@ export default function ProfileHome({ info }) {
           <Box sx={{ typography: 'body2' }}>
             {`Residencia `}
             <Link variant="subtitle2" color="inherit">
-              {userCV.country}
+              {userCV?.country}
             </Link>
           </Box>
         </Stack>
 
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
-          {userCV.personalEmail}
+          {userCV?.personalEmail}
         </Stack>
-
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="ic:round-business-center" width={24} />
@@ -87,24 +87,19 @@ export default function ProfileHome({ info }) {
                 color: link.color,
               }}
             />
-            <Link color="inherit">
-              {link.value === 'linkedin' && userCV.socialNetwork}
-            </Link>
+            <Link color="inherit">{link.value === 'linkedin' && userCV?.socialNetwork}</Link>
           </Stack>
         ))}
       </Stack>
     </Card>
   );
 
-  const renderJobs = (
-    <ProfileJob />
-  );
+  const renderJobs = <ProfileJob />;
 
   return (
     <Grid container spacing={3}>
       <Grid xs={12} md={4}>
         <Stack spacing={3}>
-
           {renderAbout}
 
           {renderSocials}
@@ -112,9 +107,7 @@ export default function ProfileHome({ info }) {
       </Grid>
 
       <Grid xs={12} md={8}>
-        <Stack spacing={3}>
-          {renderJobs}
-        </Stack>
+        <Stack spacing={3}>{renderJobs}</Stack>
       </Grid>
     </Grid>
   );

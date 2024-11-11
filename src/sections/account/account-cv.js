@@ -1,21 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { createClient } from '@supabase/supabase-js';
+import  supabase from 'src/utils/supabaseClient';
 import { useSnackbar } from 'src/components/snackbar';
 import { Card, Stack, Typography, Button, IconButton, Box, Grid } from '@mui/material';
 import Iconify from 'src/components/iconify';
 import { LoadingScreen } from 'src/components/loading-screen';
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from 'src/config-global';
 import { useCvContext } from 'src/context/cv/hooks/useCvContext';
 import { useAuthContext } from 'src/auth/hooks';
 import { UploadBox } from 'src/components/upload';
 
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-export default function AccountCv({ currentCv }) {
+export default function AccountCv() {
   const { user: authUser } = useAuthContext();
-  const { userCV, addCvAction, editCvAction, getCvByUserIdAction, deleteCvAction, loading } = useCvContext();
+  const { userCV, addCvAction, editCvAction, getCvByUserIdAction, loading } = useCvContext();
   const { enqueueSnackbar } = useSnackbar();
 
   const [file, setFile] = useState(null);
@@ -27,10 +24,24 @@ export default function AccountCv({ currentCv }) {
     }
   }, [authUser?.id, getCvByUserIdAction]);
 
+  // const handleDrop = useCallback(
+  //   (acceptedFiles) => {
+  //     const pdfFile = acceptedFiles[0];
+  //     if (pdfFile && pdfFile.type === "application/pdf") {
+  //       setFile(pdfFile);
+  //       enqueueSnackbar('Archivo PDF listo para subir', { variant: 'info' });
+  //     } else {
+  //       enqueueSnackbar('Solo se permite cargar archivos PDF', { variant: 'error' });
+  //     }
+  //   },
+  //   [enqueueSnackbar]
+  // );
+
   const handleDrop = useCallback(
     (acceptedFiles) => {
+      console.log("Archivos aceptados:", acceptedFiles); // Verifica los archivos recibidos
       const pdfFile = acceptedFiles[0];
-      if (pdfFile && pdfFile.type === "application/pdf") {
+      if (pdfFile && (pdfFile.type === "application/pdf" || pdfFile.name.endsWith(".pdf"))) {
         setFile(pdfFile);
         enqueueSnackbar('Archivo PDF listo para subir', { variant: 'info' });
       } else {
@@ -39,6 +50,7 @@ export default function AccountCv({ currentCv }) {
     },
     [enqueueSnackbar]
   );
+  
 
   const handleUpload = async () => {
     try {
@@ -103,7 +115,7 @@ export default function AccountCv({ currentCv }) {
     <Card sx={{ p: 3 }}>
       <Typography variant="h6">Subir Hoja de Vida</Typography>
 
-      <Grid xs={12} md={6} lg={4}>
+      <Grid item xs={12} md={6} lg={4}>
         <UploadBox
           onDrop={handleDrop}
           accept="application/pdf"
@@ -150,6 +162,3 @@ export default function AccountCv({ currentCv }) {
   );
 }
 
-AccountCv.propTypes = {
-  currentCv: PropTypes.object,
-};

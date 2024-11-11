@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 
 // contexts
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
@@ -17,13 +17,27 @@ import Iconify from 'src/components/iconify';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
+// Función para seleccionar n elementos aleatorios de un array
+const selectRandomJobs = (jobsArray, count) => {
+  const shuffled = [...jobsArray].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
 
 export default function ProfileJob() {
-  const { jobs, getJobAction, } = useJobContext();
+  const { jobs, getJobAction } = useJobContext();
+  const [randomJobs, setRandomJobs] = useState([]);
 
   useEffect(() => {
     getJobAction();
   }, [getJobAction]);
+
+  useEffect(() => {
+    // Selecciona aleatoriamente 3 empleos si hay suficientes en el array `jobs`
+    if (jobs.length > 0) {
+      const selectedJobs = selectRandomJobs(jobs, 3);
+      setRandomJobs(selectedJobs);
+    }
+  }, [jobs]);
 
   return (
     <>
@@ -40,13 +54,13 @@ export default function ProfileJob() {
           md: 'repeat(1, 1fr)',
         }}
       >
-        {jobs.map((job) => (
+        {randomJobs.map((job) => (
           <JobItem key={job.id} job={job} />
         ))}
       </Box>
     </>
   );
-};
+}
 
 ProfileJob.propTypes = {
   // jobs: PropTypes.array,
@@ -55,7 +69,7 @@ ProfileJob.propTypes = {
 // ----------------------------------------------------------------------
 
 function JobItem({ job }) {
-  const { title, location, salary, experience, avatarUrl , id} = job;
+  const { title, location, salary, experience, avatarUrl, id } = job;
 
   const router = useRouter();
 
@@ -81,9 +95,18 @@ function JobItem({ job }) {
         primary={title}
         secondary={
           <ul style={{ paddingLeft: '1em', listStyleType: 'none' }}>
-            <li><Iconify icon="mingcute:location-fill" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />{location}</li>
-            <li><Iconify icon="solar:wad-of-money-bold" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />{salary}</li>
-            <li><Iconify icon="carbon:skill-level-basic" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />{experience}</li>
+            <li>
+              <Iconify icon="mingcute:location-fill" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
+              {location}
+            </li>
+            <li>
+              <Iconify icon="solar:wad-of-money-bold" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
+              {salary}
+            </li>
+            <li>
+              <Iconify icon="carbon:skill-level-basic" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
+              {experience}
+            </li>
           </ul>
         }
       />
@@ -91,13 +114,11 @@ function JobItem({ job }) {
       <Button
         size="small"
         startIcon={<Iconify width={18} icon="eva:eye-fill" sx={{ mr: -0.75 }} />}
-        onClick={ () => handleView(id)}
+        onClick={() => handleView(id)}
         sx={{ flexShrink: 0, ml: 1.5 }}
       >
         ver
       </Button>
-
-
     </Card>
   );
 }
@@ -105,4 +126,3 @@ function JobItem({ job }) {
 JobItem.propTypes = {
   job: PropTypes.object,
 };
-

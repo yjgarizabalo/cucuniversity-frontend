@@ -2,8 +2,6 @@ import * as Yup from 'yup';
 import { useCallback, useMemo, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { createClient } from '@supabase/supabase-js';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
@@ -13,6 +11,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 // utils
 import { fData } from 'src/utils/format-number';
+import  supabase from 'src/utils/supabaseClient';
 // assets
 import { countries } from 'src/assets/data';
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from 'src/config-global';
@@ -38,8 +37,6 @@ export default function AccountGeneral() {
 
   const { userCV, editCvAction, addUserCvAction, getCvByUserIdAction, loading } = useCvContext();
 
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
   const [avatarFile, setAvatarFile] = useState(null);
 
 
@@ -60,15 +57,15 @@ export default function AccountGeneral() {
   const defaultValues = useMemo(() => ({
       displayName: authUser ? `${authUser.firstName} ${authUser.lastName} ${authUser.secondSurname}`: 'Invitado',
       email: authUser?.email || '',
-      avatar: userCV.avatar || '',
-      phoneNumber: userCV.phoneNumber || '',
-      address: userCV.address || '',
-      country: userCV.country || '',
-      state: userCV.state || '',
-      city: userCV.city || '',
-      personalEmail: userCV.personalEmail || '',
-      socialNetwork: userCV.socialNetwork || '',
-      aboutMe: userCV.aboutMe || '',
+      avatar: userCV?.avatar || '',
+      phoneNumber: userCV?.phoneNumber || '',
+      address: userCV?.address || '',
+      country: userCV?.country || '',
+      state: userCV?.state || '',
+      city: userCV?.city || '',
+      personalEmail: userCV?.personalEmail || '',
+      socialNetwork: userCV?.socialNetwork || '',
+      aboutMe: userCV?.aboutMe || '',
     }), [authUser, userCV]);
 
   const methods = useForm({
