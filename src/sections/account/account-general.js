@@ -143,8 +143,6 @@ export default function AccountGeneral() {
         enqueueSnackbar('Hoja de vida creada', 'success');
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
     } catch (error) {
       console.error(error);
       enqueueSnackbar('Error al actualizar la hoja de vida', 'error');

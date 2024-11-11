@@ -48,7 +48,7 @@ export default function ModernLoginView() {
 
   const defaultValues = {
     email: 'test-jobs@cucusa.org',
-    password: '12345',
+    password: '10439995521P#',
   };
 
   const methods = useForm({

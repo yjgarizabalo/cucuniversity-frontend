@@ -12,11 +12,16 @@ import ListItemText from '@mui/material/ListItemText';
 import Iconify from 'src/components/iconify';
 import { useApplyJobsContext } from 'src/context/apply-jobs/hooks/useApplyJobsContext';
 import { LoadingScreen } from 'src/components/loading-screen';
+import { useBoolean } from 'src/hooks/use-boolean';
+import JobViewCandidateDetail from './job-view-candidate-detail';
 
 // ----------------------------------------------------------------------
 
 export default function JobCandidatesList() {
   const { usersByJob, loading } = useApplyJobsContext();
+
+  const ViewUserDetail = useBoolean();
+
   return loading ? (
     <LoadingScreen />
   ) : (
@@ -45,7 +50,11 @@ export default function JobCandidatesList() {
               }
               secondary={
                 <Box display="flex" alignItems="center">
-                  <Iconify icon="fluent:mail-24-filled" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
+                  <Iconify
+                    icon="fluent:mail-24-filled"
+                    width={16}
+                    sx={{ flexShrink: 0, mr: 0.5 }}
+                  />
                   {user.email}
                 </Box>
               }
@@ -72,19 +81,22 @@ export default function JobCandidatesList() {
                 <Iconify width={18} icon="solar:phone-bold" />
               </IconButton>
 
-              <IconButton
-                size="small"
-                color="info"
-                sx={{
-                  borderRadius: 1,
-                  bgcolor: (theme) => alpha(theme.palette.info.main, 0.08),
-                  '&:hover': {
-                    bgcolor: (theme) => alpha(theme.palette.info.main, 0.16),
-                  },
-                }}
-              >
-                <Iconify width={18} icon="solar:chat-round-dots-bold" />
-              </IconButton>
+              <Tooltip title="Ver detalles">
+                <IconButton
+                  size="small"
+                  color="info"
+                  sx={{
+                    borderRadius: 1,
+                    bgcolor: (theme) => alpha(theme.palette.info.main, 0.08),
+                    '&:hover': {
+                      bgcolor: (theme) => alpha(theme.palette.info.main, 0.16),
+                    },
+                  }}
+                  onClick={() => ViewUserDetail.onTrue()}
+                >
+                  <Iconify width={18} icon="mdi:eye" />
+                </IconButton>
+              </Tooltip>
 
               <IconButton
                 size="small"
@@ -117,6 +129,11 @@ export default function JobCandidatesList() {
               </Tooltip>
             </Stack>
           </Stack>
+          <JobViewCandidateDetail
+            currentUser={user}
+            open={ViewUserDetail.value}
+            onClose={ViewUserDetail.onFalse}
+          />
         </Stack>
       ))}
     </Box>
