@@ -1,10 +1,7 @@
 import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -12,30 +9,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import Typography from '@mui/material/Typography';
-import InputAdornment from '@mui/material/InputAdornment';
 import Grid from '@mui/material/Unstable_Grid2';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 
-// _mock
-import {
-  ROLES,
-  JOB_WORKING_HOURS,
-  JOB_BENEFIT_OPTIONS,
-  JOB_EXPERIENCE_OPTIONS,
-  JOB_LOCATION,
-} from 'src/_mock';
-
-// components
-import { useJobContext } from 'src/context/job/hooks/usejobContext';
-import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
-  RHFEditor,
   RHFTextField,
-  RHFAutocomplete,
-  RHFRadioGroup,
-  RHFUploadAvatar,
 } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
@@ -69,13 +48,6 @@ export default function JobViewCandidateDetail({ currentUser, open, onClose }) {
     defaultValues,
   });
 
-  const { reset } = methods;
-
-  // useEffect(() => {
-  //   if (currentUser !== null) {
-  //     reset(defaultValues);
-  //   }
-  // }, [userCV, reset, defaultValues]);
   const AvatarImg = (
     <Box component="img" src={currentUser.cv.avatar} sx={{ width: 150, height: 150 }} />
   );
