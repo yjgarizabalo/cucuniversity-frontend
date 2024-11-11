@@ -39,7 +39,7 @@ export default function JobCandidatesList() {
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
 
-          <Avatar alt={user.firstName} src={user.firstName} sx={{ width: 48, height: 48 }} />
+          <Avatar alt={user.firstName} src={user.cv.avatar || user.firstName} sx={{ width: 48, height: 48 }} />
 
           <Stack spacing={2}>
             <ListItemText
