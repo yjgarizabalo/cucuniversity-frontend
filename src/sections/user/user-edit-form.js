@@ -46,7 +46,10 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
     secondSurname: Yup.string().optional(),
     identification: Yup.string().required('Identificación es requerida'),
     documentType: Yup.string().required('Tipo de Documento es requerido'),
-    email: Yup.string().email('Email no válido').required('Email es requerido'),
+    email: Yup.string().email('Email no válido').required('Email es requerido')
+    .email('El correo debe tener un formato válido.')
+    .matches(/^[a-zA-Z0-9._%+-]+@cucusa\.org$/, 'Solo correos "cucusa.org".')
+    .required('El correo es requerido.'),
     program: Yup.string().required('Programa es requerido'),
     gender: Yup.string().required('Género es requerido'),
     roleId: Yup.object().shape({ id: Yup.string().required('Rol es requerido') }),
@@ -83,7 +86,6 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
   } = methods;
 
   useEffect(() => {
-    // Reseteamos el formulario cada vez que currentUser cambia
     reset({
       firstName: currentUser?.firstName || '',
       secondName: currentUser?.secondName || '',
@@ -96,7 +98,7 @@ export default function UserEditForm({ currentUser, currentRoles, open, onClose 
       gender: currentUser?.gender || '',
       roleId: currentUser?.roleId ? { id: currentUser.roleId } : { id: '', name: '', description: '' },
     });
-  }, [currentUser, reset]); 
+  }, [currentUser, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
     const dataUser = {

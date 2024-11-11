@@ -48,10 +48,17 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
     secondSurname: Yup.string().optional(),
     documentType: Yup.string().required('Tipo de documento es requerido'),
     identification: Yup.string().required('Identificación es requerida'),
-    email: Yup.string().email('Email no válido').required('Email es requerido'),
+    email: Yup.string().email('Email no válido').required('Email es requerido')
+    .email('El correo debe tener un formato válido.')
+    .matches(/^[a-zA-Z0-9._%+-]+@cucusa\.org$/, 'Solo correos "cucusa.org".')
+    .required('El correo es requerido.'),
     program: Yup.string().required('Programa es requerido'),
     gender: Yup.string().required('Género es requerido'),
     roleId: Yup.object().shape({ id: Yup.string().required('Rol es requerido') }),
+    password: Yup.string().required('Contraseña es requerida'),
+    confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir')
+    .required('Confirmar contraseña es requerida'),
   });
 
   const defaultValues = useMemo(
@@ -66,6 +73,8 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
       program: currentUser?.program || '',
       gender: currentUser?.gender || '',
       roleId: currentUser?.roleId || { id: '', name: '', description: '' },
+      password: currentUser?.password || '',
+      confirmPassword: '',
     }),
     [currentUser]
   );
@@ -93,6 +102,7 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
       program: data.program,
       roleId: data.roleId.id,
       gender: data.gender,
+      password: data.password,
     };
 
     try {
@@ -237,6 +247,8 @@ export default function UserCreateForm({ currentUser, currentRoles, open, onClos
                       );
                     }}
                   />
+                  <RHFTextField name="password" label="Contraseña" type="password" />
+                  <RHFTextField name="confirmPassword" label="Confirmar Contraseña" type="password" />
                 </Box>
               </Card>
             </Grid>

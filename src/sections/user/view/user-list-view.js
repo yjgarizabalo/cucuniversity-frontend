@@ -138,6 +138,12 @@ export default function UserListView(rowAdd) {
     [router]
   );
 
+  const handleEditPassword = useCallback(
+    (id) => {
+    router.push(paths.dashboard.user.editPassword(id));
+  }, [router]
+);
+
   // const handleFilterStatus = useCallback(
   //   (event, newValue) => {
   //     handleFilters('status', newValue);
@@ -257,6 +263,7 @@ export default function UserListView(rowAdd) {
                         onSelectRow={() => table.onSelectRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                         onEditRow={() => handleEditRow(row.id)}
+                        onEditPassword={() => handleEditPassword(row.id)}
                       />
                     ))}
 
@@ -283,6 +290,8 @@ export default function UserListView(rowAdd) {
           />
         </Card>
       </Container>
+
+
 
       <ConfirmDialog
         open={confirm.value}
