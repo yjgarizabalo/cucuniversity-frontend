@@ -35,7 +35,7 @@ export default function ProfileHome({ info }) {
       <CardHeader title="Sobre mi" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Box sx={{ typography: 'body2' }}>{userCV?.aboutMe}</Box>
+        <Box sx={{ typography: 'body2' }}>{userCV?.aboutMe ? userCV?.aboutMe : 'No disponible'}</Box>
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="mingcute:location-fill" width={24} />
@@ -43,14 +43,14 @@ export default function ProfileHome({ info }) {
           <Box sx={{ typography: 'body2' }}>
             {`Residencia `}
             <Link variant="subtitle2" color="inherit">
-              {userCV?.country}
+              {userCV?.country ? userCV?.country : 'País no disponible'}
             </Link>
           </Box>
         </Stack>
 
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
-          {userCV?.personalEmail}
+          {userCV?.personalEmail ? userCV?.personalEmail : 'Correo no disponible'}
         </Stack>
 
         <Stack direction="row" spacing={2}>
@@ -87,7 +87,7 @@ export default function ProfileHome({ info }) {
                 color: link.color,
               }}
             />
-            <Link color="inherit">{link.value === 'linkedin' && userCV?.socialNetwork}</Link>
+            <Link color="inherit">{link.value === 'linkedin' && userCV?.socialNetwork ? userCV?.socialNetwork : 'No disponible'}</Link>
           </Stack>
         ))}
       </Stack>

@@ -111,7 +111,7 @@ export default function JobItem({ job, onView, onCandidatesView, onDelete }) {
         open={popover.open}
         onClose={popover.onClose}
         arrow="right-top"
-        sx={{ width: 140 }}
+        sx={{ width: 180 }}
       >
         {canViewJobDetail && (
           <MenuItem
@@ -132,7 +132,7 @@ export default function JobItem({ job, onView, onCandidatesView, onDelete }) {
               onCandidatesView();
             }}
           >
-            <Iconify icon="solar:eye-bold" />
+            <Iconify icon="solar:users-group-rounded-bold-duotone" />
             Ver Candidatos
           </MenuItem>
         )}
