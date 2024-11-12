@@ -13,23 +13,22 @@ import { useSettingsContext } from 'src/components/settings';
 //
 import { useApplyJobsContext } from 'src/context/apply-jobs/hooks/useApplyJobsContext';
 import { Typography } from '@mui/material';
-import JobCandidatesList from '../job-candidates-list';
 import JobUsersAppliedToolbar from '../job-users-applied-toolbar';
+import JobCandidatesList from '../job-candidates-list';
 
 // ----------------------------------------------------------------------
 
 export default function JobUsersAppliedView({jobId}) {
   const { jobSelected, loadingDetail, getJobByIdAction } = useJobContext();
-  const { loading, getUsersByJobIdAction } = useApplyJobsContext();
+  // const { usersByJob, loading, getUsersByJobIdAction } = useApplyJobsContext();
 
   useEffect(() => {
-    getUsersByJobIdAction(jobId);
     getJobByIdAction(jobId)
-  }, [getUsersByJobIdAction, jobId, getJobByIdAction]);
+  }, [ jobId, getJobByIdAction]);
 
   const settings = useSettingsContext();
 
-  return loading || loadingDetail ? (
+  return loadingDetail ? (
     <LoadingScreen />
   ) : (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -38,7 +37,7 @@ export default function JobUsersAppliedView({jobId}) {
         {`Usuarios que aplicaron a la oferta ${jobSelected.title}`}
       </Typography>
 
-      <JobCandidatesList />
+      <JobCandidatesList jobId={jobId}/>
     </Container>
   );
 }

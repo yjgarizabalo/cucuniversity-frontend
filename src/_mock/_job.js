@@ -11,6 +11,7 @@ export const JOB_DETAILS_TABS = [
 ];
 
 export const ROLES = [
+  '',
   'Frontend Developer',
   'Backend Developer',
   'Fullstack Developer',
@@ -19,6 +20,7 @@ export const ROLES = [
 ];
 
 export const JOB_WORKING_HOURS = [
+  '',
   'De lunes a viernes',
   'Disponibilidad de fin de semana',
   'Turno de dia',
@@ -38,6 +40,7 @@ export const JOB_EXPERIENCE_OPTIONS = [
 ];
 
 export const JOB_LOCATION = [
+  '',
   'Colombia',
   'Mexico',
   'Argentina',

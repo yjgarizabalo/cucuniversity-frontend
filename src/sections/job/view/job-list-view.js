@@ -179,7 +179,7 @@ export default function JobListView(rowAdd) {
         }}
       />
 
-      <JobCreateForm currentJob={rowAdd} open={CreateJob.value} onClose={CreateJob.onFalse} />
+      <JobCreateForm  open={CreateJob.value} onClose={CreateJob.onFalse} />
 
       <Stack
         spacing={2.5}

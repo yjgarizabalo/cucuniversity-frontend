@@ -7,8 +7,9 @@ import Stack from '@mui/material/Stack';
 
 // ----------------------------------------------------------------------
 
-export default function EmptyContent({ title, imgUrl, action, filled, description, sx, ...other }) {
+export default function EmptyContent({ title, imgUrl, action, filled, description, noFound, sx, ...other }) {
   return (
+    noFound &&
     <Stack
       flexGrow={1}
       alignItems="center"
@@ -60,4 +61,5 @@ EmptyContent.propTypes = {
   imgUrl: PropTypes.string,
   sx: PropTypes.object,
   title: PropTypes.string,
+  noFound: PropTypes.bool,
 };

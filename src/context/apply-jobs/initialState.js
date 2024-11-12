@@ -1,7 +1,7 @@
 export const initialState = {
     jobsByUser: [],
     usersByJob: [],
-    loading: false,
+    loading: true,
     error: false
   }
   

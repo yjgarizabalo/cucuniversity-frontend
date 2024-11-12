@@ -39,7 +39,7 @@ import FormProvider, {
 
 // ----------------------------------------------------------------------
 
-export default function JobCreateForm({ currentJob, open, onClose }) {
+export default function JobCreateForm({ open, onClose }) {
   const { addJobAction } = useJobContext();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -57,18 +57,24 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
 
   const defaultValues = useMemo(
     () => ({
-      title: currentJob?.title || '',
-      description: currentJob?.description || '',
-      roleJob: currentJob?.roleJob || '',
-      company: currentJob?.company || '',
-      location: currentJob?.location || '',
-      experience: currentJob?.experience || '',
-      salary: currentJob?.salary || '',
-      workingHours: currentJob?.workingHours || '',
-      benefits: currentJob?.benefits || '',
+      title: '',
+      description: '',
+      roleJob: '',
+      company: '',
+      location: '',
+      experience: '',
+      salary: '',
+      workingHours:  '',
+      benefits: '',
     }),
-    [currentJob]
+    []
   );
+
+  const roleOptions = useMemo(() => ROLES.map((option) => option || ''), []);
+const locationOptions = useMemo(() => JOB_LOCATION.map((option) => option || ''), []);
+const workingHoursOptions = useMemo(() => JOB_WORKING_HOURS.map((option) => option || ''), []);
+const experienceOptions = useMemo(() => JOB_EXPERIENCE_OPTIONS.map((option) => option || ''), []);
+const benefitOptions = useMemo(() => JOB_BENEFIT_OPTIONS, []);
 
   const methods = useForm({
     resolver: yupResolver(NewJobSchema),
@@ -95,11 +101,10 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
     };
 
     try {
+      await addJobAction(dataJob);
       reset();
       onClose();
       enqueueSnackbar('Oferta creada con éxito', 'success');
-      addJobAction(dataJob);
-      console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }
@@ -128,7 +133,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
         <Stack spacing={3} sx={{ p: 3 }}>
           <Stack spacing={1}>
             <Typography variant="subtitle2">Experiencia</Typography>
-            <RHFRadioGroup row spacing={4} name="experience" options={JOB_EXPERIENCE_OPTIONS} />
+            <RHFRadioGroup row spacing={4} name="experience" options={experienceOptions} />
           </Stack>
 
           <Stack spacing={1.5}>
@@ -137,7 +142,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
               name="roleJob"
               placeholder="Selecciona Rol"
               autoHighlight
-              options={ROLES.map((option) => option || '')}
+              options={roleOptions.map((option) => option || '')}
               getOptionLabel={(option) => option}
               renderOption={(props, option) => (
                 <li {...props} key={option}>
@@ -157,7 +162,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
             <RHFAutocomplete
               name="location"
               placeholder="Seleccione Ubicación"
-              options={JOB_LOCATION.map((option) => option || '')}
+              options={locationOptions.map((option) => option || '')}
               getOptionLabel={(option) => option}
               renderOption={(props, option) => (
                 <li {...props} key={option}>
@@ -172,7 +177,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
             <RHFAutocomplete
               name="workingHours"
               placeholder="Seleccione horario"
-              options={JOB_WORKING_HOURS.map((option) => option || '')}
+              options={workingHoursOptions.map((option) => option || '')}
               getOptionLabel={(option) => option}
               renderOption={(props, option) => (
                 <li {...props} key={option}>
@@ -201,7 +206,7 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
 
           <Stack spacing={1}>
             <Typography variant="subtitle2">Benficios</Typography>
-            <RHFRadioGroup row spacing={4} name="benefits" options={JOB_BENEFIT_OPTIONS} />
+            <RHFRadioGroup row spacing={4} name="benefits" options={benefitOptions} />
           </Stack>
         </Stack>
       </Card>
@@ -267,7 +272,6 @@ export default function JobCreateForm({ currentJob, open, onClose }) {
 }
 
 JobCreateForm.propTypes = {
-  currentJob: PropTypes.object,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };

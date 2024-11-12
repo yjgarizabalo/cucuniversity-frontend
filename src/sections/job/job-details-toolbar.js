@@ -12,7 +12,7 @@ import Iconify from 'src/components/iconify';
 import { useAuthContext } from 'src/auth/hooks';
 import { useApplyJobsContext } from 'src/context/apply-jobs/hooks/useApplyJobsContext';
 import { useJobContext } from 'src/context/job/hooks/usejobContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -21,14 +21,19 @@ export default function JobDetailsToolbar({ backLink, sx, ...other }) {
   const { user } = useAuthContext();
   const { jobSelected } = useJobContext();
   const { permissions } = useAuthContext();
-
-  const userAlreadyApplied = jobsByUser.some((job) => job.id === jobSelected.id);
+  const [userAlreadyApplied, setUserAlreadyApplied] = useState(false);
 
   const canApplyJob = permissions.includes('apply_jobOffers');
 
   useEffect(() => {
     getJobsByUserIdAction(user.id);
   }, [user.id, getJobsByUserIdAction]);
+
+  useEffect(()=>{
+    if(jobsByUser.some((job) => job.id === jobSelected.id)){
+      setUserAlreadyApplied(true);
+    }
+  },[jobSelected, jobsByUser])
 
   const handleApllyJob = async () => {
     const data = {
@@ -37,6 +42,7 @@ export default function JobDetailsToolbar({ backLink, sx, ...other }) {
     };
     try {
       await applyJobAction(data);
+      setUserAlreadyApplied(true);
     } catch (error) {
       console.error(error);
     }

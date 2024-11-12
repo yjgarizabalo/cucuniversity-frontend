@@ -1,6 +1,6 @@
 export const initialState = {
   users: [],
   userSelected: {},
-  loading: false,
+  loading: true,
   error: false
 }

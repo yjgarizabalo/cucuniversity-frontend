@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 // @mui
 import Box from '@mui/material/Box';
@@ -15,7 +15,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { useAuthContext } from 'src/auth/hooks';
-import { TableNoData } from 'src/components/table';
+import EmptyContent from 'src/components/empty-content';
 
 export default function ProfileAplications() {
   const { user } = useAuthContext();
@@ -56,8 +56,9 @@ export default function ProfileAplications() {
         ))}
       </Box>
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <TableNoData
-          notFound={jobsByUser.length === 0}
+      <EmptyContent
+          title="No hay aplicaciones"
+          noFound={jobsByUser.length === 0}
           sx={{
             textAlign: 'center',
             display: 'flex',
@@ -75,7 +76,7 @@ export default function ProfileAplications() {
 // ----------------------------------------------------------------------
 
 function JobItem({ job, onView }) {
-  const { roleJob, company, location } = job;
+  const { title, company, location } = job;
 
   return (
     <Card
@@ -85,10 +86,10 @@ function JobItem({ job, onView }) {
         p: (theme) => theme.spacing(3, 2, 3, 3),
       }}
     >
-      <Avatar alt={roleJob} src={roleJob} sx={{ width: 48, height: 48, mr: 2 }} />
+      <Avatar alt={title} src={title} sx={{ width: 48, height: 48, mr: 2 }} />
 
       <ListItemText
-        primary={roleJob}
+        primary={title}
         secondary={
           <>
             <Box display="flex" alignItems="center">

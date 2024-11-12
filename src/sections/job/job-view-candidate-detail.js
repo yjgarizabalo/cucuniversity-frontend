@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 // @mui
 import Box from '@mui/material/Box';
@@ -27,15 +27,15 @@ export default function JobViewCandidateDetail({ currentUser, open, onClose }) {
         ? `${currentUser.firstName} ${currentUser.lastName} ${currentUser.secondSurname}`
         : 'Invitado',
       email: currentUser?.email || '',
-      avatar: currentUser?.cv.avatar || currentUser?.firstName,
-      phoneNumber: currentUser?.cv.phoneNumber || '',
-      address: currentUser?.cv.address || '',
-      country: currentUser?.cv.country || '',
-      state: currentUser?.cv.state || '',
-      city: currentUser?.cv.city || '',
-      personalEmail: currentUser?.cv.personalEmail || '',
-      socialNetwork: currentUser?.cv.socialNetwork || '',
-      aboutMe: currentUser?.cv.aboutMe || '',
+      avatar: currentUser?.cv?.avatar || currentUser?.firstName,
+      phoneNumber: currentUser?.cv?.phoneNumber || '',
+      address: currentUser?.cv?.address || '',
+      country: currentUser?.cv?.country || '',
+      state: currentUser?.cv?.state || '',
+      city: currentUser?.cv?.city || '',
+      personalEmail: currentUser?.cv?.personalEmail || '',
+      socialNetwork: currentUser?.cv?.socialNetwork || '',
+      aboutMe: currentUser?.cv?.aboutMe || '',
       documentType: currentUser?.documentType || '',
       gender: currentUser?.gender || '',
       identification: currentUser?.identification || '',
@@ -48,8 +48,16 @@ export default function JobViewCandidateDetail({ currentUser, open, onClose }) {
     defaultValues,
   });
 
+  // const { reset } = methods;
+
+  // useEffect(() => {
+  //   if (open) {
+  //   reset(defaultValues);
+  //   }
+  // }, [open, currentUser, reset, defaultValues]);
+
   const AvatarImg = (
-    <Box component="img" src={currentUser.cv.avatar} sx={{ width: 150, height: 150 }} />
+    <Box component="img" src={currentUser.cv?.avatar || currentUser.firstName} sx={{ width: 150, height: 150 }} />
   );
 
   return (

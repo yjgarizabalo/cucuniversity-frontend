@@ -15,15 +15,12 @@ import JobItem from './job-item';
 // ----------------------------------------------------------------------
 
 export default function JobList({jobs}) {
-  const { getJobAction, deleteJobAction } = useJobContext();
+  const { deleteJobAction } = useJobContext();
 
   const router = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => {
-    getJobAction();
-  }, [getJobAction]);
 
   const handleView = useCallback(
     (id) => {
@@ -41,12 +38,12 @@ export default function JobList({jobs}) {
     [router]
   );
 
-  const handleEdit = useCallback(
-    (id) => {
-      router.push(paths.dashboard.job.edit(id));
-    },
-    [router]
-  );
+  // const handleEdit = useCallback(
+  //   (id) => {
+  //     router.push(paths.dashboard.job.edit(id));
+  //   },
+  //   [router]
+  // );
 
   const handleDelete = useCallback((id) => {
     enqueueSnackbar('Oferta Eliminada', 'success');
@@ -73,7 +70,7 @@ return (
           job={job}
           onView={() => handleView(job.id)}
           onCandidatesView={()=>handleCandidatesView(job.id)}
-          onEdit={() => handleEdit(job.id)}
+          // onEdit={() => handleEdit(job.id)}
           onDelete={() => handleDelete(job.id)}
         />
       ))}

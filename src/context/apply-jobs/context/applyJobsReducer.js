@@ -10,10 +10,10 @@ export const Payload = {
   
   const reducer = (state, action) => {
     switch (action.type) {
-      case Payload.LOGIN_ACTION:
+      case Payload.LOADING_ACTION:
         return {
           ...state,
-          loading: action.payload,
+          loading: action.payload.loading,
           error: false,
         };
       case Payload.ERROR_ACTION:
@@ -32,8 +32,8 @@ export const Payload = {
       case Payload.GET_USERSBYJOB:
         return {
           ...state,
-          usersByJob: action.payload,
           loading: false,
+          usersByJob: action.payload,
           error: false,
         };
       case Payload.APPLY_JOB:
