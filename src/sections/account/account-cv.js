@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import  supabase from 'src/utils/supabaseClient';
+import supabase from 'src/utils/supabaseClient';
 import { useSnackbar } from 'src/components/snackbar';
 import { Card, Stack, Typography, Button, IconButton, Box, Grid } from '@mui/material';
 import Iconify from 'src/components/iconify';
@@ -8,6 +7,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { useCvContext } from 'src/context/cv/hooks/useCvContext';
 import { useAuthContext } from 'src/auth/hooks';
 import { UploadBox } from 'src/components/upload';
+
 
 
 export default function AccountCv() {
@@ -39,18 +39,18 @@ export default function AccountCv() {
 
   const handleDrop = useCallback(
     (acceptedFiles) => {
-      console.log("Archivos aceptados:", acceptedFiles); // Verifica los archivos recibidos
       const pdfFile = acceptedFiles[0];
-      if (pdfFile && (pdfFile.type === "application/pdf" || pdfFile.name.endsWith(".pdf"))) {
+
+      if (pdfFile && (pdfFile.type === "pdf" || pdfFile.name.endsWith("pdf"))) {
         setFile(pdfFile);
-        enqueueSnackbar('Archivo PDF listo para subir', { variant: 'info' });
+        enqueueSnackbar('Archivo PDF listo para subir', 'info');
       } else {
-        enqueueSnackbar('Solo se permite cargar archivos PDF', { variant: 'error' });
+        enqueueSnackbar('Solo se permite cargar archivos PDF', 'error');
       }
     },
     [enqueueSnackbar]
-  );
-  
+  )
+
 
   const handleUpload = async () => {
     try {
@@ -90,7 +90,7 @@ export default function AccountCv() {
       setFile(null);
     } catch (error) {
       console.error(error);
-      enqueueSnackbar('Error al subir el archivo', 'error' );
+      enqueueSnackbar('Error al subir el archivo', 'error');
     } finally {
       setUploading(false);
     }
@@ -116,13 +116,14 @@ export default function AccountCv() {
       <Typography variant="h6">Subir Hoja de Vida</Typography>
 
       <Grid item xs={12} md={6} lg={4}>
+
         <UploadBox
           onDrop={handleDrop}
-          accept="application/pdf"
           placeholder={
             <Stack spacing={0.5} alignItems="center" sx={{ color: 'text.disabled' }}>
               <Iconify icon="eva:cloud-upload-fill" width={40} />
-              <Typography variant="body2">Arrastra un archivo PDF aquí</Typography>
+              <Typography variant="body2">Arrastra
+                un archivo PDF aquí</Typography>
             </Stack>
           }
           sx={{
@@ -133,6 +134,7 @@ export default function AccountCv() {
             borderRadius: 1.5,
           }}
         />
+
       </Grid>
 
 
@@ -153,7 +155,7 @@ export default function AccountCv() {
               Ver PDF
             </Typography>
             <IconButton color="error" component="a" href={userCV.cvFile} target="_blank" rel="noopener noreferrer">
-              <Iconify icon="eva:eye-outline"  />
+              <Iconify icon="eva:eye-outline" />
             </IconButton>
           </Stack>
         </Box>
