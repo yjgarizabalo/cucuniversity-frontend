@@ -31,7 +31,7 @@ export default function JobDetailsView({ id }) {
 
   const settings = useSettingsContext();
 
-  return loadingDetail || loading ? (
+  return loadingDetail ? (
     <LoadingScreen />
   ) : (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
