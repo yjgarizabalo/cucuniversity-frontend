@@ -31,10 +31,12 @@ const _programs = [
   '',
   'Lic. en Administración de Negocios Internacionales',
   'Administración de Negocios Internacionales',
+  'Maestría en Administración de Negocios Internacionales',
+  'Maestría en Marketing',
   'Funcionaro',
 ];
 
-const _documentType = ['', 'Cedula de Ciudadania', 'Tarjeta de Identidad', 'Cedula de Extranjeria'];
+const _documentType = ['', 'Cedula de Ciudadania', 'Tarjeta de Identidad', 'Cedula de Extranjeria', 'Pasaporte'];
 
 export default function UserCreateForm({ currentUser, currentRoles, open, onClose }, sx) {
   const { addUserAction } = useUserContext();

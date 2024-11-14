@@ -12,11 +12,17 @@ export const JOB_DETAILS_TABS = [
 
 export const ROLES = [
   '',
-  'Frontend Developer',
-  'Backend Developer',
-  'Fullstack Developer',
-  'DevOps',
-  'System Engineer',
+  'Asociado en Administración de Negocios Internacionales',
+  'Licenciatura en Administración de Negocios Internacionales',
+  'Administrador de Empresas',
+  'Auxiliar Administrativo',
+  'Axuliar Contable',
+  'Asistente de Gerencia',
+  'Asistente de Recursos Humanos',
+  'Asistente de Contabilidad',
+  'Asistente de Administración',
+  'Asistente de Gerencia',
+  'Asistente de Recursos Humanos',
 ];
 
 export const JOB_WORKING_HOURS = [
@@ -30,6 +36,8 @@ export const JOB_BENEFIT_OPTIONS = [
   { value: 'Parqueadero gratis', label: 'Parqueadero gratis' },
   { value: 'Comisiones', label: 'Comisiones' },
   { value: 'Viajes', label: 'Viajes' },
+  { value: 'Bonos', label: 'Bonos' },
+  { value: 'no_aplica', label: 'No aplica' },
 ];
 
 export const JOB_EXPERIENCE_OPTIONS = [
@@ -86,7 +94,6 @@ export const _jobs = [...Array(12)].map((_, index) => {
   const benefits = JOB_BENEFIT_OPTIONS.slice(0, 3).map((option) => option.label);
 
   const experience = JOB_EXPERIENCE_OPTIONS.map((option) => option.label)[index] || JOB_EXPERIENCE_OPTIONS[1].label;
-
 
   const company = {
     name: _mock.companyName(index),
