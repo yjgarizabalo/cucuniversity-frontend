@@ -65,7 +65,7 @@ export default function ModernLoginView() {
   useEffect(() => {
     if (msParam) {
       setErrorMsg(decodeURIComponent(msParam)); // Mostrar mensaje de error
-      
+
       // Actualizar la URL sin el parámetro ms para redirigir al inicio
       const updatedUrl = `${window.location.origin}/auth/jwt/login?returnTo=${encodeURIComponent(returnTo)}`;
       window.history.replaceState(null, '', updatedUrl); // Reemplazar el historial con la URL de inicio
@@ -148,7 +148,7 @@ export default function ModernLoginView() {
           window.location.href = `${CUC_HOST_API}${endpoints.auth.login}`;
         }}
       >
-        Iniciar sesión con mi cuenta Microsoft
+        Iniciar con Microsoft
       </LoadingButton>
     </Stack>
   );
