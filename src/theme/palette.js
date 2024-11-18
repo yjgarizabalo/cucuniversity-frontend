@@ -103,6 +103,8 @@ export function palette(mode) {
       primary: GREY[800],
       secondary: GREY[600],
       disabled: GREY[500],
+      tree: SUCCESS.main,
+      four: INFO.main
     },
     background: {
       paper: '#FFFFFF',

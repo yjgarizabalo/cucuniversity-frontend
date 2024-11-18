@@ -46,7 +46,7 @@ export default function AccountPopover() {
 
   // const { user } = useMockedUser();
 
-  const { logout, user: authUser  } = useAuthContext();
+  const { logout, user: authUser } = useAuthContext();
 
   const popover = usePopover();
 
@@ -103,13 +103,24 @@ export default function AccountPopover() {
       <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 200, p: 0 }}>
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-          {authUser ? `${authUser.firstName} ${authUser.secondName} ${authUser.lastName} ${authUser.secondSurname}`: 'Invitado'}
+            {authUser ? `${authUser.firstName} ${authUser.secondName} ${authUser.lastName} ${authUser.secondSurname}` : 'Invitado'}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {authUser?.email}
           </Typography>
         </Box>
+
+
+
+        <Divider sx={{ borderStyle: 'dashed' }} />
+
+        <Box sx={{ p: 2, pb: 1.5 }}>
+          <Typography variant="body2" sx={{ color: 'text.four' }} noWrap>
+            {authUser?.role?.name}
+          </Typography>
+        </Box>
+
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
