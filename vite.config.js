@@ -1,4 +1,3 @@
-// https://github.com/vitejs/vite/discussions/3448
 import path from 'path';
 import fs from 'fs/promises';
 import { defineConfig } from 'vite';
@@ -32,5 +31,15 @@ export default defineConfig({
         },
       ],
     },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
+    },
+  },
+  server: {
+    historyApiFallback: true,
   },
 });
