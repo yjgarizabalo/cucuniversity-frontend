@@ -4,13 +4,13 @@ import { paths } from 'src/routes/paths';
 // API
 // ----------------------------------------------------------------------
 
-// RENDER API TEST
+
 export const CUC_HOST_API = import.meta.env.VITE_CUC_HOST_API_RENDER;
 
 // LOCAL API
 // export const CUC_API = import.meta.env.VITE_CUC_API_RENDER;
 
-// ----------------------------------------------------------------------
+
 
 export const ASSETS_API = import.meta.env.VITE_ASSETS_API;
 
